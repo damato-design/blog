@@ -1,1 +1,1 @@
-# blog
+# blog.damato.design
