@@ -1,0 +1,158 @@
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  color: #111;
+  display: flex;
+  flex-direction: column;
+  max-width: 80ch;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+blockquote {
+  border-left: 3px dotted hotpink;
+  margin-left: 0;
+  padding-left: 2rem;
+  font-size: 1.2em;
+}
+
+pre {
+  border: 3px dotted hotpink;
+  border-radius: 1em;
+  padding: 1em;
+}
+
+pre code {
+  font-size: 1.2em;
+}
+
+.underline, main a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: hotpink;
+  text-underline-offset: .1em;
+  transition: color .218s ease;
+}
+
+.underline:hover, main a:hover {
+  color: hotpink;
+}
+
+header h1, header p {
+  margin: 0;
+}
+
+header {
+  margin: 2rem 0;
+}
+
+header p {
+  text-transform: uppercase;
+  font-weight: bolder;
+  font-size: .8em;
+}
+
+.posts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.card {
+  display: inline-flex;
+  text-decoration: none;
+  gap: 2rem;
+  color: inherit;
+}
+
+.posts .card {
+  min-height: 200px;
+}
+
+.card-emoji {
+  width: 1em;
+  font-size: min(3em, 10vw);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  filter: contrast(0) sepia(1) saturate(10) hue-rotate(-60deg) drop-shadow(4px 4px 0px black);
+}
+
+.post .card-summary,
+.posts .card-emoji {
+  margin-top: .5em;
+}
+
+.posts .card-emoji:after {
+  content: '';
+  border-right: 2px dotted hotpink;
+  display: block;
+  flex: 1;
+  width: calc(50% - 1px);
+}
+
+.card-summary {
+  align-self: baseline;
+}
+
+.card-date {
+  text-transform: uppercase;
+  font-weight: bolder;
+  font-size: .8em;
+  color: hotpink;
+}
+
+.card-title,
+.card-desc {
+  margin: 0;
+}
+
+.card-title {
+  font-size: min(3em, 10vw);
+  line-height: 1.1;
+  margin-left: -.05em;
+  margin-bottom: .125em;
+}
+
+.posts .card-title {
+  text-transform: uppercase;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 2rem 0;
+}
+
+.pagination [aria-disabled] {
+  visibility: hidden;
+}
+
+footer {
+  margin-top: auto;
+  padding: 1rem 0;
+}
+
+footer .card {
+  align-items: center;
+}
+
+footer p {
+  font-size: .8em;
+  text-transform: uppercase;
+  font-weight: bolder;
+}
+
+footer .card-emoji {
+  filter: none;
+}
+
+.ds-house-logo {
+  width: 1em;
+  height: 1em;
+}

@@ -1,0 +1,40 @@
+---
+layout: layout.njk
+title: blog.damato.design
+pagination:
+  data: collections.posts
+  size: 5
+  alias: posts
+  reverse: true
+---
+
+{% if posts %}
+<ul class='posts'>
+  {%- for post in posts %}
+  <li>
+    <a href="{{ post.url }}" class='card'>
+      <span class='card-emoji'>{{ post.data.emoji }}</span>
+      <div class='card-summary'>
+        <datetime class='card-date' time="{{ post.date.toISOString() }}">{{ post.date.toLocaleString('en-US', { month: 'long', day: '2-digit', year: 'numeric' }) }}</datetime>
+        <h2 class='card-title underline'>{{ post.data.title }}</h2>
+        {% if post.data.desc %}
+        <p class='card-desc'>{{ post.data.desc }}</p>
+        {% endif %}
+      </div>
+    </a>
+  </li>
+  {%- endfor %}
+</ul>
+{% endif %}
+
+<nav class="pagination">
+  <a 
+    role="link"
+    {% if pagination.href.previous %} href="{{pagination.href.previous}}" {% endif %}
+    {% if not pagination.href.previous %} aria-disabled="true" {% endif %}>Previous Page</a>
+  
+  <a 
+    role="link"
+    {% if pagination.href.next %} href="{{pagination.href.next}}" {% endif %}
+    {% if not pagination.href.next %} aria-disabled="true" {% endif %}>Next Page</a>
+</nav>

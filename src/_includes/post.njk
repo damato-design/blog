@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{{ title }}</title>
+  {% include "head.njk" %}
+</head>
+<body class="post">
+  {% include "header.njk" %}
+  <main>
+    <div class="card">
+      <span class="card-emoji">{{ emoji }}</span>
+      <div class="card-summary">
+        <h2 class="card-title">{{ title }}</h1>
+      </div>
+    </div>
+    {{ content | safe }}
+  </main>
+  {% include "footer.njk" %}
+</body>
+</html>
