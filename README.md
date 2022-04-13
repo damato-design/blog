@@ -1,3 +1,3 @@
-# [ultrapink](https://ultrap.ink)
+# [blog.damato.design](https://blog.damato.design)
 
 Design System Hot Takes
