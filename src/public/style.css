@@ -3,15 +3,20 @@
   margin: var(--space--away) 0;
 }
 
+#header,
+.posts a {
+  text-decoration: none;
+}
+
 .posts {
   list-style: none;
   margin: var(--space--away) 0;
   padding: 0;
 }
 
-#header,
-.posts a {
-  text-decoration: none;
+[slot="icon"] {
+  width: 1em;
+  filter: contrast(0) sepia(1) saturate(10) hue-rotate(-60deg) drop-shadow(4px 4px 0px black);
 }
 
 hr[slot="line"] {
@@ -20,13 +25,12 @@ hr[slot="line"] {
   margin: 0 auto;
 }
 
-[slot="icon"] {
-  width: 1em;
-  filter: contrast(0) sepia(1) saturate(10) hue-rotate(-60deg) drop-shadow(4px 4px 0px black);
-}
-
 datetime {
   margin-left: calc(var(--text--display) + var(--space--away));
+}
+
+.content {
+  margin-block: var(--space--away);
 }
 
 .pagination {
