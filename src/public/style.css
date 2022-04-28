@@ -6,6 +6,12 @@
 #header,
 .posts a {
   text-decoration: none;
+  color: inherit;
+}
+
+a [slot="title"] {
+  text-decoration: underline;
+  text-decoration-color: var(--feedback_standard_foreground-color);
 }
 
 .posts {
@@ -25,10 +31,16 @@ hr[slot="line"] {
   margin: 0 auto;
 }
 
-datetime {
-  margin-left: calc(var(--text--display) + var(--space--away));
+.spacer {
+  display: inline-block;
+  width: calc(var(--text--display) + var(--space--away));
 }
 
+datetime {
+  color: var(--feedback_standard_foreground-color);
+}
+
+topic-summary p,
 .content {
   margin-block: var(--space--away);
 }
