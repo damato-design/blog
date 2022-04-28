@@ -12,22 +12,23 @@ pagination:
 <ul class='posts'>
   {%- for post in posts %}
   <li>
-    <a href="{{ post.url }}" class='card'>
-      <span class='card-emoji'>{{ post.data.emoji }}</span>
-      <div class='card-summary'>
-        <datetime class='card-date' time="{{ post.date.toISOString() }}">{{ post.date.toLocaleString('en-US', { month: 'long', day: '2-digit', year: 'numeric' }) }}</datetime>
-        <h2 class='card-title underline'>{{ post.data.title }}</h2>
+    <a href="{{ post.url }}">
+      <datetime class="text--detail" time="{{ post.date.toISOString() }}">{{ post.date.toLocaleString('en-US', { month: 'long', day: '2-digit', year: 'numeric' }) }}</datetime>
+      <topic-summary>
+        <span class="text--display" slot="icon">{{ post.data.emoji }}</span>
+        <span class="text--display" role="heading" slot="title">{{ post.data.title }}</span>
+        <hr slot="line"/>
         {% if post.data.desc %}
-        <p class='card-desc'>{{ post.data.desc }}</p>
+        <p>{{ post.data.desc }}</p>
         {% endif %}
-      </div>
+      </topic-summary>
     </a>
   </li>
   {%- endfor %}
 </ul>
 {% endif %}
 
-<nav class="pagination">
+<nav class="pagination" data-density-shift>
   <a 
     role="link"
     {% if pagination.href.previous %} href="{{pagination.href.previous}}" {% endif %}
