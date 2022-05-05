@@ -8,7 +8,7 @@ I love web components. Being able to just plop a custom element onto a page with
 
 The trickiest part of web components for me has been how to identify when a web components, which is written as HTML, needs to be defined through JavaScript. From a performance point-of-view, we don't want to send JavaScript to the page for components that aren't there. On the flip side, we don't want to miss components that apppear later in the lifecycle of the page.
 
-The technique I'm about to explain is something I was working on at Compass but was never completed. Since then I've also enhanced the approach to be a bit easier to setup.
+The technique I'm about to explain is something I was working on at [Compass](https://compass.com) but was never completed. Since then I've also enhanced the approach to be a bit easier to setup.
 
 ## Registrar
 
@@ -48,7 +48,17 @@ The missing piece is the selector to target these custom elements. In my origina
 }
 ```
 
-Yep, that's it. Now the `undefined-detection` animation will trigger for all custom elements that are not yet defined. So we will write this CSS to the `<head/>` of the page within the registrar and begin listening for the animation.
+Yep, that's it. Now the `undefined-detection` animation will trigger for all custom elements that are not yet defined.
+
+{% aside %}
+
+### Greedy registration
+
+I've noticed that custom elements that are on the page from extensions or other libraries will also attempt to be requested and ultimately fail since they aren't part of the library. This would be a benefit for having an explicit list of elements to listen for but the failures can be caught and ignored in this implementation or you could filter by prefix (i.e.; `ds-button` but not `random-button`).
+
+{% endaside %}
+
+So we will write this CSS to the `<head/>` of the page within the registrar and begin listening for the animation.
 
 ```js
 const ANIMATION_NAME = 'undefined-detection';
@@ -87,7 +97,7 @@ This requires a bit of infrastructure. In my custom element library, each compon
 const SOURCE_DIR = new URL(document.currentScript.src).href.replace(/[^/]*$/, '');
 ```
 
-The code above determines the url where the current script is located and then removes the `registrar.iife.js` file name. I haven't found a cleaner way to do this without the ugly RegEx and without requiring to know the file name here.
+The code above determines the url where the current script is located and then removes the `registrar.iife.js` file name. I haven't found a cleaner way to do this without the ugly regex and without requiring to know the file name here.
 
 Then we can determine the location of the components by building a url with this variable.
 
@@ -141,7 +151,7 @@ const SOURCE_DIR = new URL(document.currentScript.src).href.replace(/[^/]*$/, ''
 })()
 ```
 
-The addition parts added are to ensure we don't fetch definitions for things we are currently loading or have already loaded and to clean up the scripts being added to the page after they have completed.
+The additional parts added are to ensure we don't fetch definitions for things we are currently loading or have already loaded and to clean up the scripts being added to the page after they have completed.
 
 ## Handling shadow roots
 
@@ -160,7 +170,7 @@ function onAnimationStart({ animationName, target }) {
 }
 ```
 
-This will also require us to change the `observe` function since shadow roots do not have a `<head>`. This is what the final registrar function looks like.
+This will also require us to change the `observe` function since shadow roots do not have a `<head/>`. This is what the final registrar function looks like.
 
 ```js
 const ANIMATION_NAME = 'undefined-detection';
@@ -235,6 +245,31 @@ class MyElement extends window.HTMLElement {
 }
 window.customElements.define('my-element', MyElement);
 ```
+
+{% aside %}
+
+### Listening for defined
+
+You may have considered another approach to use node detection to just look for defined elements.
+
+```css
+:defined {
+  animation: defined-detection .1ms;
+}
+```
+
+From there we could just add the target resources to each element; skipping the `customElements.whenDefined` check since the CSS animation trigger should catch it instead.
+
+```js
+root.addEventListener('animationend', ({ animationName, target }) => {
+   if (animationName !== 'defined-detection') return;
+   observe(target.shadowRoot);
+})
+```
+
+There's one catch, the `:defined` selector will trigger for _all elements_ (`<html/>`, `<div/>`, `<p/>`) and for every single one of them found on the page. While you could certainly filter for specific custom elements with open shadow roots, it's still a lot of callbacks firing. Another reason why having a list of elements to update or pre-updating with the triggering resources seems to be better approaches.
+
+{% endaside %}
 
 ## All together now
 
