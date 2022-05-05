@@ -22,7 +22,7 @@ a [slot="title"] {
 
 [slot="icon"] {
   width: 1em;
-  filter: contrast(0) sepia(1) saturate(10) hue-rotate(-60deg) drop-shadow(4px 4px 0px black);
+  filter: contrast(0) sepia(1) saturate(10) hue-rotate(180deg) drop-shadow(4px 4px 0px black);
 }
 
 hr[slot="line"] {
