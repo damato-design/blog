@@ -278,3 +278,5 @@ Once you have the files bundled and deployed, you can just add the registrar to 
 ```html
 <script src="registrar.iife.js" defer>
 ```
+
+And that's it, we're automagically getting the definitions for web components on-demand!
