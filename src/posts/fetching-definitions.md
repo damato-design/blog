@@ -162,11 +162,11 @@ When a custom element is identified, we'll want to listen inside of its shadow r
 ```js
 function onAnimationStart({ animationName, target }) {
   if (animationName !== ANIMATION_NAME) return;
-  const name = target.tagName.toLowerCase();
-  register(name);
+  const tagName = target.tagName.toLowerCase();
+  register(tagName);
 
   // When the custom element is defined, begin looking for custom elements within
-  window.customElements.whenDefined(name).then(() => observe(target.shadowRoot));
+  window.customElements.whenDefined(tagName).then(() => observe(target.shadowRoot));
 }
 ```
 
@@ -201,13 +201,13 @@ const SOURCE_DIR = new URL(document.currentScript.src).href.replace(/[^/]*$/, ''
     // Here's where we determine where to attach the resources
     const { anchor, target } = location(root);
     anchor.insertBefore(styles, target);
-    window.customElements.whenDefined(name).then(() => observe(target.shadowRoot));
   }
 
   function onAnimationStart({ animationName, target }) {
     if (animationName !== ANIMATION_NAME) return;
     const tagName = target.tagName.toLowerCase();
     register(tagName);
+    window.customElements.whenDefined(tagName).then(() => observe(target.shadowRoot));
   }
 
   function register(tagName) {
