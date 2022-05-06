@@ -17,6 +17,7 @@
     </a>
 
      <topic-summary>
+       <datetime slot="overline" class="text--detail" data-density-shift time="{{ page.date.toISOString() }}">{{ page.date.toLocaleString('en-US', { month: 'long', day: '2-digit', year: 'numeric' }) }}</datetime>
        <span slot="icon" class="text--heading">{{ emoji }}</span>
        <h2 slot="title" class="text--heading">{{ title }}</h2>
      </topic-summary>

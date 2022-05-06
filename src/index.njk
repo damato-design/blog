@@ -13,9 +13,8 @@ pagination:
   {%- for post in posts %}
   <li>
     <a href="{{ post.url }}">
-      <span class="spacer"></span>
-      <datetime class="text--detail" data-density-shift time="{{ post.date.toISOString() }}">{{ post.date.toLocaleString('en-US', { month: 'long', day: '2-digit', year: 'numeric' }) }}</datetime>
       <topic-summary>
+        <datetime slot="overline" class="text--detail" data-density-shift time="{{ post.date.toISOString() }}">{{ post.date.toLocaleString('en-US', { month: 'long', day: '2-digit', year: 'numeric' }) }}</datetime>
         <span class="text--display" slot="icon">{{ post.data.emoji }}</span>
         <span class="text--display" role="heading" slot="title">{{ post.data.title }}</span>
         <hr slot="line"/>

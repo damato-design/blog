@@ -97,7 +97,7 @@ This requires a bit of infrastructure. In my custom element library, each compon
 const SOURCE_DIR = new URL(document.currentScript.src).href.replace(/[^/]*$/, '');
 ```
 
-The code above determines the url where the current script is located and then removes the `registrar.iife.js` file name. I haven't found a cleaner way to do this without the ugly regex and without requiring to know the file name here.
+The code above determines the url where the current script is located and then removes the `registrar.iife.js` file name. I haven't found a cleaner way to do this without the ugly regex and without requiring to know the file name here. I wish browsers had the [`path` module from Node](https://nodejs.org/api/path.html).
 
 Then we can determine the location of the components by building a url with this variable.
 
@@ -267,7 +267,7 @@ root.addEventListener('animationend', ({ animationName, target }) => {
 })
 ```
 
-There's one catch, the `:defined` selector will trigger for _all elements_ (`<html/>`, `<div/>`, `<p/>`) and for every single one of them found on the page. While you could certainly filter for specific custom elements with open shadow roots, it's still a lot of callbacks firing. Another reason why having a list of elements to update or pre-updating with the triggering resources seems to be better approaches.
+There's one catch, the `:defined` selector will trigger for _all elements_ (`<html/>`, `<div/>`, `<p/>`, etc.) and for every single one of them found on the page. While you could certainly filter for specific custom elements with open shadow roots, it's still a lot of callbacks firing. Another reason why having a list of elements to update or pre-updating with the triggering resources seems to be better approaches.
 
 {% endaside %}
 

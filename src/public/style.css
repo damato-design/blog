@@ -31,11 +31,6 @@ hr[slot="line"] {
   margin: 0 auto;
 }
 
-.spacer {
-  display: inline-block;
-  width: calc(var(--text--display) + var(--space--away));
-}
-
 datetime {
   color: var(--feedback_standard_foreground-color);
 }
