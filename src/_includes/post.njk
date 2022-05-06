@@ -7,20 +7,9 @@
 <body class="post">
   <main id="main" class="max-content" data-density-shift>
      
-    <a href="/" id="header">
-      <topic-summary>
-        <span slot="icon" class="text--heading">🧠</span>
-        <h1 slot="title" class="text--heading">blog<wbr>.damato<wbr>.design</h1>
-        <span slot="line"></span>
-        <small>Design System Hot Takes</small>
-      </topic-summary>
-    </a>
-
-     <topic-summary>
-       <datetime slot="overline" class="text--detail" data-density-shift time="{{ page.date.toISOString() }}">{{ page.date.toLocaleString('en-US', { month: 'long', day: '2-digit', year: 'numeric' }) }}</datetime>
-       <span slot="icon" class="text--heading">{{ emoji }}</span>
-       <h2 slot="title" class="text--heading">{{ title }}</h2>
-     </topic-summary>
+    {% include "header.njk" %}
+     <datetime slot="overline" class="text--detail" time="{{ page.date.toISOString() }}">{{ page.date.toLocaleString('en-US', { month: 'long', day: '2-digit', year: 'numeric' }) }}</datetime>
+      <h2 slot="title" class="text--heading">{{ title }}</h2>
      <div class="content">
        {{ content | safe }}
      </div>

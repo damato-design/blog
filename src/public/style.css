@@ -45,6 +45,7 @@ topic-summary p,
   justify-content: space-between;
   gap: var(--space--near);
   padding-block: var(--space--away) 0;
+  align-self: stretch;
 }
 
 .pagination [aria-disabled] {
