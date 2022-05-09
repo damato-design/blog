@@ -115,10 +115,18 @@ $levels: 4;
 }
 ```
 
-I'm using the [Fibonacci sequence](https://en.wikipedia.org/wiki/Fibonacci_number) for the steps since designers love that [golden ratio](https://www.nngroup.com/articles/golden-ratio-ui-design/) in layout.
+I'm using the [Fibonacci sequence](https://en.wikipedia.org/wiki/Fibonacci_number) for the steps since designers love that [golden ratio in layout](https://www.nngroup.com/articles/golden-ratio-ui-design/).
 
 {% endaside %}
 
 ## + Typography
 
-You can take this one step further my including typography.
+You can take this one step further by including typography. If you consider that each use of typography is included into a category, the type scale could ramp based on the density instead of in isolation. This allows for a clearer relationship between typography and space as many designers strive for through vertical rhythm and a grid system.
+
+If you identify categories of typography with proper guidance for each you can connect the density to the category. Body text becomes larger in hero images and smaller in general areas. Perhaps even smaller for data-dense interfaces like tables. Each area uses the same type style but the density changes the size.
+
+## Real world examples
+
+If you're interested in how this all works in a real site or system, **the [damato.design](https://damato.design) family of sites all use the above approach to determine spacing + typography**, including this site. I will admit determining where to add the density shift is the bigger challenge but what helps is to identify where the `--spacing--near` and `--spacing--away` values should go first, then determine if the density should shift as the second step.
+
+One more note, in the [DAMATO Design System](https://system.damato.design), we do not have many typography categories; only display, heading, standard, and detail. This restricts the number of heading levels to only display and heading which loses content hierarchy unless shifting density. We could include more typography categories to describe a few additional levels (title, subtitle, etc) but opted to exclude for simplicity.
