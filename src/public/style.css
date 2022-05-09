@@ -51,3 +51,17 @@ topic-summary p,
 .pagination [aria-disabled] {
   visibility: hidden;
 }
+
+#footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+#footer > div {
+  display: flex;
+  justify-content: flex-end;
+  padding-inline: var(--space--near);
+  padding-block: var(--space--away);
+}
