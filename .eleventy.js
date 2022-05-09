@@ -21,6 +21,7 @@ module.exports = function(eleventyConfig) {
   </aside>`);
 
   eleventyConfig.addPassthroughCopy({"src/public/*.(css|jpg|png|svg|webmanifest|ico)": '/'});
+  eleventyConfig.addPassthroughCopy({"src/posts/images/*.(jpg|png|svg)": '/posts/images'});
   
   eleventyConfig.on('afterBuild', transformPreviews);
 
