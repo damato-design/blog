@@ -57,6 +57,7 @@ topic-summary p,
   bottom: 0;
   left: 0;
   right: 0;
+  pointer-events: none;
 }
 
 #footer > div {
@@ -64,4 +65,8 @@ topic-summary p,
   justify-content: flex-end;
   padding-inline: var(--space--near);
   padding-block: var(--space--away);
+}
+
+#footer > a {
+  pointer-events: initial;
 }
