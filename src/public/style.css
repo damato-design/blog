@@ -67,6 +67,6 @@ topic-summary p,
   padding-block: var(--space--away);
 }
 
-#footer > a {
+#footer a {
   pointer-events: initial;
 }
