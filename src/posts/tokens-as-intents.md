@@ -69,9 +69,9 @@ What Nathan calls _concepts_ in his post is the basis behind the naming conventi
 
 As a designer, I want to place a button inside of a card. What kind of button should go into that card? I don't mean what color or font size, I mean _what kind of button_. When we design an interface we are making decisions about the kind of thing to use that is expected to help the user move forward. We decide to use a primary button because we want to draw the user's attention here first before any other action. The kind of button is primary due to its priority and the decision I'm making is an **intent**. We can separate the intent from the styles we associate with that intent.
 
-Another example would be an alert banner. Which banner should I use to show your credit card is about to expire? I'm not looking for the orange banner, I'm looking for the warning banner. I intend to describe to the user that this message is a warning. If you think in this way, the style of the warning is not important. It's the decision about we expect to convey that is important.
+Another example would be an alert banner. Which banner should I use to show your credit card is about to expire? I'm not looking for the orange banner, I'm looking for the warning banner. I intend to describe to the user that this message is a warning. If you think in this way, the style of the warning is not important. It's the decision about how we expect to convey this message that is important.
 
-If you fully adopt this approach, this helps the user by teaching similarly styled things have the same behavior. It'll be easy for a user to identify all primary actions or warning statuses because they have the same treatment (or have the same intent) across uses.
+If you fully adopt this approach, this helps by teaching the user similarly styled things have the same behavior. It'll be easy for a user to identify all primary actions or warning statuses because they have the same treatment (or have the same intent) across uses.
 
 To be clear **intents are tokens**. They just have a special purpose in the ecosystem.
 
@@ -95,7 +95,7 @@ Now we can use the `feedback-warning-surface-color` in places of the experience 
 }
 ```
 
-With this system, you are able to support any variation of theming; light & dark mode, brand changes, private labeling, etc.. All you need to do is store different mappings of values to intents. Maybe in one theme, warnings need to be shown in red. In that theme change the mapping for warning backgrounds to red.
+With this system, you are able to support any variation of theming; light & dark mode, brand changes, private labeling, etc.. All you need to do is store different mappings of values to intents (aka. _theme_). Maybe in one theme, warnings need to be shown in red. In that theme change the mapping for warning backgrounds to red.
 
 - `feedback-warning-surface-color` ⬅ `color-red-300`
 
@@ -105,17 +105,17 @@ You'll never need to go into the components to make a change as long as we use i
 
 I've have a few years of experience with this approach and want to document some of the pitfalls to avoid when implementing.
 
-**Avoid the words light and dark**. You might consider trying this for buttons that appear on inverted backgrounds. Instead, I recommend setting an inverted theme within that container so it can cover all of the possible treatments within. Remember, it's probably not just the button that needs to be inverted, there's probably text or input fields that might need coverage too.
+**Avoid the words light and dark**. You might consider trying this for buttons that appear on inverted backgrounds. Instead, I recommend setting an inverted theme within that container so it can cover all of the possible treatments within. Remember, it's probably not just the button that needs to be inverted, there's probably text or input fields that might need coverage too. If you really need to show a relationship use the word "contrast" instead.
 
 **Make naming relative to the page styles**. I recommend a very generic category called "box" which in its simpliest form describes the `<body/>` styles.
 
 - `box-background-color`: The `<body/>` background color.
-- `box-foreground-color`: The `<body/>` text / icon color.
+- `box-foreground-color`: The `<body/>` text / icon color related to the background.
 - `box-border-color`: The most common border color for boxes which will share the `<body/>` background color.
 
 In my experience there might be another kind of container that is meant to show a visual difference from the body background. I tend to name this `boxLowContrast` because it is still relational to the `<body/>`. If you have more variations that this, you'll have to get creative with your naming here. Remember, this is for generic non-interactive containers. You can have additional categories for more meaningful containers.
 
-Doing this allows you to keep in the midset of a theme when completing the mapping.
+Doing this allows you to keep in the mindset of a theme when completing the mapping.
 
 ```json
 // "light theme"
@@ -133,10 +133,10 @@ Doing this allows you to keep in the midset of a theme when completing the mappi
 }
 ```
 
-**Start with generic categories**. A component is not necessarily an intent. You can consider a tab to be a part of an interactive category. Perhaps dive a step deeper into a navigational category. However, I would not recommend making a "tab" category.
+**Start with generic categories**. A component is not necessarily an intent. You can consider a tab to be a part of an actionable category. Perhaps dive a step deeper into a navigational category. However, I would not recommend making a "tab" category.
 
-- `action-background-color`: Generic, describes all interactive backgrounds.
-- `navigation-background-color`: More specific, describes all interactive backgrounds which are meant for navigation.
+- `action-background-color`: Generic, describes all interactive element backgrounds.
+- `navigation-background-color`: More specific, describes all interactive element backgrounds which are meant for navigation.
 - `tab-background-color`: Very specific, only describes the tab background color.
 
 Here are some categories that have worked well in the past:
@@ -153,7 +153,7 @@ The feedback and figure colors are unlike the others. For the feedback category 
 
 - `feedback-[type]-surface-color`: Describes when the background is used to indicate the status through color. This is meant for banners that use the background as the color accent.
 - `feedback-[type]-onsurface-color`: Describes the color to use for elements that appear on the `feedback-[type]-surface-color` such as text and icons.
-- `feedback-[type]-foreground-color`: Describes when the text is used to indicate the status through color. An example of this might be error text underneath an input field.
+- `feedback-[type]-foreground-color`: Describes when the text is used to indicate the status through color. An example of this might be error text underneath an input field. This color is related to the `box-background-color` in terms of contrast and application.
 
 A caveat here is that if you attempt to put more complicated experiences within a container which has `feedback-[type]-surface-color`, the related `feedback-[type]-onsurface-color` will have difficulty applying coverage to the elements within. The recommendation here is to keep the feedback to text and icons only.
 
