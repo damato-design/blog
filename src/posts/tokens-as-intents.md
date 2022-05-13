@@ -107,7 +107,7 @@ I've have a few years of experience with this approach and want to document some
 
 **Avoid the words light and dark**. You might consider trying this for buttons that appear on inverted backgrounds. Instead, I recommend setting an inverted theme within that container so it can cover all of the possible treatments within. Remember, it's probably not just the button that needs to be inverted, there's probably text or input fields that might need coverage too. If you really need to show a relationship use the word "contrast" instead.
 
-**Make naming relative to the page styles**. I recommend a very generic category called "box" which in its simpliest form describes the `<body/>` styles.
+**Make naming relative to the page styles**. I recommend a very generic category called "box" which in its simplest form describes the `<body/>` styles.
 
 - `box-background-color`: The `<body/>` background color.
 - `box-foreground-color`: The `<body/>` text / icon color related to the background.
