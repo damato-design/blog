@@ -3,6 +3,7 @@ const fs = require('fs');
 const pluginRss = require("@11ty/eleventy-plugin-rss");
 const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const Image = require("@11ty/eleventy-img");
+const externalLinks = require('eleventy-plugin-external-links');
 
 const PREVIEW_DIR = path.resolve(__dirname, '_site', 'img');
 
@@ -12,6 +13,7 @@ const LINE_REGEX = new RegExp(`(?:\\b)[\\w\\s]{1,${MAX_CHARS}}(?:\\W|$)`, 'g');
 module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(pluginRss);
   eleventyConfig.addPlugin(syntaxHighlight);
+  eleventyConfig.addPlugin(externalLinks);
   eleventyConfig.addFilter('splitlines', (text) => text.match(LINE_REGEX) || []);
 
   eleventyConfig.addPairedShortcode('aside', (children, feedback = 'info') => `<aside data-density-shift role="note" data-feedback="${feedback}">
