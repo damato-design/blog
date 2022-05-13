@@ -2,6 +2,7 @@
 title: Spacing solved
 desc:  I've been on a journey to understand the way we think of space within a digital interface and I think I've reached a point of understanding that might help shift traditional approaches to something more systematic.
 emoji: 🚀
+date: 2022-05-09
 ---
 
 Design tokens for color and typography are fairly common for design systems. In particular, color token naming has finally gotten some traction by thinking semantically. In other words, not naming the color based on the value but the intent to use. Typography is getting some traction here as well; where naming is done by use. This tends to be easier to understand since a type style is composed of many different properties.

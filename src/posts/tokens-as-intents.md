@@ -2,6 +2,7 @@
 title: Tokens as intents
 desc:  Design tokens are ubiquitous in design systems and allow for individual values to be reused with a single name. What should that naming system be?
 emoji: 💰
+date: 2022-05-12
 ---
 
 There are tons of definitions of design tokens on the web. Enough that I won't link to them here and you can find your favorite one with a web search. Many of the examples of design tokens show a relationship that looks something like this:

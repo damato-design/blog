@@ -2,6 +2,7 @@
 title: Fetching web component definitions
 desc: I've been using a technique for a few years which passively fetches a web component definition once it is discovered on a page.
 emoji: 📫
+date: 2022-04-12
 ---
 
 I love web components. Being able to just plop a custom element onto a page with all the functionality baked in without needing a framework or bundling to make it work is just liberating. I know there's a lot of overhead that comes with it that libraries and frameworks aim to abstract but I just enjoy having the low-level ability to do whatever you want.
