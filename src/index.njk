@@ -17,10 +17,9 @@ pagination:
   <li>
     <a href="{{ post.url }}">
       <topic-summary>
-        <datetime slot="overline" class="text--detail" data-density-shift time="{{ post.date.toISOString() }}">{{ post.date.toLocaleString('en-US', { month: 'long', day: '2-digit', year: 'numeric' }) }}</datetime>
+        <datetime slot="overline" class="overline text--detail" data-density-shift time="{{ post.date.toISOString() }}">{{ post.date.toLocaleString('en-US', { month: 'long', day: '2-digit', year: 'numeric' }) }}</datetime>
         <span class="text--display" slot="icon">{{ post.data.emoji }}</span>
         <span class="text--display" role="heading" slot="title">{{ post.data.title }}</span>
-        <hr slot="line"/>
         {% if post.data.desc %}
         <p>{{ post.data.desc }}</p>
         {% endif %}

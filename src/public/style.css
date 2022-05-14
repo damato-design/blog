@@ -1,12 +1,20 @@
 #header {
   display: block;
-  margin: var(--space--away) 0;
+  padding: var(--space--away) 0;
 }
 
 #header,
 .posts a {
   text-decoration: none;
   color: inherit;
+}
+
+.posts > li {
+  padding-block: var(--space--away);
+}
+
+.overline {
+  opacity: .5;
 }
 
 a [slot="title"] {
@@ -20,19 +28,14 @@ a [slot="title"] {
   padding: 0;
 }
 
+.content a {
+  font-weight: bolder;
+  text-underline-offset: 1px;
+}
+
 [slot="icon"] {
   width: 1em;
   filter: contrast(0) sepia(1) saturate(10) hue-rotate(180deg) drop-shadow(4px 4px 0px black);
-}
-
-hr[slot="line"] {
-  border: 0;
-  border-left: 1px dotted;
-  margin: 0 auto;
-}
-
-datetime {
-  color: var(--feedback_standard_foreground-color);
 }
 
 topic-summary p,
