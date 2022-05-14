@@ -53,7 +53,7 @@ Now the designer chooses the density context for this particular experience but 
 
 ## Padding and gap
 
-We can think of padding as the space around an element and the gap as space between elements. In the cards referenced within the image above, we can use these definitions to describe the spacing used in most of the elements.
+We can think of padding as the **space around** an element and the gap as **space between** elements. In the cards referenced within the image above, we can use these definitions to describe the spacing used in most of the elements.
 
 - Spacing between the tags is a gap.
 - Spacing between the headings (video and supernova) is a gap.

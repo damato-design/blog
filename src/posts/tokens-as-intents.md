@@ -77,7 +77,7 @@ To be clear **intents are tokens**. They just have a special purpose in the ecos
 
 ## A new system of naming
 
-If we use the intent based naming system, the mapping might look have an assignment like these:
+If we use the intent based naming system, the mapping might have an assignment like these:
 
 - `feedback-warning-surface-color` ⬅ `color-orange-500`
 - `feedback-warning-onsurface-color` ⬅ `#fff`

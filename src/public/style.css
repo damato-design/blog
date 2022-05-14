@@ -9,6 +9,10 @@
   color: inherit;
 }
 
+#header strong {
+  font-weight: bolder;
+}
+
 .posts > li {
   padding-block: var(--space--away);
 }
@@ -41,6 +45,10 @@ a [slot="title"] {
 topic-summary p,
 .content {
   margin-block: var(--space--away);
+}
+
+topic-summary p {
+  font-weight: normal;
 }
 
 .pagination {
