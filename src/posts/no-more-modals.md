@@ -46,3 +46,8 @@ It's common to find modals used to login or signup. Consider using a separate pa
 However, it’s important to note that a modal with multiple steps will just prolong the amount of time spent away from the main tasks, making it more likely that users will forget what they were doing in the first place.
 {% endquote %}
 
+In my opinion this describes that we _shouldn't_ be using a modal for wizards and instead provide a navigational pattern linking to pages sequentially; allowing the user to return to steps easily. This is also relevant to their following point about lessening a user's effort. The point of designing an experience is to do just that. So, asking if the user is working with an agent could be a question exposed as a checkbox while filling out the form for a open house. That selection could be saved for subsequent open house requests.
+
+---
+
+It's important to truly design with emphathy when crafting an experience. The modal should not live at the top of the designer's toolbox. Perhaps, we should provide a double confirmation pattern before choosing some design patterns. How would you like that?
