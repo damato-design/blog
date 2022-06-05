@@ -40,7 +40,9 @@ Let's be clear here, I'm not recommending to remove _all_ modals from experience
 
 It's common to find modals used to login or signup. Consider using a separate page unless you allow the user to make customizations before creating an account. In this case, you'll consider using a modal to show progress is maintained while they complete the signup process. Make sure the signup process is reduced down to the essential fields. Allow the user to include additional information later in their profile.
 
-[NN/Group also provides a few additional recommendations](https://www.nngroup.com/articles/modal-nonmodal-dialog/) for when to use modals. One of the examples is a wizard which breaks down a complicated workflow into steps. What's important here is the second paragraph:
+[NN/Group](https://www.nngroup.com/) also provides a few additional recommendations for when to use modals. One of the examples is a wizard which breaks down a complicated workflow into steps. What's important here is the second paragraph:
 
-> However, it’s important to note that a modal with multiple steps will just prolong the amount of time spent away from the main tasks, making it more likely that users will forget what they were doing in the first place.
+{% quote, "https://www.nngroup.com/articles/modal-nonmodal-dialog" %}
+However, it’s important to note that a modal with multiple steps will just prolong the amount of time spent away from the main tasks, making it more likely that users will forget what they were doing in the first place.
+{% endquote %}
 

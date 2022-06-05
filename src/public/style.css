@@ -40,6 +40,8 @@ a [slot="title"] {
 .content blockquote:before {
   content: '❝';
   color: var(--feedback_standard_foreground-color);
+  font-size: 2em;
+  line-height: 1;
 }
 
 [slot="icon"] {
