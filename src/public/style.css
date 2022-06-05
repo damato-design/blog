@@ -37,6 +37,11 @@ a [slot="title"] {
   text-underline-offset: 1px;
 }
 
+.content blockquote:before {
+  content: '❝';
+  color: var(--feedback_standard_foreground-color);
+}
+
 [slot="icon"] {
   width: 1em;
   filter: contrast(0) sepia(1) saturate(10) hue-rotate(180deg) drop-shadow(4px 4px 0px black);
