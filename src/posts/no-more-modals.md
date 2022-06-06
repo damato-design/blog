@@ -52,7 +52,7 @@ Speaking of the real estate industry, many web sites of this genre use a [lightb
 
 ## Accessibility
 
-Attempting to make a modal fully accessible is a serious challenge. For example, you'll need to indicate that a new area of the page has been created, and focus must enter this area and be trapped for the duration of the experience until the task is complete. At which point, focus must return to the initial trigger of the modal. What actually receives focus (a child of the modal or the modal itself) is actually [up for debate](https://www.scottohara.me/blog/2019/03/05/open-dialog.html); making a recommendation for it unclear.
+Attempting to make a modal fully accessible is a serious challenge. For example, you'll need to indicate that a new area of the page has been created, and focus must enter this area and be trapped for the duration of the experience until the task is complete. At which point, focus must return to the initial trigger of the modal. What actually receives focus (a child of the modal or the modal itself) is actually [up for debate](https://www.scottohara.me/blog/2019/03/05/open-dialog.html); making a recommendation for it unclear. Additionally, events should not occur behind the modal which is easier said than done. Even with [the new `inert` attribute](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/inert), ensuring that other elements are still accessible could be tricky with the introduction of third-party resources that need events outside of the modal.
 
 As you might imagine, things become increasing difficult with [more modals](https://github.com/w3c/aria-practices/issues/1241) added to the experience. How to juggle focus? What the screen reader should announce? How to navigate between these popups?
 
