@@ -1,6 +1,6 @@
 ---
 title: Dynamic Storybook
-desc:  I revisit an storybook approach I used a few years ago to help visualize all my components' configurations at once. Something that is not possible in modern storybook versions.
+desc:  I revisit a Storybook approach I used a few years ago to help visualize all my components' configurations at once. And why its not recommended in modern Storybook versions.
 emoji: 📚
 date: 2022-06-14
 ---
@@ -23,7 +23,7 @@ export const text = () => <Button>Hello</Button>;
 export const emoji = () => <Button>😀😎👍💯</Button>;
 ```
 
-The default export is the metadata about your story; the title, the component, and maybe some additional configuration options. Each named export is a story. So in the above example, you'd have two stories. One named "Text" and one named "Emoji". And very coming soon, [CSF v3](https://storybook.js.org/blog/component-story-format-3-0/) will introduce an even smaller amount of code to create a story:
+The default export is the metadata about your story; the title, the component, and maybe some additional configuration options. Each named export is a story. So in the above example, you'd have two stories. One named "Text" and one named "Emoji". And coming soon, [CSF v3](https://storybook.js.org/blog/component-story-format-3-0/) will introduce an even smaller amount of code to create a story:
 
 ```jsx
 export default { component: Button };
@@ -31,7 +31,7 @@ export const text = { args: { children: 'Hello' } };
 export const emoji = { args: { children: '😀😎👍💯' } };
 ```
 
-However, if you know anything about the JavaScript module ecosystem you'll see the problem with my goal. **There's no way to generate stories using CSF**. In fact, Storybook doesn't even treat this file as a _real_ module. Storybook will actually read this file, create an [abstract syntax tree (AST)](https://en.wikipedia.org/wiki/Abstract_syntax_tree) and then begin parsing the file for information [[source]](https://github.com/storybookjs/storybook/blob/next/lib/csf-tools/src/CsfFile.ts).
+However, if you know anything about the JavaScript module ecosystem you'll see the problem with my goal. **There's no way to generate stories using CSF**. In fact, Storybook doesn't even treat this file as a _real_ module at first. Storybook will actually read this file, create an [abstract syntax tree (AST)](https://en.wikipedia.org/wiki/Abstract_syntax_tree) and then begin parsing the file for information [[source]](https://github.com/storybookjs/storybook/blob/next/lib/csf-tools/src/CsfFile.ts).
 
 Let's compare this to the original `storiesOf()` method of writing stories.
 
@@ -192,16 +192,17 @@ everythingAllAtOnce(Button, {
 });
 ```
 
+Not showing the code to implement here, you can use your imagination.
 ## Cool, what should we do with this?
 
 For starters, this would a good way to begin generating assets for your component library. The [story.to.design](https://story.to.design/) tool by [‹div›RIOTS](https://divriots.com/) can transform stories into [Figma](https://www.figma.com/) components. This'll help keep the Figma library up to date with the code because it's pulling from the code. Imagine, writing minimal code to generate all of these assets!
 
-It's also a good way to determine configurations that you may not have expected. Perhaps, icons in inline buttons don't work well, so you might want to set a conditional in the component to either warn or omit the icons.
+It's also a good way to determine configurations that you may not have expected. Perhaps you notice with review of the permutations, icons in inline buttons don't work well, so you might want to set a conditional in the component to either warn or omit the icons.
 
-Speaking of checking configurations, this would be great for testing. You could ensure a check every configuration for some baseline metrics and even assert that all configurations that use the same props render in the same expected way. This is truly a full coverage scenario without writing much code.
+Speaking of checking configurations, this would be great for testing. You could ensure a check in every configuration for some baseline metrics and even assert that all configurations that use the same props will render in the same expected way. This is truly a full coverage scenario without writing much code.
 
 ## Full circle
 
-This brings me back to the introduction of the CSF format; which doesn't support this type of behavior at all. There's [a document](https://www.notion.so/Storybook-Combos-a5abecd87e9c4e0b86277244af093aea) outlining the possibility of "Storybook Combos", which is only a proposal with no clear direction yet.
+This brings me back to the introduction of the CSF format; which doesn't support this type of behavior at all. There's [a document](https://www.notion.so/Storybook-Combos-a5abecd87e9c4e0b86277244af093aea) outlining the possibility of "Storybook Combos", which is only a proposal with no affirmitive direction yet.
 
 I hope that whatever the future holds for Storybook that the team sees the benefits of `storiesOf()` and attempts to support the ability for dynamic stories in the future. I'm sure the design system community has more use-cases for dynamic stories that are past just the needs outlined above.
