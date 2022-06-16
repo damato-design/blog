@@ -23,7 +23,9 @@
 
 a [slot="title"] {
   text-decoration: underline;
-  text-decoration-color: var(--feedback_standard_foreground-color);
+  background: -webkit-linear-gradient(left, var(--feedback_standard_foreground-color), var(--feedback_standard_surface-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: rgba(200,40,40,0.3);
 }
 
 .posts {
@@ -46,7 +48,8 @@ a [slot="title"] {
 
 [slot="icon"] {
   width: 1em;
-  filter: contrast(0) sepia(1) saturate(10) hue-rotate(180deg) drop-shadow(4px 4px 0px black);
+  filter: contrast(0) sepia(1) saturate(100) hue-rotate(0deg) drop-shadow(-4px -4px 1px orange) blur(.5px);
+  text-shadow: 2px -8px rgb(0,0,0,.2);
 }
 
 topic-summary p,
