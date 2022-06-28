@@ -1,6 +1,6 @@
 ---
 title: Against atomic design
-desc: The concept of atomic desing has swept through the design community over the years; being the basis for many component library approaches. However, there's something about it that is more harmful than helpful. 
+desc: The concept of atomic design has swept through the design community over the years; being the basis for many component library approaches. However, there's something about it that is more harmful than helpful. 
 emoji: 🧬
 date: 2022-05-25
 ---
