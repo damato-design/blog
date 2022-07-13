@@ -5,24 +5,6 @@ emoji: 🎨
 date: 2022-07-11
 ---
 
-First and foremost, I'm color deficient. You might have heard of this as color-blindness however, I am not blind to color. I do not see the world in only black-and-white. I can see colors, just not as well compared to most people. I can appreciate a good synthwave hot pink most of the time. In college, I told one of my art professors that I was color deficient and I'll never forget what he said:
-
-{% quote "#" "Art professor" %}
-Maybe you should consider a different major.
-{% endquote %}
-
-Luckily, I didn't wind up working in art. I work in design.
-
-## Art is not design
-
-Art is a freedom of an artist's expression; an attempt to convey a feeling through their medium. It is commonly an egocentric activity to achieve a desired appearance. This is in contrast to design, specifically product design, which is striving for altruism and inclusivity. This is supported through pattern recognition and reusing familiar experiences to achieve a goal. Design systems are the ultimate solution for achieving this cohesive experience; establishing trust between the user and the product. One deviation from past experience could be enough for the user to hesitate on the next step or stop the progress indefinitely.
-
-In design, form follows function. It means that something should be usable before it is beautiful. In order to do this, we must identify the problem we need to solve. In a qualified user experience practice, this will not begin with designing an interface but with research. Interviews, competitive analysis, user personas, and all the truth finding techniques to paint the best picture of the problem so that you can begin to hypothesize a solution.
-
-## Wirecutting
-
-After completing a phase of user research, the next task is not jumping into high-fidelity, pixel-perfect mockups. I'll coin the term "wirecutting" for when a designer cuts out this wireframing step. Wireframing helps visualize the flow and features expected to support the user's goals. In this process, it is easy to see when cluttered interfaces appear and the priority of elements reevalutated. These are commonly without color and for good reason. If it doesn't work in black & white, color isn't going to help. Putting gold leaf on a turd, is a really shiny turd.
-
 It's unfortunate that the first entry at the [Laws of UX](https://lawsofux.com/en/) is the "Aesthetic-Usability Effect" which is summarized with the following statement.
 
 {% quote "https://lawsofux.com/en/aesthetic-usability-effect" "Jon Yablonski, Laws of UX" %}
@@ -35,9 +17,23 @@ The source for this law is from an [NN/G article](https://www.nngroup.com/articl
 Users are more tolerant of minor usability issues when they find an interface visually appealing. This aesthetic-usability effect can mask UI problems and can prevent issue discovery during usability testing. 
 {% endquote %}
 
-The difference between the two statments is that the former suggests that its good to hide usability problems with garnish. The latter addresses that this is a problem when measuring success accurately.
+The difference between the two statments is that the former suggests that its good to hide usability problems with garnish. The latter addresses that this is a problem when measuring success accurately. I believe that color is part of that avoidable garnish.
 
-Returning to the benefits of wireframing, I believe in a world where wireframes are piped into a tool which creates high-fidelity mockups using the rules and guidance of a design system. Amazingly, this world is here in the form of [Uizard](https://uizard.io/). Using this tool, designers can avoid the nuiances of following the system guidelines and focus on the experience by wireframing.
+## Full transparency
+
+I'm color deficient. You might have heard of this as color-blindness however, I am not blind to color. I do not see the world in only black & white. I can see colors, just not as well compared to most people. I can appreciate a good synthwave hot pink most of the time. However I also don't believe that the world should be black & white. Color provides personality and identity. There's emotion behind it and often relates to someone's opinion of something looking attractive or replusive. It is clearly a driver of some decisions but hardly ones that direct a critical path.
+
+## Art is not design
+
+Art is a freedom of an artist's expression; an attempt to convey a feeling through their medium. It is commonly an egocentric activity to achieve a desired appearance. This is in contrast to design, specifically product design, which is striving for altruism and inclusivity. This is supported through pattern recognition and reusing familiar experiences to achieve a goal. Design systems are the ultimate solution for achieving this cohesive experience; establishing trust between the user and the product. One deviation from past experience could be enough for the user to hesitate on the next step or stop the progress indefinitely.
+
+In design, form follows function. It means that something should be usable before it is beautiful. In order to do this, we must identify the problem we need to solve. In a qualified user experience practice, this will not begin with designing an interface but with research. Interviews, competitive analysis, user personas, and all the truth finding techniques to paint the best picture of the problem so that you can begin to hypothesize a solution.
+
+## Wirecutting
+
+After completing a phase of user research, the next task is not jumping into high-fidelity, pixel-perfect mockups. I'll coin the term "**wirecutting**" for when a designer cuts out this wireframing step to work on prettier things. Wireframing helps visualize the flow and features expected to support the user's goals. In this process, it is easy to see when cluttered interfaces appear and the priority of elements reevalutated. These are commonly without color and for good reason. If it doesn't work in black & white, color isn't going to help. Putting gold leaf on a turd, is a really shiny turd.
+
+I believe in a world where wireframes are piped into a tool which creates high-fidelity mockups using the rules and guidance of a design system. Amazingly, this world is here in the form of [Uizard](https://uizard.io/). Using this tool, designers can avoid the nuiances of following the system guidelines and focus on the experience by wireframing. The tool should handle the high-fidelity part of the handoff process. For some folks, this may take some of the fun out of the job. On the other hand, maybe the job was misunderstood in the first place.
 
 Of course this assumes a design system is in place. So let's now focus specifically in this area.
 
@@ -45,7 +41,7 @@ Of course this assumes a design system is in place. So let's now focus specifica
 
 There's dozens of posts online about how color palettes were created for a design system ([Lyft](https://design.lyft.com/re-approaching-color-9e604ba22c88), [Github](https://github.blog/2022-06-14-accelerating-github-theme-creation-with-color-tooling/), [Adobe](https://adobe.design/stories/design-for-scale/reinventing-adobe-spectrum-s-colors)). A great deal of talk about color theory and creating tools to help visualize curves of color for the perfect balance. I cannot deny that resulting palettes are often very beautiful and I often need to use the work of others in order to choose color due to my deficiency. However, how much of that palette do you really expect to use?
 
-Let's first just talk about contrast which is a requirement to make something accessible. If you have several steps of color, I'd guess that many of the colors found within the middle of those steps have trouble being accessible with _most_ colors in your palette. It's very possible you could omit much from the middle of the palette to avoid accessibility problems.
+Let's first just talk about contrast which is a requirement to make something accessible. If you have several steps of color, I'd guess that many of the colors found within the middle of those steps have trouble being accessible with _most_ colors in your palette. This is something that [the Stripe team found](https://stripe.com/blog/accessible-color-systems) while revisiting color for accessibility. It's very possible you could omit much from the middle of the palette to support accessible color choice.
 
 The reason why you want to omit color is to reduce cognitive load for you and your peers. In other words, trying to choose the right color becomes a challenge when there are so many to choose from. Limiting the selection drives consistency. I'll even go so far to say that it enhances creativity because you'll need to design within constraints which requires out-of-the-(crayon)-box thinking.
 
@@ -71,7 +67,7 @@ An area where more colors are typically introduced are parts of an experience th
 
 Another area where color is used is to indicate deviations between near identical entities. This can commonly be found in elements like data visualizations (ie., charts) but can also be found when segregating users in a list of contacts. Changes of color here are meant to separate like items making the collection easier to scan.
 
-I can tell you from experience that I often have difficulty identifying the parts of a data visualization that relies on color to show data. You can imagine how much harder it would be for a blind user to experience. This is again why more emphasis should be given toward presenting the data inclusively, perhaps using a table, and also include a progressive enhancement through a visualization. Putting the color before the data is only helpful for some; let's consider being help for all.
+I can tell you from experience that I often have difficulty identifying the parts of a data visualization that relies on color to show data [but don't take my word for it](https://www.nature.com/articles/d41586-021-02696-z). You can imagine how much harder it would be for a blind user to experience. This is again why more emphasis should be given toward presenting the data inclusively, perhaps using a table, and also include a progressive enhancement through a visualization. Putting the color before the data is only helpful for some; let's consider being help for all. The Carbon folks at IBM have more [tips to support data visualization for accessibility](https://medium.com/carbondesign/color-palettes-and-accessibility-features-for-data-visualization-7869f4874fca) and mention more work still needs to be done.
 
 ## Finish with color
 
