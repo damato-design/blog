@@ -35,7 +35,7 @@ Keep this in mind as we review the next topic; density contexts.
 
 I spent a great deal of time gazing at the first image in [Nathan Curtis's post about Spacing in Design Systems](https://medium.com/eightshapes-llc/space-in-design-systems-188bcbae0d62). Here's the image from the post:
 
-![](../images/nathan-curtis-space.png)
+![Example cards](../images/nathan-curtis-space.png)
 
 If we were to use the mental model we've come up with above, the tags within each card are 1 degree of separation apart from each other; in this comp a value of 8. The paragraph above is different from the tags, or in the next house. That can be described as 2 degrees of separation between the paragraph and tags.
 

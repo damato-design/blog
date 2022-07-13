@@ -7,7 +7,7 @@ date: 2022-05-25
 
 Atomic design as an idea I agree with; parts of your system are built from smaller parts. What I don't agree with is the image that has been floating around the internet which introduces people to the concept:
 
-![](../images/brad-frost-atomic.png)
+![Atomic design guide showing small parts becoming larger](../images/brad-frost-atomic.png)
 
 If you think about this, how could an organism (a living thing) become a template (a non-living thing)? If you think I'm taking the image too literally; that's the point. People around the design community have taken the naming convention provided by design as the standard and using it to communicate where something lives within the system.
 
@@ -17,7 +17,7 @@ However, even if you know about atomic design the examples can also conflict. Th
 
 So here's the easy fix:
 
-![](../images/revised-atomic.png)
+![Atomic design guide showing small parts becoming larger](../images/revised-atomic.png)
 
 **#naming-is-hard**. The naming is what hurts the approach.
 
