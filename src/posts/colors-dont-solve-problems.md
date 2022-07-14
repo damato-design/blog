@@ -1,6 +1,6 @@
 ---
 title: Colors don't solve problems
-desc: I argue that we spend too much time curating color in design systems and as a result we lose focus against much more important priorities.
+desc: Color is one of the least important facets of user interface design and the process of chooing colors should be avoided for as long as possible in favor of much more important explorations.
 emoji: 🎨
 date: 2022-07-11
 ---
@@ -21,11 +21,11 @@ The difference between the two statments is that the former suggests that its go
 
 ## Full transparency
 
-I'm color deficient. You might have heard of this as color-blindness however, I am not blind to color. I do not see the world in only black & white. I can see colors, just not as well compared to most people. I can appreciate a good synthwave hot pink most of the time. However I also don't believe that the world should be black & white. Color provides personality and identity. There's emotion behind it and often relates to someone's opinion of something looking attractive or replusive. It is clearly a driver of some decisions but hardly ones that direct a critical path.
+I'm color deficient. You might have heard of this as color-blindness however, I am not blind to color. I do not see the world in only black & white. I can see colors, just not as well compared to most people. I can appreciate a good synthwave hot pink most of the time. However I also don't believe that the world should be black & white. Color provides personality and identity. There's emotion behind each selection and often relates to an opinion of a piece looking attractive or replusive. It is clearly a driver of some decisions but hardly ones that direct a critical path of usability.
 
 ## Art is not design
 
-Art is a freedom of an artist's expression; an attempt to convey a feeling through their medium. It is commonly an egocentric activity to achieve a desired appearance. This is in contrast to design, specifically product design, which is striving for altruism and inclusivity. This is supported through pattern recognition and reusing familiar experiences to achieve a goal. Design systems are the ultimate solution for achieving this cohesive experience; establishing trust between the user and the product. One deviation from past experience could be enough for the user to hesitate on the next step or stop the progress indefinitely.
+Art is a freedom of an artist's expression; an attempt to convey a feeling through their medium. It is commonly an egocentric activity to achieve a desired appearance. This is in contrast to design which is striving for altruism and inclusivity. This is supported through pattern recognition and reusing familiar experiences to achieve a goal. Design systems are the ultimate solution for achieving this cohesive experience; establishing trust between the user and the product. One deviation from past experience could be enough for the user to hesitate on the next step or stop the progress indefinitely.
 
 In design, form follows function. It means that something should be usable before it is beautiful. In order to do this, we must identify the problem we need to solve. In a qualified user experience practice, this will not begin with designing an interface but with research. Interviews, competitive analysis, user personas, and all the truth finding techniques to paint the best picture of the problem so that you can begin to hypothesize a solution.
 
@@ -35,35 +35,47 @@ After completing a phase of user research, the next task is not jumping into hig
 
 I believe in a world where wireframes are piped into a tool which creates high-fidelity mockups using the rules and guidance of a design system. Amazingly, this world is here in the form of [Uizard](https://uizard.io/). Using this tool, designers can avoid the nuiances of following the system guidelines and focus on the experience by wireframing. The tool should handle the high-fidelity part of the handoff process. For some folks, this may take some of the fun out of the job. On the other hand, maybe the job was misunderstood in the first place.
 
-Of course this assumes a design system is in place. So let's now focus specifically in this area.
+Of course this assumes a design system is well established. So let's now focus specifically in this area.
 
 ## Budget crayon box
 
-There's dozens of posts online about how color palettes were created for a design system ([Lyft](https://design.lyft.com/re-approaching-color-9e604ba22c88), [Github](https://github.blog/2022-06-14-accelerating-github-theme-creation-with-color-tooling/), [Adobe](https://adobe.design/stories/design-for-scale/reinventing-adobe-spectrum-s-colors)). A great deal of talk about color theory and creating tools to help visualize curves of color for the perfect balance. I cannot deny that resulting palettes are often very beautiful and I often need to use the work of others in order to choose color due to my deficiency. However, how much of that palette do you really expect to use?
+There's dozens of posts online about how color palettes were created for a design system ([Lyft](https://design.lyft.com/re-approaching-color-9e604ba22c88), [Github](https://github.blog/2022-06-14-accelerating-github-theme-creation-with-color-tooling/), [Adobe](https://adobe.design/stories/design-for-scale/reinventing-adobe-spectrum-s-colors)). A great deal of talk about color theory and creating tools to help visualize curves of color for the perfect balance. I cannot deny that resulting palettes are often very beautiful and I often need to use the work of others in order to choose color due to my deficiency. However, **how much of that palette do you really expect to use?** This is the palette created by Ferdy Christant based on [Open Color](https://yeun.github.io/open-color/).
+
+![Large color palette](../images/color-challenged-palette.png)
+
+That's a lot of color.
 
 Let's first just talk about contrast which is a requirement to make something accessible. If you have several steps of color, I'd guess that many of the colors found within the middle of those steps have trouble being accessible with _most_ colors in your palette. This is something that [the Stripe team found](https://stripe.com/blog/accessible-color-systems) while revisiting color for accessibility. It's very possible you could omit much from the middle of the palette to support accessible color choice.
 
-The reason why you want to omit color is to reduce cognitive load for you and your peers. In other words, trying to choose the right color becomes a challenge when there are so many to choose from. Limiting the selection drives consistency. I'll even go so far to say that it enhances creativity because you'll need to design within constraints which requires out-of-the-(crayon)-box thinking.
+And in [Ferdy's post about working with the palette](https://ferdychristant.com/color-for-the-color-challenged-884c7aa04a56), there is mention about the lack of accessibility in the palette.
+
+{% quote "https://ferdychristant.com/color-for-the-color-challenged-884c7aa04a56" "Ferdy Christant"%}
+Open Color does not rank well when it comes to contrast. The root cause here is that we’re paying the price of beauty.
+{% endquote %}
+
+You'll be paying for more than beauty if hit with [an accessibility lawsuit](https://www.shrm.org/resourcesandtools/hr-topics/behavioral-competencies/global-and-cultural-effectiveness/pages/record-number-of-lawsuits-filed-over-accessibility-for-people-with-disabilities.aspx). But Ferdy's answer is to add _more_ color; 3 more dark tones to each hue. I don't agree with this suggestion because trying to choose the right color becomes a challenge when there are so many to choose from (ie., [Hick's Law](https://lawsofux.com/en/hicks-law/)). Limiting the selection drives consistency. I'll even go so far to say that it enhances creativity because you'll need to design within constraints which requires out-of-the-(crayon)-box thinking.
 
 ## Coloring outside the lines
 
 Past contrast, let's now talk about the application of color within an interface. If you look at many modern interface designs today, they tend to follow a 60/30/10 rule. Some sites like [Twitter](https://twitter.com/) even let you choose a few colors. This comes from interior design where you choose 3 colors and use them in percentages in your space. This is a loose rule, and [opponents of the rule](https://bootcamp.uxdesign.cc/problems-with-the-60-30-10-rule-25206d02bbfd) will call out several factors against it. 
 
 {% quote "https://bootcamp.uxdesign.cc/problems-with-the-60-30-10-rule-25206d02bbfd" "Catherine Rasgaitis" %}
-First, restricting a color palette to only three colors inhibits creative designs. While it prevents overstimulation, exploring more “rebellious” designs make brands stand out from their competitors. Breaking rules or making new ones is how trends start.
+First, restricting a color palette to only three colors inhibits creative designs. While it prevents overstimulation, exploring more “rebellious” designs make brands stand out from their competitors.
 {% endquote %}
 
-For the purpose of functional product design, I don't believe we should be striving for creativity in the application of color. Users are expecting familiar and accessible experiences. Painting with all of the colors of the wind will feel like navigating a swatch hurricane. The limiting of this color helps set expectations as users achieve their goals.
+For the purpose of functional product design, I don't believe we should be striving for creativity in the application of color. Users are expecting familiar and accessible experiences. Painting with all of the colors of the wind will feel like navigating a rainbow hurricane. The limiting of this color helps set expectations as users achieve their goals.
 
-Even in interior design, the original birth of the rule, it is near impossible to strictly use only three colors. There will be additional hints of other colors outside the chosen selection for elements that make up a room. This is a photo of an actual room in the design systems house.
+Even in interior design, the original birth of the rule, it is near impossible to strictly use only three colors. It isn't realistic. There will be additional hints of other colors outside the chosen selection for elements that make up a room. This is a photo of an actual room in the design systems house.
 
 ![Photo of room using balanced color of interior design](../images/ds-house-room.jpg)
 
-White is a majority, blue is next most prominent, accents are orange-yellow. Importantly there are other colors too! The green plant, the teal footstools, even a rainbow legoset. Admittedly, the rule should probably be something like 55/25/15, which leaves an additional 5% of various colors not covered by the rule where applicable. For usser interface design the majority of color will cover the background, the next most important color covers content, and the final most important covers accents that draw the user toward interactivity.
+White is a majority, blue is next most prominent, accents are orange-yellow. Importantly there are other colors too! The green plant, the teal footstools, even a rainbow legoset. Admittedly, the rule should probably be something like 55/25/15, which leaves an additional 5% of various colors not covered by the rule where applicable. For user interface design the majority of color will cover the background, the next most important color covers content, and the final most important covers accents that draw the user toward interactivity.
+
+So for most cases I believe you could probably design the large majority of an interface by having a palette of roughly 10 colors or less.
 
 ## Cases for more crayons
 
-An area where more colors are typically introduced are parts of an experience that are meant to indicate status. An error state is frequently shown in red. However, if the text describing the error is too small to distinguish color, it could be missed as an error. Furthermore, the color red is prosperous in China. These are all reasons why we should not rely on color alone to indicate status. I recommend having two forms of status indication; one can be color where cultural sensitivity is considered and then some other pattern to support the status.
+An area where more colors are typically introduced are parts of an experience that are meant to indicate status. An error state is frequently shown in red. However, if the text describing the error is too small or thin to distinguish color, it could be missed as an error. Furthermore, the color red is prosperous in China. These are all reasons why we should not rely on color alone to indicate status. I recommend having two forms of status indication; one can be color where cultural sensitivity is considered and then some other pattern to support the status.
 
 Another area where color is used is to indicate deviations between near identical entities. This can commonly be found in elements like data visualizations (ie., charts) but can also be found when segregating users in a list of contacts. Changes of color here are meant to separate like items making the collection easier to scan.
 
@@ -71,4 +83,4 @@ I can tell you from experience that I often have difficulty identifying the part
 
 ## Finish with color
 
-There is a reason why, when you apply stain to a table, the solution you apply is called the "finish". It happens at the end of the building process. After all the plans are made, the legs cut and fastened, and the top made smooth do you finally apply the coloring. Color can bring the personality to an experience and to call something done. There can be an appropriate time to focus on this work but for the start, keep it simple and use design tokens to support changes for the future.
+There is a reason why, when you apply stain to a table, the solution you apply is called the "finish". It happens at the end of the building process. After all the plans are made, the legs cut and fastened, and the top made smooth do you finally apply the coloring. Color can bring the personality to an experience and to call something done. There can be an appropriate time to focus on this work but for the start, keep it simple and use design tokens to support changes for the future. Make color the finish to a usable product.
