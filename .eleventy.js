@@ -5,7 +5,7 @@ const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const Image = require("@11ty/eleventy-img");
 const externalLinks = require('eleventy-plugin-external-links');
 const readingTime = require('reading-time');
-const slugify = require('slugify');
+const slug = require('slug');
 
 const PREVIEW_DIR = path.resolve(__dirname, '_site', 'img');
 
@@ -22,7 +22,7 @@ module.exports = function(eleventyConfig) {
     return `${Math.floor(minutes)} min read`;
   });
 
-  eleventyConfig.addFilter('slug', (text) => slugify(text))
+  eleventyConfig.addFilter('slug', (text) => slug(text));
 
   eleventyConfig.addPairedShortcode('aside', (children, feedback = 'info') => `<aside data-density-shift role="note" data-feedback="${feedback}">
   
