@@ -10,7 +10,7 @@ const slug = require('slug');
 const PREVIEW_DIR = path.resolve(__dirname, '_site', 'img');
 
 const MAX_CHARS = 19;
-const LINE_REGEX = new RegExp(`(?:\\b)[\\w\\s]{1,${MAX_CHARS}}(?:\\W|$)`, 'g');
+const LINE_REGEX = new RegExp(`(?:\\b)['\\w\\s]{1,${MAX_CHARS}}(?:[^'\\w]|$)`, 'g');
 
 module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(pluginRss);
