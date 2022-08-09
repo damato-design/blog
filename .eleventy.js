@@ -6,6 +6,7 @@ const Image = require("@11ty/eleventy-img");
 const externalLinks = require('eleventy-plugin-external-links');
 const readingTime = require('reading-time');
 const slug = require('slug');
+const pluginMermaid = require("@kevingimbel/eleventy-plugin-mermaid");
 
 const PREVIEW_DIR = path.resolve(__dirname, '_site', 'img');
 
@@ -16,6 +17,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(pluginRss);
   eleventyConfig.addPlugin(syntaxHighlight);
   eleventyConfig.addPlugin(externalLinks);
+  eleventyConfig.addPlugin(pluginMermaid);
   eleventyConfig.addFilter('splitlines', (text) => text.match(LINE_REGEX) || []);
   eleventyConfig.addFilter('readtime', (text) => {
     const {minutes} = readingTime(text);

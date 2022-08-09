@@ -61,6 +61,11 @@ topic-summary p {
   font-weight: normal;
 }
 
+pre.mermaid {
+  display: flex;
+  justify-content: center;
+}
+
 .pagination {
   display: flex;
   justify-content: space-between;
