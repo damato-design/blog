@@ -11,27 +11,35 @@ The web offers several different means of choosing an option. We'll explore them
 
 ## Ground rules
 
-The pattern we'll be focusing on is a group of similar items and the ways they can be presented. This means singular buttons and links aren't included in this exploration. While they are a choice, they are often the only choice in the small context where they are introduced. So a group of buttons for formatting a document is part of the scope, but a button found within the hero section of a marketing page will not. A list of navigational links in the header is included, but a link found within the body of text will not.
+The pattern we'll be focusing on is a group of similar items and the ways they can be presented and interacted. This means singular buttons and inline links aren't included in this exploration.
 
-The act of creating an option will also be avoided for this section. Generally speaking once the option is created it'll be included within the given list of options using one of the patterns described.
-
-This exploration will also only focus on patterns which provide limited choices. For example, color pickers and range selectors are omitted for brevity.
+The act of creating an option will also be avoided. Generally speaking, once the option is created, it'll be included within the existing group of options using one of the patterns described. An example of this might be creating a post category.
 
 ## Definitions
 
 The following patterns will be referenced throughout this exploration:
 
-- Button groups:
-- Radio button groups:
-- Checkbox groups:
-- Native HTML select options:
-- Navigational menus:
-- Tab groups:
+- [Button groups](https://developer.microsoft.com/en-us/fluentui#/controls/web/commandbar): Examples are found in word processing tools for selecting text alignment.
+- [Radio button groups](https://www.lightningdesignsystem.com/components/radio-group/): Examples are found in online surveys to rate quality of service.
+- [Checkbox groups](https://react-spectrum.adobe.com/react-spectrum/CheckboxGroup.html): Examples are found in selecting options to filter products.
+- [Native HTML select options](https://carbondesignsystem.com/components/select/usage): Examples are found when selecting locations from a list.
+- [Navigational menus](https://baseweb.design/components/header-navigation/): Examples are found in the header of marketing sites.
+- [Tab groups](https://www.newskit.co.uk/components/tabs/): Examples are found within web pages as secondary navigation.
+
+{% aside %}
+### Button group confusion
+
+What I've defined as button group above is not a common button group [found amongst most design systems](https://component.gallery/components/button-group/). The key difference here is the keyboard navigation. A button group is often delivered as just a layout pattern of existing buttons with very little change of visual style and no change in interaction pattern. Each button is accessible via the `Tab` key like any other button that isn't in a group. Because of this, I identify these as groups of individual buttons. There's nothing stopping most systems to allow any sort of interactive component to exist in these groups; like links for example.
+
+I am specifically calling out the pattern found in toolbars as it is expected to be a single tab stop, where navigation between buttons is done by arrow keys. Visually these are groups of buttons but with a different and warranted enhancement for accessibility.
+
+Admittedly, for the purposes of the exploration this deviation isn't critical to our final decision tree but still worth calling out.
+{% endaside %}
 
 It's also important to define a few terms used for accessibility:
 
-- Tab stop:
-- Roving tabindex:
+- **Tab stop**: An area of the interface which is focused by the `Tab` key where additional actions can occur. Links and text input fields are clear tab stop examples, but entire lists of options can also be defined as a single tab stop. The area that should be identified as a tab stop is achieved through accessibility best practices for an experience.
+- **Roving tabindex**: A technique to show focus on an element without the use of the `Tab` key. This is done by toggling the `tabIndex` of interactive elements. One element in the list will receive a `tabIndex="0"`, while the rest receive `tabIndex="-1"`. This allows the user to re-enter the area using the `Tab` key and return focus back to the previously focused element. [Here's a video explaining the technique by Rob Dodson](https://www.youtube.com/watch?v=uCIC2LNt0bk&t=6s).
 
 ## Instant gratification
 
@@ -84,15 +92,15 @@ Let's continue to group our patterns:
 
 </div>
 
-## Being greedy
+## Confirmation follows form
 
-Returning to the confirmational group, one of the most clear indications of usage is between checkboxes and radio buttons. Checkboxes are meant for selecting more than one option, while radio buttons are used for selecting a single exclusive option.
+Returning to the confirmational group, these are patterns most commonly found in forms. This aligns to the way which we would fill out paper forms by entering in all the information first before submitting. 
+
+One of the most clear indications of usage between these patterns of the group is between checkboxes and radio buttons. Checkboxes are meant for selecting more than one option, while radio buttons are used for selecting a single exclusive option.
 
 Interestingly, the native HTML select allows for both configurations (using the `multiple` attribute for multiple selections). So the question is, why use the native HTML select when there are other patterns which more clear usage?
 
-One of the properties of the HTML select is the limited amount of data to show. The element is restrictive to a word or phrase which represents the value for selection. The other patterns allow for much more information. In relation, the select only displays the selected value. This means that it is less likely that the user will review the selection. This may be a good or bad thing; you may want the user to make a quick decision but it could be too quick in some cases. Laying out all the options as checkboxes or radio buttons help the user consider all the possibilities. Simply put if you want to encourage review, use checkbox or radio buttons. If you want to discourage review, use a HTML select.
-
-Another facet to consider is keyboard navigation. The HTML select has several enhancements embedded within which help the user find options quickly. The `Home`/`End` keys can jump to the top and bottom of the list. The alphanumeric keys can jump to matching options. These are things not easily achieveable using checkboxes or radio buttons since they are often unrelated HTML structures. Even including these features might be unexpected to standard experiences.
+One of the properties of the HTML select is the limited amount of data to show. The element is restrictive to a word or phrase which represents the value for selection. The other patterns allow for much more information. In relation, the select only displays the selected value. This means that it is less likely that the user will review the selection since it requires extra interaction. Laying out all the options as checkboxes or radio buttons help the user consider all the possibilities. Additionally, the HTML select options are not bound to the page layout; its options will exist separately from visual flow. This supports the basis of using checkboxes and radios for options which need more detail from options that are concise.
 
 Let's break down the options one more time:
 
@@ -112,7 +120,7 @@ Let's break down the options one more time:
       - Radio button groups
     - **Multiple**
       - Checkbox groups
-  - **Terse**
+  - **Concise**
     - Native HTML select options
 
 </div>
@@ -130,9 +138,9 @@ Here's a visual representation of our decision tree:
     C --> E{Directed to new page?}
     E -->|Yes| F[Navigational]
     E -->|No| G[Functional]
-    D -->H{Needs consideration?}
+    D --> H{Include considerations?}
     H -->|Yes| I[Verbose]
-    H -->|No| J[Terse]
+    H -->|No| J[Concise]
 ```
 
 ## Putting into practice
