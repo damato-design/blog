@@ -1,3 +1,8 @@
+#main {
+ max-width: min(860px - var(--space--away), 100vw - var(--space--away));
+ margin-block: var(--space--near);
+}
+
 #header {
   display: block;
   padding: var(--space--away) 0;
@@ -37,6 +42,10 @@ a [slot="title"] {
 .content a {
   font-weight: bolder;
   text-underline-offset: 1px;
+}
+
+.content blockquote {
+  font-style: italic;
 }
 
 .content blockquote:before {

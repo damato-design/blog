@@ -15,6 +15,8 @@ The pattern we'll be focusing on is a group of similar items and the ways they c
 
 The act of creating an option will also be avoided. Generally speaking, once the option is created, it'll be included within the existing group of options using one of the patterns described. An example of this might be creating a post category.
 
+While important, this exploration will not be focusing on the curation of the content within an option. Certainly, poor choices in wording or inaccessible options will inhibit the user from making the best choice. The following exploration assumes options are well-crafted.
+
 ## Definitions
 
 The following patterns will be referenced throughout this exploration:
@@ -24,6 +26,7 @@ The following patterns will be referenced throughout this exploration:
 - [Checkbox groups](https://react-spectrum.adobe.com/react-spectrum/CheckboxGroup.html): Examples are found in selecting options to filter products.
 - [Native HTML select options](https://carbondesignsystem.com/components/select/usage): Examples are found when selecting locations from a list.
 - [Navigational menus](https://baseweb.design/components/header-navigation/): Examples are found in the header of marketing sites.
+- [Context menus](https://v2.grommet.io/menu): Examples are found as right-click to copy.
 - [Tab groups](https://www.newskit.co.uk/components/tabs/): Examples are found within web pages as secondary navigation.
 
 {% aside %}
@@ -41,6 +44,17 @@ It's also important to define a few terms used for accessibility:
 - **Tab stop**: An area of the interface which is focused by the `Tab` key where additional actions can occur. Links and text input fields are clear tab stop examples, but entire lists of options can also be defined as a single tab stop. The area that should be identified as a tab stop is achieved through accessibility best practices for an experience.
 - **Roving tabindex**: A technique to show focus on an element without the use of the `Tab` key. This is done by toggling the `tabIndex` of interactive elements. One element in the list will receive a `tabIndex="0"`, while the rest receive `tabIndex="-1"`. This allows the user to re-enter the area using the `Tab` key and return focus back to the previously focused element. [Here's a video explaining the technique by Rob Dodson](https://www.youtube.com/watch?v=uCIC2LNt0bk&t=6s).
 
+{% aside %}
+### Accessibility is not easy
+
+There's a great deal of nuance when attempting to make options accessible. While the w3 attempts to provide [guidance on best practices](https://www.w3.org/WAI/ARIA/apg/patterns/), achieving intended results can be challenging. For example, [the guidelines claim](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#x6-6-2-managing-focus-in-composites-using-aria-activedescendant) the following: 
+
+> If a component container has an ARIA role that supports the `aria-activedescendant` property, it is not necessary to manipulate the tabindex attribute and move DOM focus among focusable elements within the container.
+
+However, [testing completed by Zell Liew](https://zellwk.com/blog/element-focus-vs-aria-activedescendant/) concluded that `aria-activedescendant` is not well supported for assistive technologies. It's important to put your best efforts toward marking the options for visibiity to all users and their methods of interaction.
+
+{% endaside %}
+
 ## Instant gratification
 
 One of the attributes of making a selection is the immediate result of the interaction. Patterns that show new content based on the selection are commonly immediate. For example, navigational menus which redirect to new content should be instant. Buttons that update state like deleting a row of data are also expected to happen quickly.
@@ -54,6 +68,7 @@ This means we can divide the patterns into some groups:
 - **Instantaneous**
   - Button groups
   - Navigational menus
+  - Context menus
   - Tab groups
 
 - **Confirmational**
@@ -73,6 +88,18 @@ For buttons (`<button/>` elements), this isn't the case when prepared as a group
 
 This is a good place to introduce the tab user interface pattern which commonly is treated to look like manilla folder tabs. If the tab interface you prepare expects each tab to be a navigational link that can be revisited using the browser's URL bar, this means that each tab is an individual tab stop; as link behavior is expected. On the other hand, if each tab is meant to execute a command, thereby keeping the user on the same page, then the entire tab group is one tab stop with roving tabindex navigation. In this way the tab pattern can either act as a navigational menu (using links), or a button group (using buttons). The main decision goes back to the links versus buttons debate to decide which experience to use.
 
+{% aside %}
+### Etymology of tab
+
+Tangentially, the word tab has two definitions for this exploration:
+
+- **Tab (n.)**: a second or further document or page that can be opened on a spreadsheet or web browser. Compare also Middle English _tab_ "strap or string" (mid-15c.), Norwegian dialectal _tave_ "piece of cloth, rag."
+- **Tab (v.)**: to press the tab key on a computer or typewriter. As a short form of _tabulator key_ of a typewriter (later computer) it is recorded from 1916.
+
+Confusingly, you often do not move between tabs using the tab key. Such is the wonderful world of English and computer interfaces.
+
+{% endaside %}
+
 Let's continue to group our patterns:
 
 <div data-density-shift>
@@ -83,6 +110,7 @@ Let's continue to group our patterns:
     - Tab groups*
   - **Functional**
     - Button groups
+    - Context menus
     - Tab groups*
 
 - **Confirmational**
@@ -112,6 +140,7 @@ Let's break down the options one more time:
     - Tab groups*
   - **Functional**
     - Button groups
+    - Context menus
     - Tab groups*
 
 - **Confirmational**
@@ -143,12 +172,19 @@ Here's a visual representation of our decision tree:
     H -->|No| J[Concise]
 ```
 
-## Putting into practice
+The flow chart above can help lead a path toward a decision but we also must ask _why_?
 
-Let's see how this exploration can inform a hypothetical experience. We can imagine an interface that allows the user to filter products. First, we can deduce if the changes should happen immediately or happen after confirmation. Some filtering patterns allow for many options to be selected before loading results while others allow for a single option to execute the filter. This will depend on some factors but at least we can start climbing down the tree.
+- Why does the user need the action to happen immediately?
+- Why does the user need to remain on the page?
+- Why does the user need more information about this choice?
 
-From here, if the filtering options are immediate, they could navigate to a new page which allows the user to bookmark the results. This is the decision that results in the identification of link or button usage. Buttons would be used if new pages are not created based on filtering configurations.
+Adding purpose to these decisions will ultimately support design decisions with clarity. You can be confident that the pattern chosen is the best one based on the answers to these questions.
 
-Meanwhile, if the user is expected to choose several options at once in a confirmational filtering scheme, this does not normally require much thought. This is an opportunity to use a much more simple interface like an HTML select.
+## Unavailable options
 
-Recognize that the container in which these treatments are placed is irrelevant to the experience expectations. This means that whether the options flyout from a menu or are rendered inline within a page does not matter.
+A pattern that may be introduced is disabling an option. This could occur because the user hasn't satisfied criteria or the system is not yet prepared to offer the option. Opinions vary about the decision of showing options that the user is unable to select. I believe the following questions can determine if showing a option as disabled is helpful to the user.
+
+- Will the option be available to the user if criteria are met?
+- Are the criteria for the option clearly shown in context of the option?
+
+If the answer to the questions are "yes" then it may be appropriate to disable the option. However, note that disabled options aren't detectable to screen readers and commonly lack sufficient color contrast. Providing the criteria for enabling the option will support these deficits. [Vitaly Friedman goes into greater detail at Smashing Magazine](https://www.smashingmagazine.com/2021/08/frustrating-design-patterns-disabled-buttons/).
