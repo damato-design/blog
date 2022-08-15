@@ -1,19 +1,16 @@
 ---
-title: Choose your destiny
-desc: The act of making a selection is a critical part of user experience as it creates a path which we hope lands at a goal. This post explores the different ways users can make decisions in an interface and why designers should choose these patterns.
+title: Choose wisely
+desc: The act of making a selection is a critical part of user experience as it creates a path which we hope lands at a goal. This post explores the different ways users can make decisions in an interface and why designers should use these patterns.
 emoji: ⚔️
-date: 2022-08-09
+date: 2022-08-15
 ---
 
-We often use a restaurant's menu to make the decision whether or not to visit. The menu itself is a list of options that the visitor can choose to eat from. Making a selection could either be by ordering from waitstaff or perhaps some more high-tech means. Either way, the act of making a selection is completed where the user expects some result based on their choice.
-
-The web offers several different means of choosing an option. We'll explore them to inform our decisions for designing experiences.
-
+If you believe in free-will, options are most likely a foundational aspect of your philosophy. Designers are responsible for presenting choices to users so that they may select the best option and advance toward a goal. Historically, we have introduced several patterns which support the ability for users to make a choice. In this exploration we will consider some common interface components and understand why we might decide to use one over another.
 ## Ground rules
 
-The pattern we'll be focusing on is a group of similar items and the ways they can be presented and interacted. This means singular buttons and inline links aren't included in this exploration.
+The abstract concept we'll be focusing on is a group of similar items and the ways they can be presented and interacted. This means singular buttons and inline links aren't included in this exploration.
 
-The act of creating an option will also be avoided. Generally speaking, once the option is created, it'll be included within the existing group of options using one of the patterns described. An example of this might be creating a post category.
+The act of creating an option will also be avoided. Generally speaking, once the option is created, it'll be included within the existing presentational group of options using one of the approaches described. An example of this might be creating a post category for use in tagging entries in a blog.
 
 While important, this exploration will not be focusing on the curation of the content within an option. Certainly, poor choices in wording or inaccessible options will inhibit the user from making the best choice. The following exploration assumes options are well-crafted.
 
@@ -32,11 +29,11 @@ The following patterns will be referenced throughout this exploration:
 {% aside %}
 ### Button group confusion
 
-What I've defined as button group above is not a common button group [found amongst most design systems](https://component.gallery/components/button-group/). The key difference here is the keyboard navigation. A button group is often delivered as just a layout pattern of existing buttons with very little change of visual style and no change in interaction pattern. Each button is accessible via the `Tab` key like any other button that isn't in a group. Because of this, I identify these as groups of individual buttons. There's nothing stopping most systems to allow any sort of interactive component to exist in these groups; like links for example.
+What I've defined as button group above is not a common button group [found amongst most design systems](https://component.gallery/components/button-group/). The key difference here is the keyboard navigation. A button group is often delivered as just a layout pattern of existing buttons with very little change of visual style and no change in interaction pattern. Each button is accessible via the `Tab` key like any other button that isn't in a group. Because of this, I identify these as groups of individual buttons. There's nothing stopping most systems to allow any sort of interactive component to exist in these groups; like links for example. For this I recommend providing a layout component instead of something specific for buttons.
 
-I am specifically calling out the pattern found in toolbars as it is expected to be a single tab stop, where navigation between buttons is done by arrow keys. Visually these are groups of buttons but with a different and warranted enhancement for accessibility.
+However, I am specifically calling out the pattern found in toolbars as it is expected to be a single tab stop, where navigation between buttons is done by arrow keys. Visually these are groups of buttons but with a different and warranted enhancement for accessibility. This pattern can also be found in [listboxes](https://www.w3.org/WAI/ARIA/apg/patterns/listbox/), [comboboxes](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/), and [menus](https://www.w3.org/WAI/ARIA/apg/patterns/menubutton/) which also expect arrow key navigation between options within a single tab stop. A [segmented control](https://component.gallery/components/segmented-control/) is also of the same family but more related to radio buttons.
 
-Admittedly, for the purposes of the exploration this deviation isn't critical to our final decision tree but still worth calling out.
+To reiterate, this behavior is not meant for usage with most groups of buttons found within an interface, as each is commonly expected to be an individual tab stop.
 {% endaside %}
 
 It's also important to define a few terms used for accessibility:
@@ -84,7 +81,7 @@ Full disclosure, I am a big proponent for clarity of intent. I believe links sho
 
 Links (`<a/>` elements) are meant to be individual tab stops _always_. This means that if the link is meant to be navigational and sends the user to a new page, the user should be able to go to this element using just the `Tab` key.
 
-For buttons (`<button/>` elements), this isn't the case when prepared as a group. The group is expected to be a single tab stop. Once within the tab stop, a roving tabindex pattern is used to traverse the controls.
+For buttons (`<button/>` elements), this isn't the case when prepared as a proper group of related controls. The group is expected to be a single tab stop. Once within the tab stop, a roving tabindex pattern is used to traverse the controls.
 
 This is a good place to introduce the tab user interface pattern which commonly is treated to look like manilla folder tabs. If the tab interface you prepare expects each tab to be a navigational link that can be revisited using the browser's URL bar, this means that each tab is an individual tab stop; as link behavior is expected. On the other hand, if each tab is meant to execute a command, thereby keeping the user on the same page, then the entire tab group is one tab stop with roving tabindex navigation. In this way the tab pattern can either act as a navigational menu (using links), or a button group (using buttons). The main decision goes back to the links versus buttons debate to decide which experience to use.
 
@@ -126,9 +123,25 @@ Returning to the confirmational group, these are patterns most commonly found in
 
 One of the most clear indications of usage between these patterns of the group is between checkboxes and radio buttons. Checkboxes are meant for selecting more than one option, while radio buttons are used for selecting a single exclusive option.
 
+{% aside %}
+
+### Keyboard interactivity differences
+
+Another important difference between checkbox and radio groups is the tab stops. Each checkbox is a single tab stop, while an entire group of radio buttons is a single tab stop with arrow key navigation. This is built into HTML as long as the `name` property is correctly applied.
+
+{% endaside %}
+
 Interestingly, the native HTML select allows for both configurations (using the `multiple` attribute for multiple selections). So the question is, why use the native HTML select when there are other patterns which more clear usage?
 
-One of the properties of the HTML select is the limited amount of data to show. The element is restrictive to a word or phrase which represents the value for selection. The other patterns allow for much more information. In relation, the select only displays the selected value. This means that it is less likely that the user will review the selection since it requires extra interaction. Laying out all the options as checkboxes or radio buttons help the user consider all the possibilities. Additionally, the HTML select options are not bound to the page layout; its options will exist separately from visual flow. This supports the basis of using checkboxes and radios for options which need more detail from options that are concise.
+One of the properties of the HTML select is the limited amount of data shown. The element is restrictive to a word or phrase which represents the value for selection. The other patterns allow for much more information. In relation, the select only displays the selected value. This means that it is less likely that the user will review the selection since it requires extra interaction. Laying out all the options as checkboxes or radio buttons help the user consider all the possibilities. Additionally, the HTML select options are not bound to the page layout; its options will exist separately from visual flow. This supports the basis of using checkboxes and radios for options which need more detail from options that are concise.
+
+{% aside %}
+
+### Multiple problems
+
+The `multiple` attribute which could be added to the HTML select is not a common pattern in user interface design. On desktop devices, additional keys must be introduced in order to choose multiple options and the keys to use vary between desktop operating systems (`Ctrl` (windows) or `Cmd` (Mac)). Touch devices commonly provide these as checkboxes instead which helps users identify the ability to choose more than one. Due to these properties I would recommend avoiding the HTML select for choosing multiple options and instead present a list of checkboxes or a similar but consistent pattern.
+
+{% endaside %}
 
 Let's break down the options one more time:
 
@@ -172,7 +185,7 @@ Here's a visual representation of our decision tree:
     H -->|No| J[Concise]
 ```
 
-The flow chart above can help lead a path toward a decision but we also must ask _why_?
+The flow chart above can help lead a path toward a decision by asking **why**...
 
 - Why does the user need the action to happen immediately?
 - Why does the user need to remain on the page?
@@ -182,9 +195,19 @@ Adding purpose to these decisions will ultimately support design decisions with 
 
 ## Unavailable options
 
-A pattern that may be introduced is disabling an option. This could occur because the user hasn't satisfied criteria or the system is not yet prepared to offer the option. Opinions vary about the decision of showing options that the user is unable to select. I believe the following questions can determine if showing a option as disabled is helpful to the user.
+A pattern that may be examined is disabling an option. This could occur because the user hasn't satisfied criteria or the system is not yet prepared to offer the option. Opinions vary about the decision of showing options that the user is unable to select. I believe the following questions can determine if showing a option as disabled is helpful to the user.
 
 - Will the option be available to the user if criteria are met?
 - Are the criteria for the option clearly shown in context of the option?
 
 If the answer to the questions are "yes" then it may be appropriate to disable the option. However, note that disabled options aren't detectable to screen readers and commonly lack sufficient color contrast. Providing the criteria for enabling the option will support these deficits. [Vitaly Friedman goes into greater detail at Smashing Magazine](https://www.smashingmagazine.com/2021/08/frustrating-design-patterns-disabled-buttons/).
+
+To put it simply, if it isn't important why include it in the experience? This segues into the next topic.
+
+## Abundant options
+
+Presenting the user with too many options introduces a cognitive load and decision paralysis. As described by [Hick's Law](https://lawsofux.com/en/hicks-law/), the more choices you present, the longer it will take to reach a decision. This might include halting the current flow to return to at a later time. In contrast, limiting the number of options will improve the user experience. While some patterns expect to provide dozens of choices (eg. country of origin), there might be better design choices to capture the same information (eg. text field filtering of the list).
+
+Use empathy to drive your design choices and your users will be thankful.
+
+
