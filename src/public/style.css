@@ -5,7 +5,11 @@
 
 #header {
   display: block;
-  padding: var(--space--away) 0;
+  padding-block: var(--space--near);
+}
+
+body:not(.post) #header {
+  padding-inline: calc(var(--space--away) + .5em);
 }
 
 #header,
@@ -18,8 +22,19 @@
   font-weight: bolder;
 }
 
+.posts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space--away);
+}
+
 .posts > li {
-  padding-block: var(--space--away);
+  padding: var(--space--away);
+  border: .5em solid;
+  box-shadow: .5em .5em 0 var(--feedback_standard_foreground-color);
 }
 
 .overline {
@@ -31,12 +46,6 @@ a [slot="title"] {
   background: -webkit-linear-gradient(left, var(--feedback_standard_foreground-color), var(--feedback_standard_surface-color));
   -webkit-background-clip: text;
   -webkit-text-fill-color: rgba(200,40,40,0.3);
-}
-
-.posts {
-  list-style: none;
-  margin: var(--space--away) 0;
-  padding: 0;
 }
 
 .content a {
