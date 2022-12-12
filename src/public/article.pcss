@@ -53,6 +53,7 @@ article ::marker {
 
 article li {
   margin-block: var(--space--near);
+  margin-inline-start: var(--space--near);
 }
 
 article pre {
@@ -73,14 +74,23 @@ article code {
 article pre code {
   display: block;
   color: currentColor;
-  --codeblock-base: var(--base-hue) 50% 80%;
-  background-color: hsl(var(--codeblock-base) / 50%);
-  background-image: linear-gradient(transparent 50%, hsl(var(--codeblock-base) / 60%) 0);
+  --codeblock-base: var(--base-hue) 100% 50%;
+  --codeblock-content: var(--base-hue) 100% 20%;
+  background-color: hsl(var(--codeblock-base) / 10%);
+  background-image: linear-gradient(transparent 50%, hsl(var(--codeblock-base) / 20%) 0);
   background-size: 3em 3em;
   background-origin: content-box;
   background-attachment: local;
   padding: 1em;
   border-left: 2px solid var(--base-heat);
+}
+
+article pre .comment {
+  opacity: .4;
+}
+
+article pre :where(.function, .keyword, .property) {
+  color: hsl(var(--codeblock-content) / 100%);
 }
 
 article table {
