@@ -1,7 +1,7 @@
 ---
 title: No more modals
 desc: There's a trend in design that more and more experiences are being put into a modal. We'll explore this as a pattern and why we should often reconsider our decision to use them. 
-emoji: 🎈
+heat: 2
 date: 2022-06-05
 ---
 

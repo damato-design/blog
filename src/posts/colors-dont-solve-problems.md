@@ -1,7 +1,7 @@
 ---
 title: Colors don't solve problems
 desc: Color is one of the least important facets of user interface design and the process of chooing colors should be avoided for as long as possible in favor of much more important explorations.
-emoji: 🎨
+heat: 3
 date: 2022-07-11
 ---
 

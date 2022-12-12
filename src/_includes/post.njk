@@ -4,28 +4,31 @@
     <title>{{ title }}</title>
     {% include "head.njk" %}
   </head>
-  <body class="post">
-    <main id="main" class="max-content" data-density-shift>
-
-      <a href="/" id="header">
-        <topic-summary>
-          <span slot="icon" class="text--heading">🔥</span>
-          <h2 slot="title" class="text--heading">blog<wbr>.damato<wbr>.design</h2>
-          <strong class="text--detail">Design System Hot Takes</strong>
-        </topic-summary>
-      </a>
-      <span slot="overline" class="overline text--detail">
-        <datetime time="{{ page.date.toISOString() }}">{{ page.date.toLocaleString('en-US', { month: 'long', day: '2-digit', year: 'numeric' }) }}</datetime> / {{ content | readtime }}
-      </span>
-      <h1 slot="title" class="text--display">{{ title }}</h1>
-      <div class="content">
-        {{ content | safe }}
+  <body>
+    <main>
+      {% import "feature.njk" as f %}
+      {% include "header.njk" %}
+      {% if desc %}
+      <div class="post-hero">
+        {{ f.feature(title, desc, heat, 'h1') }}
       </div>
-      <p data-density-shift>
-        <liga-icon>chat</liga-icon> Question or comment about this post? <a href="https://twitter.com/intent/tweet?text=Hey%20%40designsyshouse,%20can%20we%20talk%20about%20{{ page.url | absoluteUrl(metadata.url) | urlencode }}?">Let us know on Twitter!</a>
-      </p>
-      <site-attribution></site-attribution>
+      {% endif %}
+      <article style="--heat: {{ heat }}">
+        {% if desc %}
+        <div class="prepost max-width">
+          <datetime time="{{ page.date.toISOString() }}">{{ page.date.toLocaleString('en-US', { month: 'long', day: '2-digit', year: 'numeric' }) }}</datetime>
+          |
+          <span>{{ content | readtime }}</span>
+          <hr/>
+        </div>
+        {% endif %}
+        <div class="max-width">
+          <div data-density-shift>
+          {{ content | safe }}
+          </div>
+        </div>
+      </article>
+      {% include "footer.njk" %}
     </main>
-    {% include "footer.njk" %}
   </body>
 </html>

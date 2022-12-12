@@ -1,0 +1,22 @@
+<style>
+    .root {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: linear-gradient(135deg, #ff416c, #ff4b2b);
+        font-size: 24px;
+        padding: 96px;
+    }
+
+    .title {
+        font-size: 120px;
+        text-shadow: 6px 12px 2px rgba(0, 0, 0, 0.15);
+    }
+</style>
+
+<div class="root">
+    {% include "src/_includes/logo.svg" %}
+    <h1 class="title">{{ title | safe }}</h1>
+</div>

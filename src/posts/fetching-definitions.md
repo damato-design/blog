@@ -1,7 +1,7 @@
 ---
 title: Fetching web component definitions
 desc: I've been using a technique for a few years which passively fetches a web component definition once it is discovered on a page.
-emoji: 📫
+heat: 0
 date: 2022-04-12
 ---
 

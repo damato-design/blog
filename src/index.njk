@@ -6,31 +6,27 @@ tags:
 - index
 pagination:
   data: collections.posts
-  size: 5
+  size: 6
   alias: posts
   reverse: true
 ---
-
+{% import "feature.njk" as f %}
 {% if posts %}
-<ul class='posts'>
-  {%- for post in posts %}
-  <li>
-    <a href="{{ post.url }}">
-      <topic-summary>
-        <datetime slot="overline" class="overline text--detail" data-density-shift time="{{ post.date.toISOString() }}">{{ post.date.toLocaleString('en-US', { month: 'long', day: '2-digit', year: 'numeric' }) }}</datetime>
-        <span class="text--display" slot="icon">{{ post.data.emoji }}</span>
-        <span class="text--display" role="heading" slot="title">{{ post.data.title }}</span>
-        {% if post.data.desc %}
-        <p>{{ post.data.desc }}</p>
-        {% endif %}
-      </topic-summary>
-    </a>
-  </li>
-  {%- endfor %}
-</ul>
+<div>
+  <ul class="posts max-width">
+    {%- for post in posts %}
+    <li>
+      <a href="{{ post.url }}" class="post-card">
+        {{ f.feature(post.data.title, post.data.desc, post.data.heat, 'h2') }}
+      </a>
+    </li>
+    {%- endfor %}
+  </ul>
+</div>
 {% endif %}
 
-<nav class="pagination" data-density-shift>
+<nav>
+  <div id="pagination" class="max-width">
   <a 
     role="link"
     {% if pagination.href.previous %} href="{{pagination.href.previous}}" {% endif %}
@@ -40,4 +36,5 @@ pagination:
     role="link"
     {% if pagination.href.next %} href="{{pagination.href.next}}" {% endif %}
     {% if not pagination.href.next %} aria-disabled="true" {% endif %}>Next Page</a>
+  </div>
 </nav>

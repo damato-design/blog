@@ -1,23 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>{{ title }}</title>
-  {% include "head.njk" %}
-</head>
-<body>
-  <main id="main" class="max-content" data-density-shift>
-    <a href="/" id="header">
-      <topic-summary>
-        <span slot="icon" class="text--display">🔥</span>
-        <h1 slot="title" class="text--display">blog<wbr>.damato<wbr>.design</h1>
-        <strong class="text--detail">Design System Hot Takes</strong>
-      </topic-summary>
-    </a>
-     <div class="content">
-       {{ content | safe }}
-     </div>
-     <site-attribution></site-attribution>
-  </main>
-  {% include "footer.njk" %}
-</body>
+  <head>
+    <title>{{ title }}</title>
+    {% include "head.njk" %}
+  </head>
+  <body>
+    <main>
+      {% include "header.njk" %}
+      <h1 class="sr-only">{{ title }}</h1>
+      {{ content | safe }}
+      {% include "footer.njk" %}
+    </main>
+  </body>
 </html>

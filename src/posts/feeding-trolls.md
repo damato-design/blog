@@ -1,7 +1,7 @@
 ---
 title: Feeding trolls
 desc:  They say that you aren't successful until people begin to criticize your work. I revisit the responses to one of my hotest takes and provide my commentary and rebuttal.
-emoji: 👺
+heat: 2
 date: 2022-06-28
 ---
 

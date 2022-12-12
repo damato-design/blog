@@ -1,0 +1,9 @@
+{% macro feature(t, d, h, tag) %}
+<div class="feature" style="--heat:{{ h }}">
+  <div class="max-width feature-lockup">
+    <strong class="post-heat"></strong>
+    <{{tag}} class="post-title">{{ t }}</{{tag}}>
+    <p class="post-description">{{ d }}</p>
+  </div>
+</div>
+{% endmacro %}
