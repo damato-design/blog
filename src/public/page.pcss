@@ -18,7 +18,7 @@
 
 body {
   --space--away: min(4rem, 4vw);
-  --space--near: 2rem;
+  --space--near: min(2rem, 4vw);
   margin: 0;
   font-family: "Merriweather";
   font-size: 1rem;
@@ -29,12 +29,12 @@ body {
 }
 
 body [data-density-shift] {
-  --space--away: min(2rem, 2vw);;
-  --space--near: 1rem;
+  --space--away: min(2rem, 2vw);
+  --space--near: min(1rem, 2vw);
 }
 
 body [data-density-shift] [data-density-shift] {
-  --space--away: min(1rem, 1vw);;
+  --space--away: min(1rem, 2vw);
   --space--near: 0.5rem;
 }
 
