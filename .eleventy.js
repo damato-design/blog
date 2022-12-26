@@ -62,7 +62,6 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy({"src/public/*": "/"});
   eleventyConfig.addPassthroughCopy({"src/posts/images/*.(jpg|png|svg)": '/posts/images'});
   
-  eleventyConfig.on('afterBuild', transformPreviews);
 
   return {
     // When a passthrough file is modified, rebuild the pages:
@@ -75,16 +74,3 @@ module.exports = function(eleventyConfig) {
     }
   };
 };
-
-function transformPreviews() {
-  fs.readdir(PREVIEW_DIR, (err, files = []) => {
-    for(const filename of files) {
-      if (path.extname(filename) !== '.svg') break;
-      Image(path.join(PREVIEW_DIR, filename), {
-        formats: ["jpeg"],
-        outputDir: PREVIEW_DIR,
-        filenameFormat: () => path.format({ ...path.parse(filename), base: '', ext: '.jpeg' })
-      })
-    }
-  })
-}
