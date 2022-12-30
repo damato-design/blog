@@ -1,15 +1,16 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta name="title" property="og:title" content="{{ title }}" />
 <meta name="description" property="og:description" content="{{ desc }}" />
 <meta name="author" content="Donnie D'Amato">
 <meta property="og:type" content="Article">
-<meta name="url" property="og:url" content="{{ post.url | url | absoluteUrl(metadata.url) }}" />
+<meta name="url" property="og:url" content="{{ page.url | url | absoluteUrl(metadata.url) }}" />
 {% ogImage "src/_includes/og-image.njk", { title: title, heat: heat } %}
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@designsyshouse" />
 <meta name="twitter:creator" content="@donniedamato" />
-<meta property="twitter:image" content="{{ post.url | url | absoluteUrl(metadata.url) }}img/{{ title | slug }}-preview.jpeg" />
+<link rel="canonical" href="{{ page.url | url | absoluteUrl(metadata.url) }}" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
