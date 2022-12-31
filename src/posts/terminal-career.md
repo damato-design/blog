@@ -5,7 +5,7 @@ heat: 1
 date: 2022-12-26
 ---
 
-In my teens, I was involved in many extra-cirricular activities in high school. I was president of the art club for all 4 years and lead for the school's robotics team. While I wasn't officially part of the class counsel, due to my volunteer work especially with the homecoming floats, I was given a new title by my peers over 20 years ago; **Design Engineer**.
+In my teens, I was involved in many extra-curricular activities in high school. I was president of the art club for all 4 years and lead for the school's robotics team. While I wasn't officially part of the class counsel, due to my volunteer work especially with the homecoming floats, I was given a new title by my peers over 20 years ago; **Design Engineer**.
 
 I didn't think much of it then but after being fully immersed in both design and engineering, I resonate with that title. Not only do I consider how an experience could be constructed; I actually construct it. That's something that's always been important to me. Just having the idea wasn't good enough, I needed to _show_ people the concept and it wouldn't be complete unless it was the real deal.
 

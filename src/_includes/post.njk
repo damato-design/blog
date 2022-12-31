@@ -15,15 +15,19 @@
       {% endif %}
       <article style="--heat: {{ heat }}">
         {% if desc %}
-        <div class="prepost max-width">
-          <datetime time="{{ page.date.toISOString() }}">{{ page.date.toLocaleString('en-US', { month: 'long', day: '2-digit', year: 'numeric' }) }}</datetime>
-          |
-          <span>{{ content | readtime }}</span>
+        <div class="max-width">
+          <div class="prepost" data-density-shift>
+            <datetime time="{{ page.date.toISOString() }}">{{ page.date.toLocaleString('en-US', { month: 'long', day: '2-digit', year: 'numeric' }) }}</datetime>
+            |
+            <span>{{ content | readtime }}</span>
+            |
+            <web-speech target="markdown" style="flex: 1"></web-speech>
+          </div>
           <hr/>
         </div>
         {% endif %}
         <div class="max-width">
-          <div class="markdown" data-density-shift>
+          <div id="markdown" data-density-shift>
           {{ content | safe }}
           </div>
           <span class="signature">- Donnie</span>

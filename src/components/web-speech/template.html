@@ -1,0 +1,19 @@
+<form>
+  <details>
+    <summary>
+      <button id="play-pause" aria-label="play" type="button"></button>
+      <button id="stop" aria-label="stop" type="button"></button>
+    </summary>
+    <fieldset id="controls">
+      <legend>Voice controls</legend>
+      <label for="voice">Voice</label>
+      <select id="voice"></select>
+      <label for="rate">Rate</label>
+      <input id="rate" type="range" min="0.5" max="2" value="1" step="0.1" />
+      <output for="rate">1.0</output>
+      <label for="pitch">Pitch</label>
+      <input id="pitch" type="range" min="0" max="2" value="1" step="0.1"/>
+      <output for="pitch">1.0</output>
+    </fieldset>
+  </details>
+</form>
