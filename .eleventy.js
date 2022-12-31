@@ -10,10 +10,16 @@ const readingTime = require('reading-time');
 const slug = require('slug');
 const pluginMermaid = require("@kevingimbel/eleventy-plugin-mermaid");
 
-const PREVIEW_DIR = path.resolve(__dirname, '_site', 'img');
-
 const MAX_CHARS = 19;
 const LINE_REGEX = new RegExp(`(?:\\b)['\\w\\s]{1,${MAX_CHARS}}(?:[^'\\w]|$)`, 'g');
+
+function getShuffledIndicies(text) {
+  return text
+    .split('')
+    .map((ch, i) => ch.trim() ? i : null)
+    .filter((i) => typeof i === 'number')
+    .sort(() => 0.5 - Math.random());
+}
 
 module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(pluginRss);
@@ -37,14 +43,14 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addFilter('splitlines', (text) => text.match(LINE_REGEX) || []);
   eleventyConfig.addFilter('readtime', (text) => {
     const {minutes} = readingTime(text);
-    return `${Math.floor(minutes)} min read`;
+    return `${Math.floor(minutes)} minute read`;
   });
 
   eleventyConfig.addFilter('slug', (text) => text && slug(text));
   eleventyConfig.addFilter('split', (text) => {
-    const random = Math.floor(Math.random() * text.length);
+    const [first, second] = getShuffledIndicies(text);
     return text.split('').map((ch, i) => {
-      const target = random === i ? ` style="--n: ${random}"` : '';
+      const target = [first, second].includes(i) ? ` style="--n: ${i}"` : '';
       return `<span aria-hidden="true" ${target}>${ch}</span>`;
     }).join('');
   });

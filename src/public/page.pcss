@@ -312,6 +312,6 @@ header a {
 
 @media (prefers-reduced-motion: no-preference) {
   .post-title [style*="--n"] {
-    animation: blink linear infinite 3s calc(var(--n) * 1s);
+    animation: blink linear infinite 5.1s calc((var(--i, 0) + var(--n)) * 3.7s);
   }
 }
