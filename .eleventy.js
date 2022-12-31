@@ -41,6 +41,13 @@ module.exports = function(eleventyConfig) {
   });
 
   eleventyConfig.addFilter('slug', (text) => text && slug(text));
+  eleventyConfig.addFilter('split', (text) => {
+    const random = Math.floor(Math.random() * text.length);
+    return text.split('').map((ch, i) => {
+      const target = random === i ? ` style="--n: ${random}"` : '';
+      return `<span aria-hidden="true" ${target}>${ch}</span>`;
+    }).join('');
+  });
 
   eleventyConfig.addPairedShortcode('aside', (children, feedback = 'info') => `<aside data-density-shift role="note" data-feedback="${feedback}">
   

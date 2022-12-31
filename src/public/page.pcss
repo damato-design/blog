@@ -257,22 +257,61 @@ header a {
     color: currentcolor;
   }
 
-    .feature > div:after {
-      opacity: 0;
-    }
+  .feature > div:after {
+    opacity: 0;
+  }
 
-    .feature .post-heat {
-      border-color: var(--base-heat);
-      box-shadow: none;
-    }
+  .feature .post-heat {
+    border-color: var(--base-heat);
+    box-shadow: none;
+  }
 
-    .feature .post-title {
-      text-shadow: 0 0.2em 0.02em rgba(0, 0, 0, 0.1);
-    }
+  .feature .post-title {
+    text-shadow: 0 0.2em 0.02em rgba(0, 0, 0, 0.1);
+  }
 
-    .feature .post-description {
-      color: currentcolor;
-      box-shadow: none;
-      border-color: var(--base-heat);
-    }
+  .feature .post-description {
+    color: currentcolor;
+    box-shadow: none;
+    border-color: var(--base-heat);
+  }
+}
+
+@keyframes blink {
+  78% {
+    color: inherit;
+    text-shadow: inherit;
+  }
+  79% {
+    color: var(--box-contrast-bg);
+  }
+  80% {
+    text-shadow: none;
+  }
+  81% {
+    color: inherit;
+    text-shadow: inherit;
+  }
+  82% {
+    color: var(--box-contrast-bg);
+    text-shadow: none;
+  }
+  83% {
+    color: inherit;
+    text-shadow: inherit;
+  }
+  92% {
+    color: var(--box-contrast-bg);
+    text-shadow: none;
+  }
+  92.5% {
+    color: inherit;
+    text-shadow: inherit;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .post-title [style*="--n"] {
+    animation: blink linear infinite 3s calc(var(--n) * 1s);
+  }
 }
