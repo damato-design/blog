@@ -224,7 +224,12 @@ header a {
 
 .prepost {
   display: flex;
-  gap: var(--space--near);
+  flex-wrap: wrap;
+}
+
+.prepost > :not(:last-child):after {
+  content: "|";
+  margin-inline: var(--space--near);
 }
 
 #pagination {

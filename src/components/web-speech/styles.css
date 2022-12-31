@@ -41,6 +41,7 @@ button[aria-label] {
 
 summary {
   display: inline-block;
+  white-space: nowrap;
 }
 
 summary:before {
