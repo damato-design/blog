@@ -2,6 +2,19 @@ import html from './template.html';
 import css from './styles.css';
 
 const ELEMENT_IDS = ['play-pause', 'stop', 'voice', 'rate', 'pitch', 'controls'];
+let voices = [];
+function getVoices(callback){
+  const synth = window.speechSynthesis;
+  const list = () => {
+    voices = synth.getVoices();
+    callback(voices);
+  };
+  if ('onvoiceschanged' in synth) {
+    synth.onvoiceschanged = list;
+  } else {
+    list();
+  }
+}
 
 class WebSpeech extends window.HTMLElement {
   constructor() {
@@ -11,18 +24,6 @@ class WebSpeech extends window.HTMLElement {
     ELEMENT_IDS.forEach((id) => this[`_$${id.replace('-', '')}`] = this.shadowRoot.getElementById(id));
 
     this._synth = window.speechSynthesis;
-    this._voices = [];
-
-    this._synth.addEventListener('voiceschanged', () => {
-      this._voices = this._synth.getVoices();
-      this._$voice.innerHTML = this._voices
-        .sort((a, b) => a.name.localeCompare(b.name))
-        .map((voice) => {
-          const selected = voice.default ? ' selected' : '';
-          return `<option ${selected}>${voice.name} - ${voice.lang}</option>`;
-        })
-        .join('');
-    });
 
     this._$playpause.addEventListener('click', () => {
       if (this.speaking) {
@@ -58,6 +59,20 @@ class WebSpeech extends window.HTMLElement {
     });
   }
 
+  connectedCallback() {
+    if (!voices.length) {
+      getVoices((v) => {
+        this._$voice.innerHTML = v
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .map((voice) => {
+            const selected = voice.default ? ' selected' : '';
+            return `<option ${selected}>${voice.name} - ${voice.lang}</option>`;
+          })
+          .join('');
+      });
+    }
+  }
+
   get target() {
     if (!this._$target) {
       this._$target = document.getElementById(this.getAttribute('target'));
@@ -78,7 +93,7 @@ class WebSpeech extends window.HTMLElement {
     if (this._$utter) {
       this._$controls.setAttribute('disabled', '');
 
-      this.utterance.voice = this._voices[this._$voice.selectedIndex];
+      this.utterance.voice = voices[this._$voice.selectedIndex];
       this.utterance.rate = Number(this._$rate.value);
       this.utterance.pitch = Number(this._$pitch.value);
       this.utterance.volume = 1;
