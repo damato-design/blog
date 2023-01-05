@@ -33,3 +33,36 @@ There are [79 examples for the card component](https://component.gallery/compone
   - Several variations of Compass listing card, owned by the listing team.
   - The way a recipe is meant to be portrayed is likely different from a movie you can watch now.
 
+Most attempts found in design systems in defining a component are fast and loose.
+
+What makes a button a component, and a stylized box not a component?
+
+A component has three basic features: content, layout, and style. Changing the style (color, typography, spacing, roundness, etc) doesn't alter the purpose of the component. (caveat with errors but shouldn't only be represented using style). Changing the content alters the message; the same kind of component can be used to message the user that they've won one million dollars or that we've logged them out. Different component, same layout and style.
+
+So what drives the possibility of different layouts? 
+
+The button has a unique purpose which does not change after customization.
+
+Have you come across buttons having icons with conflicting placement? Some icons appear on the left of the text label, some on the right? If you have an opinion about how this should be handled, then you should also agree that a card is not a component.
+
+For systems which have guidelines for composition, this is solved by restricting the interface for the component, configured in such a way which makes choices on behalf of the author based on the guidelines of the system. This will cause a supplied icon to always appear on one side of the text label, so that the author doesn't need to lookup the guidelines. This button will be presented like all other buttons in the system automatically.
+
+On the other hand, allowing the icon to appear on either side allows for cases where the guidelines might be unclear. A chevron icon shouldn't appear on the left, only on the right. How do I get it there?
+
+There exists a spectrum:
+
+Unrestricted ------- [you are somewhere here] -------- Restricted
+
+The more restrictive the composition expectations are, the more usage aligns according to design guidelines. The less restrictive composition expectations are, the more freedom designers have.
+
+Gestalt theory suggests that the whole is something different than the sum of its parts. 
+
+When you have different customizations between cards, does they still serve the same purpose?
+
+If you have a icon-button and a text-button, but they are both interactive and execute as expected, they both serve the same purpose.
+
+If you have a movie-card and a recipe-card, they do not serve the same purpose. The purpose is driven by the content.
+
+How does field frame fit into this narrative? The expectations are more well-defined. Elements can only exist in a row and the kinds of elements are restrictive.
+
+The composition is not subject to change based on external factors.
