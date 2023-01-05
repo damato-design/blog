@@ -1,0 +1,69 @@
+---
+title: Interview critique
+desc: There's a popular video trend demonstrating interview scenarios. In this post, I'll provide some feedback on one exercise in particular based on my experience as both an interviewer and interviewee.
+heat: 2
+date: 2023-01-03
+draft: true
+---
+
+Every morning before I start the day, instead of coffee to kickstart my brain, I look for some short videos to watch. Some times they are videos I've seen before that I liked, others might have been published in the last 24 hours. The topics range from action clips in big movies to a complication of cats who enjoy water. Every once in a while, I'll find some video about about design or coding and give it a shot.
+
+The [Web Dev Junkie](https://www.youtube.com/@WebDevJunkie) channel has over 80,000 subscribers. The creator seems to have a new video published _every single day_. [The video I'll be critizing](https://www.youtube.com/watch?v=-Rtlnsgbc0k) has 30,000 views and the title of this video is:
+
+**This is a good beginner React interview challenge question**
+
+From the title, I assume that the presenter would be providing a question that they had experience with in an interview setting, either as a interviewer or interviewee. As a person with experience in both, I'm going to assess how this person would do coming in for an interview as a engineer on a feature team. Let's assume we have the following prompt.
+
+> Starting from the given React + Vite project, and using the [datamuse API](https://www.datamuse.com/api/), build a small form which allows a user to enter a word and retrieve a list of synonyms.
+
+## A good start
+
+Our candidate begins by using semantic HTML and creates a `<form/>` element with an `<label/>` and `<input/>` which are linked together using `id` and `htmlFor` for accessibility. They also add a `useState()` hook to manage the storage of the incoming user input and suggest using Typescript to describe the type of value expected. This is a nice touch but perhaps something better for a following refactor.
+
+The candidate then wires up the `onChange` handler and the `value`, stumbling a bit on the difference between a "controlled" versus "uncontrolled" component. This is corrected after looking up examples, and admittedly knowing the nomenclature is less important to me than an understanding of what's happening. However, I am hoping that they aren't expecting to submit a request for every `onChange` event as that would be expensive.
+
+## Warning signs
+
+The candidate then adds a button and realizes that there are some default styles being applied. They decide to change the colors but hints at a bias against CSS; mentioning that the functionality is more important. Making a note of that as I don't agree but there's still plenty to do for this prompt to be complete.
+
+The candidate then begins to prepare the form for submission by adding an event handler to the form and calling `event.preventDefault()`, mentioning that it's important to use otherwise "this form will refresh your page". This is not the full story, as the form is meant to send the data to a url given by the required [`action`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form#attr-action) attribute which will process the data and then handle the next step; usually by displaying a new page showing success or failure. That "refresh" that occurs is actually the response from the url request. If the url is not set, that's when the page submits to itself causing the refresh. Luckily, the expectation is to send the request on form submit.
+
+While we're using a lot of JavaScript in order to create the application, we could use React to render this as SSR and then [progressive enhance the form](https://www.bram.us/2022/04/22/progressive-enhancement-and-html-forms-use-formdata/). However, I wouldn't expect this approach from a beginner but I'd be on the lookout for folks who understand the expected semantic of HTML forms.
+
+The candidate does a nice job reading the API documentation and determining how to formulate a request. Especially since the API doesn't show any full code examples of a request; just partial url constructions. They're able to construct a basic test request using `fetch()` within the handler, transform the response to JSON, and store the data within the state.
+
+## Getting into trouble
+
+So for the final part, we'll need to render out the words. The candidate opts to start using a React Fragment (`</>`) but quickly changes to use a `<div/>` to have the words all on different lines. Finally, the candidate mentions to "be fancy" and put the words in `<li/>` elements. From my perspective, this is not fancy. This is semantic. It's the most correct element to use in this case. The candidate oddly mentions the lack of interest in styling at this point when the concern isn't the look, but the purpose. This is a _list_ of words, and should therefore be represented as _list items_.
+
+However, as the candidate mentions "I wouldn't care about styling", it immediately sets off a red flag. While many tech interviews may look similar to what's happening in this video, the actual role is often very different. You aren't often building new features or applications but instead maintaining old ones and updating the styles to make them look new. That's why styling is so important. Having the ability to effortlessly rearrange the components within the experience while maintaining the legacy system is probably the most common task in web development careers. When I conduct an interview, there is often a discussion on styling since much of the role is how well you can debug or alter an existing style to match design expectations. This, along with considering accessibility, localization, and other user-centered metrics.
+
+The candidate notices an error in the web console, expecting a unique `key` for each element in the list. The candidate mentions they always miss this, especially when the linter isn't setup. I'm less empathatic to this, if this is something you _always_ miss, I'd make it a point to _never_ miss it again. In my experience, I don't rely on tools to correct me but that's because I've been coding before these tools existed. It's also because I'm never sure where I'll be writing code. It's entirely possible that I could be authoring code in a web IDE that doesn't have all the bells and whistles. Just because the tools aren't available shouldn't render me helpless to write working code. I understand these tools are helpful for beginners but I'm not assessing the tool's features, I'm assessing your skills.
+
+The candidate now notices a bug, the word `fast` was hard-coded within the request so that the user input wasn't being considered. The correction made was to send the user input _directly into the request_. Old timers will remember the [Bobby Tables XKCD comic](https://xkcd.com/327/) which humorously reminds us to always sanitize user input. While probably not detrimental for this particular application, a user could append `&topics=temperature` to the end of their word and alter the results. I might not expect a beginner to catch this, but I'd certainly demonstrate the problem and raise a conversation about it.
+
+## Time for more
+
+At this point, the prompt is complete but maybe we have more time to refactor or add features. The candidate recommends storing the base API url in an environment variable. I wouldn't recommend this for a public API like this one but I'd allow the exploration. Unfortunately, the lack of knowledge for Vite makes the implementation troublesome and the change is ultimately reverted.
+
+At this point, we might agree for some added functionality to be implemented. Clicking a word in the list would submit a new request and update the existing list. If the request is slow, some feedback should be shown indicating a slow request. The candidate decides to add an `onClick()` method directly to the `<li/>`. I'd ask the candidate to consider how this might affect accessibility and I hope they consider using buttons within the `<li/>` elements instead.
+
+The candidate then notices that the request from the input and from the click are the same, just changing the word. This shows an opportunity to abstract this function for reuse in both scenarios. While the first approach is fine for a beginner (having the form and the click call the same function), the candidate instead decides to create a few layers of abstraction. First creating an `/api` directory and setting up an adapter to handle the request functionality. Then they also create a `/hooks` directory for a custom hook to use this local adapter. All of this might seem like a premature optimization but I'm interested in the journey.
+
+The hook signature presented isn't something I'm familiar with; I've always seen a tuple as the return. Perhaps since this needs to provide a way to trigger the request, return the data, and the signal that loading is happening requires more than two values. However, I wonder if the loading could be held at the application layer, starting when the request is called and clearing the current results and ending when the results are populated. Again, not something I'd expect for a beginner but I'd be interested in the approach.
+
+Due to the use of promises, I'd expect to have a conversation about error handling. If the API being called errors, `setIsLoading()` will never be called. This can be solved by using [`.finally()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/finally) instead of a plain `.then()`. This will fire after everything is done, error or success.
+
+Also on seeing the result of the new loading screen, I'd like to ask what could be done so the form doesn't jump when the list loads. Given the lack of respect for CSS, I wouldn't expect much of a solution. Based on the layout of the page, my assumption is that the content is using flex alignment to be vertically centered. Removing that style would help correct the jumpiness.
+
+## The verdict
+
+Ultimately, I'd pass on this candidate. Primarily for the lack of interest in CSS, and somewhat for the skills not being different from any other engineer out there that _does_ have CSS skills. I'm afraid that at this point in time, I might be able to give a few prompts to [ChatGPT](https://openai.com/blog/chatgpt/) and get similar results.
+
+When I interviewed for my current position, I did the majority of the interview exercises using [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components). While I'm not entirely sure what was considered in my review meeting, I assume the team was impressed in being able to write Web Components without a framework. It's a very unique skill that you can transfer to practically any project.
+
+The other point to note is that at this time I knew very little React. I think the best I could do was recognize JSX. However, I don't think this mattered as much since I knew JavaScript so well that tripping on the React parts (ie., using `className` instead of `class`) was less of a problem. My core skills were impressive, React is just something I could (and did) learn on the job.
+
+In my view, it's a shame that there's so much emphasis put on concepts that aren't part of the regular job or aren't different from the next engineer coming in from a bootcamp. I think it's important to show interest and a quest for expertise in _something_ to stand out from the rest. 
+
+As a recent example, the last person I interviewed said she had fun writing her own code compilers and I think that's awesome. She was hired for her first tech job out of college. She then proceeded to grumble about the one-line PRs looking for more impact. Sorry to say, its often a wish upon a midnight feature.
