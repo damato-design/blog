@@ -1,7 +1,7 @@
 ---
-title: A card is not a component
+title: Do cards exist
 desc: I argue that a card shouldn't be categorized as a component and instead exist as another concept entirely.
-heat: 2
+heat: 3
 date: 2022-12-13
 draft: true
 ---
