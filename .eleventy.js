@@ -56,9 +56,11 @@ module.exports = function(eleventyConfig) {
   });
 
   eleventyConfig.addPairedShortcode('aside', (children, feedback = 'info') => `<aside data-density-shift role="note" data-feedback="${feedback}">
+  <div class="aside-content">
   
   ${children}
-  
+
+  </div>
   </aside>`);
 
   eleventyConfig.addPairedShortcode('quote', (children, cite, display) => `<figure class="fig-quote">

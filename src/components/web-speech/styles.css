@@ -2,7 +2,8 @@
   display: inline-block;
 }
 
-:host(:not(:defined)) {
+:host(:not(:defined)),
+:host(:not([init])){
   display: none;
 }
 
