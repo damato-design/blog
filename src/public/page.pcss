@@ -79,6 +79,21 @@ header {
   border-bottom: 1px solid;
 }
 
+header:after {
+  --base-hue: calc(230deg + ((var(--heat) + 1) * -60deg));
+  --base-heat: hsl(var(--base-hue) 100% 50%);
+  content: '';
+  width: calc(var(--scrollY, 0) * 1%);
+  height: 4px;
+  display: block;
+  bottom: 0;
+  left: 0;
+  background: var(--base-heat);
+  box-sizing: border-box;
+  position: absolute;
+  transition: .218s ease;
+}
+
 header > div {
   display: flex;
   justify-content: space-between;
