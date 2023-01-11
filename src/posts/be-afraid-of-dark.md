@@ -38,18 +38,23 @@ The problem is that for every UI element that _might_ appear in this section in 
 
 ## Scoped themes
 
-A theme is the collection of values assigned to semantic tokens. The semantic tokens are a contract that should have permanence so it meets expectations of folks building UI over time. The values that would appear as a right-hand assignment in the theme can have a separate stakeholder. For example, the brand identity is often encoded here perhaps as a separate set of non-semantic tokens (`brand-blue-500`). In this case, the brand is responsible for curating the right-side values but the design system team is responsible for maintaining the left-side semantic token names for those values to be assigned.
+A theme is the collection of values assigned to semantic tokens. The semantic tokens are a contract that should have permanence and meets expectations of folks building UI over time. The values that would appear as a right-hand assignment in the theme can have a separate stakeholder. For example, the brand identity is often encoded here perhaps as a separate set of non-semantic tokens (`brand-blue-500`); the color pallette influenced by the brand. In this case, the brand is responsible for curating the right-side values but the design system team is responsible for maintaining the left-side semantic token names for those values to be assigned. It is not uncommon for design system folks to be responsible for both sides though. Though I recommend avoiding managing both if possible to not introduce bias in token naming.
+
+![Left-side super important, right-side I couldn't care less](#)
+
+{% aside "warning "%}
+While I advocate for design systems folks to be hands-off for the right-side of the theme, it's not possible to be completely ignorant of what happens there. We should be providing guidance on best practices when curating this side, especially in terms of accessibility. We should provide feedback when people choose colors that have low contrast or font-sizes that are illegible.
+{% endaside %}
 
 When the user preference is set for dark-mode, they are requesting the experience in a "dark" theme. When the marketing team wants to collaborate with a partner brand, they are expecting additional values to be included in the UI to support that partner brand.
 
-Instead of the dark area and the light colored page needing to be informed by a single theme, think of the dark area as an entirely separate theme. In this way, the values that represent `button-primary-background-color` can change depending on scope.
+Now for the key insight. Instead of the dark area and the light colored page needing to be informed by a single theme, **think of the dark area as an entirely separate theme**. In this way, the values that represent `button-primary-background-color` can change depending on scope.
 
-![IMAGE](#)
+![Visually different area is given new values to existing semantic tokens](#)
 
 ```css
 [data-theme="light"] {
-    /* You can also just make this the default and
-    set on :root but I prefer to be explicit in scope */
+    /* You can also make this default and set on :root */
     --button-primary-background-color: black;
 }
 
@@ -69,12 +74,31 @@ Instead of the dark area and the light colored page needing to be informed by a 
 
 No additional configuration at the component level. No additional token names.
 
-This still requires the design token values to be curated to account for a dark UI but you avoid the naming exercise. Now you can just name the entire collection (theme) as "dark". Think of this name describing yout artboard or design file for this scope.
+This still requires the design token values to be curated to account for a dark UI but you avoid the token naming exercise. Now you can just name the entire collection (theme) as "dark". Think of this name describing your artboard for this scope and then using that artboard in a larger project with a totally different base theme.
 
-## Concerns
+## Moving forward
 
 If you worried about defining an entire new theme worth of tokens, start small. Only define the ones you need at first; text and the button. At some point you might have the resources to define it all and then you'll have an entire new theme to try.
 
-I've considered going farther in this, specifically with surfaces that expect to demonstrate feedback (eg., warning banner). You might imagine this banner similar to the dark section above with a text lockup and action to take. I say if you have the resources to prepare this as a theme, go for it! You'll be better prepared for when code samples might appear within the notification. Otherwise, you'll need to be highly restrictive to the kinds of content that appear within various colored surfaces.
+I've considered going farther in this, specifically with surfaces that expect to demonstrate feedback (eg., warning banner). You might imagine this banner similar to the dark section above with a text lockup and action to take. I say if you have the resources to prepare this as a theme, go for it! You'll be better prepared for when code samples might appear within the notification. Otherwise, you'll need to be highly restrictive to the kinds of content that appear within various colored surfaces. And we all know how much designers love restrictions. :)
 
-And we all know how much designers love restrictions. :)
+This is in contrast to [what I've recommended before](./tokens-as-intents) and I've learned from that mistake. The possibility of multiple types of buttons to appear on an colored background requires something better. This gets increasingly more cumbersome moving past text and buttons.
+
+This recommendation also requires that the system delivering themes be flexible enough to request more than one. I think there's an opportunity for some optimization here as well; where we statically analyze the page for tokens used within scopes and only serve what's needed. However, to start you could just import the theme when a scope is added. The benefit of this is if the scoped theme hasn't been included or the scope hasn't been applied, it'll fallback to the base theme which will show all the text and buttons from the base theme.
+
+```css
+:root {
+    --button-primary-background-color: black;
+}
+```
+
+```html
+<body>
+    <button class="primary">This button has a black background</button>
+    <section data-theme="dark">
+        <!-- No definitions for the dark theme, 
+        everything inside inherits from the light theme -->
+        <button class="primary">This button has a black background</button>
+    </section>
+</body>
+```
