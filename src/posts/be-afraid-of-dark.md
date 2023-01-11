@@ -1,16 +1,16 @@
 ---
-title: On dark
+title: Be afraid of dark
 desc: While it might seem intuitive at first, naming your tokens this way doesn't scale.
 heat: 2
 date: 2023-01-10
 draft: true
 ---
 
-The phrase "ondark" (or variations like "inverse") appear within token names in the design systems community all the time and I've tried providing recommendations in token related posts before. However, it seems this approach is becoming more wide-spread so I want to give it one final try to describe the problem with this naming scheme and how to avoid it.
+The phrase "ondark" (or variations like "inverse") appear within token names in the design systems community all the time. I've tried providing recommendations in token related posts and replies before. However, it seems this approach is becoming more wide-spread so I want to give it one final try to describe the problem with this naming scheme and provide an alternative method.
 
 ## Semantic tokens or bust
 
-The first step is fully investing in semantic tokens. I've called them "intents" in the past to further enforce the expectation that the name describes purpose over value. We're talking about token names like `button-primary-background-color` which give information about the component or pattern and the property being influenced. In no way does it give any information about what the value of this color is. The more you avoid encoding the value in the name, the more flexible your system will be with the opportunity for that color to change in the future.
+The first step is fully investing in semantic tokens. [I've called them "intents"](./tokens-as-intents) in the past to further enforce the expectation that the name describes purpose over value. We're talking about token names like `button-primary-background-color` which give information about the component or pattern and the property being influenced. In no way does it give any information about what the value of this color is. The more you avoid encoding the value in the name, the more flexible your system will be with the opportunity for that color to change in the future.
 
 This extends to any token; describe the purpose and avoid the value when naming.
 
@@ -18,7 +18,7 @@ This extends to any token; describe the purpose and avoid the value when naming.
 
 So you have a UI which is primarily light colored. Perhaps a white background with nearly black text. There's a section in this UI that you want to have a stark contrast with the rest of the page. In this section, you have some text lockup and a call-to-action button. The button has all the same properties that other buttons in the system have, except it's located on this dark background.
 
-Most folks might have a button prepared specifically for this scenario. We might even provide a configuration for when this happens in code. `<Button appearance='ondark'/>`. Under the hood, that might reference different tokens which point to specific `ondark` values in the theme (ie., collection of semantic tokens with values assigned).
+Most folks might have a button prepared specifically for this scenario. We might even provide a configuration for when this happens in code. `<Button appearance='ondark'/>`. Under the hood, that might reference different tokens which point to specific `ondark` values sent to the page.
 
 ```scss
 button.primary {
@@ -38,6 +38,10 @@ The problem is that for every UI element that _might_ appear in this section in 
 
 ## Scoped themes
 
+A theme is the collection of values assigned to semantic tokens. The semantic tokens are a contract that should have permanence so it meets expectations of folks building UI over time. The values that would appear as a right-hand assignment in the theme can have a separate stakeholder. For example, the brand identity is often encoded here perhaps as a separate set of non-semantic tokens (`brand-blue-500`). In this case, the brand is responsible for curating the right-side values but the design system team is responsible for maintaining the left-side semantic token names for those values to be assigned.
+
+When the user preference is set for dark-mode, they are requesting the experience in a "dark" theme. When the marketing team wants to collaborate with a partner brand, they are expecting additional values to be included in the UI to support that partner brand.
+
 Instead of the dark area and the light colored page needing to be informed by a single theme, think of the dark area as an entirely separate theme. In this way, the values that represent `button-primary-background-color` can change depending on scope.
 
 ![IMAGE](#)
@@ -45,7 +49,7 @@ Instead of the dark area and the light colored page needing to be informed by a 
 ```css
 [data-theme="light"] {
     /* You can also just make this the default and
-    set on :root but I prefer to be explicit */
+    set on :root but I prefer to be explicit in scope */
     --button-primary-background-color: black;
 }
 
@@ -65,7 +69,7 @@ Instead of the dark area and the light colored page needing to be informed by a 
 
 No additional configuration at the component level. No additional token names.
 
-This still requires the design token values to be curated to account for a dark UI but you avoid the naming exercise. Now you can just name the entire collection (theme) as "dark".
+This still requires the design token values to be curated to account for a dark UI but you avoid the naming exercise. Now you can just name the entire collection (theme) as "dark". Think of this name describing yout artboard or design file for this scope.
 
 ## Concerns
 
