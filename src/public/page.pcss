@@ -76,19 +76,19 @@ header {
   color: var(--box-raised-fg);
   filter: var(--box-raised-shadow);
   padding: var(--space--near);
-  border-bottom: 1px solid;
 }
 
 header:after {
   --base-hue: calc(230deg + ((var(--heat) + 1) * -60deg));
   --base-heat: hsl(var(--base-hue) 100% 50%);
+  --light-heat: hsl(var(--base-hue) 100% 90%);
   content: '';
   width: calc(var(--scrollY, 0) * 1%);
-  height: 4px;
+  height: .5em;
   display: block;
   bottom: 0;
   left: 0;
-  background: var(--base-heat);
+  background-image: linear-gradient(to left, var(--base-heat), var(--light-heat));
   box-sizing: border-box;
   position: absolute;
   transition: .218s ease;
