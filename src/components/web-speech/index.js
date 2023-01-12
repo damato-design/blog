@@ -62,7 +62,7 @@ class WebSpeech extends window.HTMLElement {
   connectedCallback() {
     if (!voices.length) {
       getVoices((v) => {
-        this.setAttribute('init', '');
+        if (v.length) this.setAttribute('init', '');
         this._$voice.innerHTML = v
           .sort((a, b) => a.name.localeCompare(b.name))
           .map((voice) => {
