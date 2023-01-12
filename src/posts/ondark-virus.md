@@ -1,14 +1,16 @@
 ---
-title: Be afraid of ondark
-desc: While it might seem intuitive at first, naming your tokens this way doesn't scale.
+title: Ondark virus
+desc: While it might seem intuitive at first, naming your tokens this way is bad for your health.
 heat: 2
 date: 2023-01-10
 draft: true
 ---
 
-The "ondark" virus is infecting token names in the design systems community everywhere. I've tried providing recommendations in token related posts and replies before. However, it seems this approach is becoming more wide-spread so I want to give it one final try to describe the problem with this naming scheme and provide a remedy.
+The "ondark" virus is infecting token names in the design systems community everywhere. I've tried providing recommendations in token related posts and replies before. However, it seems this approach is becoming more wide-spread so I want to give it one final try to describe the problem with this naming scheme and provide some help with prevention.
 
-## The problem
+**This isn't about what a token name should include, it's about what it shouldn't.**
+
+## Prognosis
 
 Imagine you have a UI which is primarily light colored. Perhaps a white background with nearly black text. There's a section in this UI that you want to have a stark contrast with the rest of the page. In this section, you have some text lockup and a call-to-action button. The button has all the same properties that other buttons in the system have, except it's located on this dark background.
 
@@ -28,13 +30,15 @@ The problem is that for every UI element that _might_ appear in this section in 
 
 No bueno.
 
-## Semantic tokens or bust
+## Remedy
+
+### Semantic tokens
 
 The first step is fully investing in semantic tokens. [I've called them "intents"](./tokens-as-intents) in the past to further enforce the expectation that the name describes purpose over value. We're talking about token names like `--button-background` or `--input-focused-critical-border-color` which give information about the component or pattern and the property being influenced. In no way does it give any information about what the value of this color is. The more you avoid encoding the value in the name, the more flexible your system will be with the opportunity for that color to change in the future.
 
 This extends to any token; describe the purpose and avoid the value when naming.
 
-## Scoped themes
+### Scoped themes
 
 A theme is the collection of values assigned to semantic tokens. The semantic tokens are a contract that should have permanence and meet expectations of folks building UI over time. These are the tokens that appear on the _left-side_ of a theme. The values that would appear on the _right-side_ can and should have a separate stakeholder, most likely one that represents a brand. I recommend avoiding managing both sides if possible to not introduce subjective bias or confusion in token naming.
 
@@ -67,7 +71,7 @@ Now for the key insight. Instead of the dark area and the light colored page nee
 
 Now the only name you need is the one describing the theme; "dark".
 
-## Moving forward
+## Prescription
 
 This still requires the design token values to be curated to account for a dark UI. If you worried about defining an entire new theme worth of tokens, start small. Only define the ones you need at first; maybe background, text and button. At some point you might have the resources to define it all and then you'll have an entire new theme to try.
 
@@ -86,4 +90,16 @@ This new recommendation also requires that the system delivering themes be flexi
 </body>
 ```
 
-This is in contrast to [what I've recommended before](./tokens-as-intents) and I've learned from that mistake. The possibility of multiple types of buttons to appear on an colored background requires something better. With this experience, I have confidence that it is.
+## Recovery
+
+If you're already using the "ondark" naming convention, it'll be hard to move to this new system. That goes for any semantic token that was expected for public use. Deprecating tokens at the semantic tier is very difficult because they could be used anywhere across the platform. 
+
+Luckily there's a path forward:
+
+1. First, you can setup the scopes and apply within the UI in the appropriate locations.
+1. Then define the values for those themes, making note of the UI elements that exist in those locations.
+1. Start serving those themes to the pages, which will be inert at first because no UI elements should reference the tokens.
+1. Finally, either remove the component configuration that applies the dark theme or update the semantic token assignments to the generic versions.
+1. You can now safely remove the "ondark" token virus.
+
+I wish you best of luck in your path toward recovery. 
