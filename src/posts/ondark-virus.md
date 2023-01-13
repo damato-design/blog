@@ -54,7 +54,7 @@ And certainly when posed with limited resources, it's entirely possible for the 
 {% endaside %}
 
 {% aside %}
-Note that the idea of "dark-mode" is also well represented by providing a dark theme. A user preference for "high-contrast mode" is asking for a high-contrast theme. The mode is the user preference. The theme is a collection of value assignments that aim to satisfy the mode.
+Note that for simplicity the idea of "dark-mode" is also well represented by providing a dark theme. A user preference for "high-contrast mode" is asking for a high-contrast theme. The mode is the user preference. The theme is a collection of value assignments that aim to satisfy the mode.
 {% endaside %}
 
 Now for the key insight — instead of the dark area and the light colored page needing to be informed by a single theme, **think of the dark area as an entirely separate theme**. In this way, the values that represent `--button-background` can change depending on scope.
@@ -103,4 +103,72 @@ Luckily there's a path forward:
 1. Finally, either remove the component configuration that applies the dark theme or remove the "ondark" token assignments for the more generic tokens.
 1. You can now safely remove the "ondark" token virus from your system.
 
-I wish you best of luck in your path toward recovery. 
+I wish you best of luck in your path toward recovery.
+
+---
+
+**EDIT (2023-01-12):** [Dave](https://desandro.com/) posted a great question as a follow-up and it deserves addressing.
+
+{% quote "https://twitter.com/desandro/status/1613568348331155456" "Dave DeSandro" %}
+
+I'm curious how you would accommodate session-level Dark Mode? Does the hero theme stay dark, or maybe sub-themes like `data-theme='inverted'`
+
+{% endquote %}
+
+[My reply](https://twitter.com/donniedamato/status/1613583101493481487) was half-joking but in seriousness, the answer is to continue leaning into semantic naming at the _scope_ level. For the purposes of this demonstration, it was more helpful to use the word "dark" to further cement what was happening within the scope. In practice, the scope should be described with some meaning or purpose for the change in scope over expected appearance. For the examples above, the "light" theme could instead be the "base" theme as it is meant to be the default. The "dark" theme could be "feature" theme as it is meant to highlight features (in our examples).
+
+```html
+<body data-theme="base">
+    <button>Login</button>
+    <section data-theme="feature">
+        <button>Click here</button>
+    </section>
+</body>
+```
+
+This way user preferences could be read to determine what values are applied to which scope.
+
+```css
+/* no-preference */
+[data-theme="base"] {
+  /* light colored assignments */
+}
+
+[data-theme="feature"] {
+  /* dark colored assignments */
+}
+
+
+@media (prefers-color-scheme: light) {
+  [data-theme="base"] {
+    /* light colored assignments */
+  }
+
+  [data-theme="feature"] {
+    /* slight contrast to light assignments as needed */
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-theme="base"] {
+    /* dark colored assignments */
+  }
+
+  [data-theme="feature"] {
+    /* slight contrast to dark assignments as needed */
+  }
+}
+```
+
+If you want to be more efficient, only serve the user-preference when it is set.
+
+```html
+<!-- first stylesheet is no-preference -->
+<link href="default.css" rel="stylesheet" />
+<link href="light.css" rel="stylesheet" media="(prefers-color-scheme: light)" />
+<link href="dark.css" rel="stylesheet" media="(prefers-color-scheme: dark)" />
+```
+
+As you can see, things get complicated when you are including user preference alongside the scoped themes but "ondark" is definitely not solving this. For scoped themes, it's complex but not impossible. During the first pass, I recommend leaving user preference out to keep the execution simple but plan for it in a future implementation.
+
+If it was only as easy as `body { filter: invert(1); }`!
