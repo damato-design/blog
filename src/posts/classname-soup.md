@@ -5,7 +5,7 @@ heat: 2
 date: 2023-01-17
 ---
 
-The internet blew up against regarding CSS frameworks and there have been no shortage of responses. While this could just be more fuel to the fire, I hope this will be evergreen and reflect on any similar approaches that are developed over time. This also has the benefit of avoiding the name of any single framework in particular and instead comment on the direction as a whole.
+The internet blew up again regarding CSS frameworks and there have been no shortage of responses. While this could just be more fuel to the fire, I hope this will be evergreen and reflect on any similar approaches that are developed over time. This also has the benefit of avoiding the name of any single framework in particular and instead comment on the direction as a whole.
 
 ## Lightbulb moment
 
