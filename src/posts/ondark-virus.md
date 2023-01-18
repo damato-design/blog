@@ -33,7 +33,7 @@ No bueno.
 
 ### Semantic tokens
 
-The first step is fully investing in semantic tokens. [I've called them "intents"](./tokens-as-intents) in the past to further enforce the expectation that the name describes purpose over value. We're talking about token names like `--button-background` or `--input-focused-critical-border-color` which give information about the component or pattern and the property being influenced. In no way does it give any information about what the value of this color is. The more you avoid encoding the value in the name, the more flexible your system will be with the opportunity for that color to change in the future.
+The first step is fully investing in semantic tokens. [I've called them "intents"](../tokens-as-intents) in the past to further enforce the expectation that the name describes purpose over value. We're talking about token names like `--button-background` or `--input-focused-critical-border-color` which give information about the component or pattern and the property being influenced. In no way does it give any information about what the value of this color is. The more you avoid encoding the value in the name, the more flexible your system will be with the opportunity for that color to change in the future.
 
 This extends to any token; describe the purpose and avoid the value when naming.
 

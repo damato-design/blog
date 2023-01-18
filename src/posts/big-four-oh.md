@@ -9,7 +9,7 @@ It's my birthday today, 40 times around the sun. I reflect back to the first tim
 
 ## Complementary Space
 
-A topic that I've [written about on my blog](./spacing-solved) and [spoke about at a conference earlier this year](https://www.youtube.com/watch?v=W2P-Bhbcj9k) is a new way to think of spacing tokens called [Complementary Space](https://complementary.space/). It's the follow-up to [Gridless Design](https://gridless.design/) which got a great deal of interest last year. Complementary Space has gotten a bit less attention but I think that's understandable because it is experimental and not strictly design token based. It needs a different kind of mindset to fully embrace. Releasing it so close to the holidays was also probably bad timing. However, I appreciate all of the feedback I've received on it.
+A topic that I've [written about on my blog](../spacing-solved) and [spoke about at a conference earlier this year](https://www.youtube.com/watch?v=W2P-Bhbcj9k) is a new way to think of spacing tokens called [Complementary Space](https://complementary.space/). It's the follow-up to [Gridless Design](https://gridless.design/) which got a great deal of interest last year. Complementary Space has gotten a bit less attention but I think that's understandable because it is experimental and not strictly design token based. It needs a different kind of mindset to fully embrace. Releasing it so close to the holidays was also probably bad timing. However, I appreciate all of the feedback I've received on it.
 
 ## Connecting with community
 
