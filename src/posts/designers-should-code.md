@@ -3,12 +3,12 @@ title: Designers should code
 desc: Medium ignorance is detrimental when communicating your intentions.
 heat: 1
 date: 2023-01-19
-draft: true
+draft: false
 ---
 
-In the book "Syntactic Structures", linguist Noam Chomsky composes the following sentence:
+In the book "[Syntactic Structures](https://books.google.com/books/about/Syntactic_Structures.html?id=a6a_b-CXYAkC)", linguist [Noam Chomsky](https://chomsky.info/) composes the following sentence:
 
-{% quote %}
+{% quote "https://en.wikipedia.org/wiki/Colorless_green_ideas_sleep_furiously" "Noam Chomsky" %}
 Colorless green ideas sleep furiously.
 {% endquote %}
 
