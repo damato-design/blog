@@ -3,7 +3,7 @@ title: Designers should code
 desc: Medium ignorance is detrimental when communicating your intentions.
 heat: 1
 date: 2023-01-19
-draft: false
+draft: true
 ---
 
 In the book "[Syntactic Structures](https://books.google.com/books/about/Syntactic_Structures.html?id=a6a_b-CXYAkC)", linguist [Noam Chomsky](https://chomsky.info/) composes the following sentence:
