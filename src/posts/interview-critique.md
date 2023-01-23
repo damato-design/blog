@@ -8,13 +8,21 @@ draft: true
 
 Every morning before I start the day, instead of coffee to kickstart my brain, I look for some short videos to watch. Some times they are videos I've seen before that I liked, others might have been published in the last 24 hours. The topics range from action clips in big movies to a complication of cats who enjoy water. Every once in a while, I'll find some video about about design or coding and give it a shot.
 
-The [Web Dev Junkie](https://www.youtube.com/@WebDevJunkie) channel has over 80,000 subscribers. The creator seems to have a new video published _every single day_. [The video I'll be critizing](https://www.youtube.com/watch?v=-Rtlnsgbc0k) has 30,000 views and the title of this video is:
+As of this writing, the [Web Dev Cody](https://www.youtube.com/@WebDevCody) channel has over 85,000 subscribers. The creator seems to have a new video published _every single day_. [The video I'll be critizing](https://www.youtube.com/watch?v=-Rtlnsgbc0k) has nearly 40,000 views and the title of this video is:
 
 **This is a good beginner React interview challenge question**
 
 From the title, I assume that the presenter would be providing a question that they had experience with in an interview setting, either as a interviewer or interviewee. As a person with experience in both, I'm going to assess how this person would do coming in for an interview as a engineer on a feature team. Let's assume we have the following prompt.
 
 > Starting from the given React + Vite project, and using the [datamuse API](https://www.datamuse.com/api/), build a small form which allows a user to enter a word and retrieve a list of synonyms.
+
+{% aside %}
+For the purposes of this mock assessment I'm acting as if I am interviewing this candidate for a front-end role, as is my specialty. The presenter mentioned that the purpose was to test React skills. The [React website](https://reactjs.org/) has the following subheadline:
+
+> A JavaScript library for building user interfaces
+
+So it is valid to assume we're using React to build something for the front-end where user interfaces live on the web.
+{% endaside %}
 
 ## A good start
 
@@ -28,7 +36,7 @@ The candidate then adds a button and realizes that there are some default styles
 
 The candidate then begins to prepare the form for submission by adding an event handler to the form and calling `event.preventDefault()`, mentioning that it's important to use otherwise "this form will refresh your page". This is not the full story, as the form is meant to send the data to a url given by the required [`action`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form#attr-action) attribute which will process the data and then handle the next step; usually by displaying a new page showing success or failure. That "refresh" that occurs is actually the response from the url request. If the url is not set, that's when the page submits to itself causing the refresh. Luckily, the expectation is to send the request on form submit.
 
-While we're using a lot of JavaScript in order to create the application, we could use React to render this as SSR and then [progressive enhance the form](https://www.bram.us/2022/04/22/progressive-enhancement-and-html-forms-use-formdata/). However, I wouldn't expect this approach from a beginner but I'd be on the lookout for folks who understand the expected semantic of HTML forms.
+While we're using a lot of JavaScript in order to create the application, we could use React to render this as SSR and then [progressive enhance the form](https://www.bram.us/2022/04/22/progressive-enhancement-and-html-forms-use-formdata/). Unfortunately, I wouldn't expect this approach from a beginner but I'd be on the lookout for folks who understand the expected semantic of HTML forms.
 
 The candidate does a nice job reading the API documentation and determining how to formulate a request. Especially since the API doesn't show any full code examples of a request; just partial url constructions. They're able to construct a basic test request using `fetch()` within the handler, transform the response to JSON, and store the data within the state.
 
@@ -38,7 +46,7 @@ So for the final part, we'll need to render out the words. The candidate opts to
 
 However, as the candidate mentions "I wouldn't care about styling", it immediately sets off a red flag. While many tech interviews may look similar to what's happening in this video, the actual role is often very different. You aren't often building new features or applications but instead maintaining old ones and updating the styles to make them look new. That's why styling is so important. Having the ability to effortlessly rearrange the components within the experience while maintaining the legacy system is probably the most common task in web development careers. When I conduct an interview, there is often a discussion on styling since much of the role is how well you can debug or alter an existing style to match design expectations. This, along with considering accessibility, localization, and other user-centered metrics.
 
-The candidate notices an error in the web console, expecting a unique `key` for each element in the list. The candidate mentions they always miss this, especially when the linter isn't setup. I'm less empathatic to this, if this is something you _always_ miss, I'd make it a point to _never_ miss it again. In my experience, I don't rely on tools to correct me but that's because I've been coding before these tools existed. It's also because I'm never sure where I'll be writing code. It's entirely possible that I could be authoring code in a web IDE that doesn't have all the bells and whistles. Just because the tools aren't available shouldn't render me helpless to write working code. I understand these tools are helpful for beginners but I'm not assessing the tool's features, I'm assessing your skills.
+The candidate notices an error in the web console, expecting a unique `key` for each element in the list. The candidate mentions they always miss this, especially when the linter isn't setup. I'm less empathetic to this. If this is something you _always_ miss, I'd make it a point to _never_ miss it again. In my experience, I don't rely on tools to correct me but that's because I've been coding before these tools existed. It's also because I'm never sure where I'll be writing code. It's entirely possible that I could be authoring code in a web IDE that doesn't have all the bells and whistles. Just because the tools aren't available shouldn't render me helpless to write working code. I understand these tools are helpful for beginners but I'm not assessing the tool's features, I'm assessing your skills.
 
 The candidate now notices a bug, the word `fast` was hard-coded within the request so that the user input wasn't being considered. The correction made was to send the user input _directly into the request_. Old timers will remember the [Bobby Tables XKCD comic](https://xkcd.com/327/) which humorously reminds us to always sanitize user input. While probably not detrimental for this particular application, a user could append `&topics=temperature` to the end of their word and alter the results. I might not expect a beginner to catch this, but I'd certainly demonstrate the problem and raise a conversation about it.
 
@@ -50,7 +58,7 @@ At this point, we might agree for some added functionality to be implemented. Cl
 
 The candidate then notices that the request from the input and from the click are the same, just changing the word. This shows an opportunity to abstract this function for reuse in both scenarios. While the first approach is fine for a beginner (having the form and the click call the same function), the candidate instead decides to create a few layers of abstraction. First creating an `/api` directory and setting up an adapter to handle the request functionality. Then they also create a `/hooks` directory for a custom hook to use this local adapter. All of this might seem like a premature optimization but I'm interested in the journey.
 
-The hook signature presented isn't something I'm familiar with; I've always seen a tuple as the return. Perhaps since this needs to provide a way to trigger the request, return the data, and the signal that loading is happening requires more than two values. However, I wonder if the loading could be held at the application layer, starting when the request is called and clearing the current results and ending when the results are populated. Again, not something I'd expect for a beginner but I'd be interested in the approach.
+This hook signature presented isn't something I'm personally familiar with; I've always seen a tuple as the return. Perhaps since this needs to provide a way to trigger the request, return the data, and the signal that loading is happening requires more than two values. However, I wonder if the loading could be held at the application layer, starting when the request is called and clearing the current results and ending when the results are populated. I think it would make an interesting conversation and I'd like to know the benefits and drawbacks to it.
 
 Due to the use of promises, I'd expect to have a conversation about error handling. If the API being called errors, `setIsLoading()` will never be called. This can be solved by using [`.finally()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/finally) instead of a plain `.then()`. This will fire after everything is done, error or success.
 
@@ -58,7 +66,9 @@ Also on seeing the result of the new loading screen, I'd like to ask what could 
 
 ## The verdict
 
-Ultimately, I'd pass on this candidate. Primarily for the lack of interest in CSS, and somewhat for the skills not being different from any other engineer out there that _does_ have CSS skills. I'm afraid that at this point in time, I might be able to give a few prompts to [ChatGPT](https://openai.com/blog/chatgpt/) and get similar results.
+Ultimately, I'd pass on this candidate for a front-end role. Primarily for the lack of interest in CSS, and somewhat for the skills not being different from any other engineer out there that _does_ have CSS skills. I'm afraid that at this point in time, I might be able to give a few prompts to [ChatGPT](https://openai.com/blog/chatgpt/) and get similar results.
+
+It is entirely possible that my experience skews me to have a different definition of a front-end role. However, front-end in _any_ definition should include the languages of the browser because that _is_ definitively front-end. The server is _not_ the front, it is very much the back. How we serve to the front-end could be (and often is) included in a front-end role. Which is why I think understanding the configuration of Vite is a nice-to-have, while a working knowledge of CSS is a must. If you want to avoid the CSS, then you're looking for any role that _isn't_ front-end.
 
 When I interviewed for my current position, I did the majority of the interview exercises using [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components). While I'm not entirely sure what was considered in my review meeting, I assume the team was impressed in being able to write Web Components without a framework. It's a very unique skill that you can transfer to practically any project.
 
@@ -66,4 +76,4 @@ The other point to note is that at this time I knew very little React. I think t
 
 In my view, it's a shame that there's so much emphasis put on concepts that aren't part of the regular job or aren't different from the next engineer coming in from a bootcamp. I think it's important to show interest and a quest for expertise in _something_ to stand out from the rest. 
 
-As a recent example, the last person I interviewed said she had fun writing her own code compilers and I think that's awesome. She was hired for her first tech job out of college. She then proceeded to grumble about the one-line PRs looking for more impact. Sorry to say, its often a wish upon a midnight feature.
+As a recent example, the last person I interviewed said she had fun writing her own code compilers and I think that's awesome. She was hired for her first tech job out of college. She then discovered much of the real world changes were one-line PRs. Sorry to say more impact is often a wish upon a midnight feature.
