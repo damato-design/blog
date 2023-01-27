@@ -133,15 +133,9 @@ header a {
   --dark-heat: hsl(var(--base-hue) 100% 20%);
   --shadow-heat: hsla(var(--base-hue) 100% 5%);
   padding: var(--space--near);
-  background-color: var(--box-contrast-bg);
-  color: var(--box-contrast-fg);
-  background: linear-gradient(
-    to bottom,
-    var(--dark-heat),
-    var(--box-contrast-bg)
-  );
   border-radius: inherit;
   border: inherit;
+  border-color: var(--base-heat);
   overflow: hidden;
 }
 
@@ -158,56 +152,38 @@ header a {
   position: relative;
 }
 
-.feature-lockup:after {
-  content: "";
-  height: 100%;
-  max-height: 50vh;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  z-index: 0;
-  transform: skewx(15deg) skewy(15deg);
-  background-position: center;
-  background-size: 2rem 2rem;
-  background-color: transparent;
-  background-image: linear-gradient(var(--dark-heat) 1px, transparent 1px),
-    linear-gradient(90deg, var(--dark-heat) 1px, transparent 1px);
-  opacity: 1;
-}
-
 .post-heat {
   border-radius: 2rem;
-  border: 0.25rem solid;
+  border: 0.25rem solid var(--base-heat);
   font-family: Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans,
     sans-serif;
-  background-color: var(--dark-heat);
+  background-color: var(--light-heat);
   text-transform: uppercase;
   padding: 0.3em 0.6em;
   font-size: 0.8rem;
-  box-shadow: 0 0 1em var(--base-heat);
   position: relative;
   z-index: 1;
   color: var(--box-contrast-fg);
 }
 
+[style] .post-heat:before {
+  filter: brightness(0);
+}
+
 [style*="--heat:0"] .post-heat:before {
   content: "Mild 🌶️";
-  filter: brightness(100);
 }
 
 [style*="--heat:1"] .post-heat:before {
   content: "Medium 🌶️🌶️";
-  filter: brightness(100);
 }
 
 [style*="--heat:2"] .post-heat:before {
   content: "Hot 🌶️🌶️🌶️";
-  filter: brightness(100);
 }
 
 [style*="--heat:3"] .post-heat:before {
   content: "Volcanic 🌶️🌶️🌶️🌶️";
-  filter: brightness(100);
 }
 
 .post-title {
@@ -216,19 +192,22 @@ header a {
   font-family: "Oooh Baby";
   font-weight: 700;
   line-height: 1;
-  text-shadow: 0 -0.75em 1em, 0 0 0.1em, 0 0 1em var(--base-heat),
-    0 0 0.5em var(--base-heat), 0 0 0.1em var(--base-heat),
-    0 0.2em 0.02em var(--box-contrast-bg);
   position: relative;
   z-index: 1;
   margin-block: 0;
+  transform: skew(10deg, -2deg);
+}
+
+.post-title span {
+  background-image: linear-gradient(var(--base-heat), var(--base-heat));
+  background-size: 100% .4em;
+  background-position: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 .post-description {
   font-size: 1rem;
-  color: var(--light-heat);
-  border-left: 2px solid;
-  box-shadow: inset 1.25em 0 2em -1.75em var(--base-heat);
+  border-left: 2px solid var(--base-heat);
   padding: var(--space--near);
   margin: 0;
   margin-block-start: auto;
@@ -288,44 +267,5 @@ header a {
     color: currentcolor;
     box-shadow: none;
     border-color: var(--base-heat);
-  }
-}
-
-@keyframes blink {
-  78% {
-    color: inherit;
-    text-shadow: inherit;
-  }
-  79% {
-    color: var(--box-contrast-bg);
-  }
-  80% {
-    text-shadow: none;
-  }
-  81% {
-    color: inherit;
-    text-shadow: inherit;
-  }
-  82% {
-    color: var(--box-contrast-bg);
-    text-shadow: none;
-  }
-  83% {
-    color: inherit;
-    text-shadow: inherit;
-  }
-  92% {
-    color: var(--box-contrast-bg);
-    text-shadow: none;
-  }
-  92.5% {
-    color: inherit;
-    text-shadow: inherit;
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .post-title [style*="--n"] {
-    animation: blink linear infinite 5.1s calc((var(--i, 0) + var(--n)) * 3.7s);
   }
 }
