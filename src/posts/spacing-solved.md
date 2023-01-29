@@ -1,6 +1,6 @@
 ---
 title: Spacing solved
-desc:  I've been on a journey to understand the way we think of space within a digital interface and I think I've reached a point of understanding that might help shift traditional approaches to something more systematic.
+desc:  Shifting traditional approaches to something more semantic.
 heat: 2
 date: 2022-05-09
 ---

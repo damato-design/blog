@@ -1,6 +1,6 @@
 ---
 title: Tokens as intents
-desc:  Design tokens are ubiquitous in design systems and allow for individual values to be reused with a single name. What should that naming system be?
+desc:  Naming your parts with purpose.
 heat: 1
 date: 2022-05-12
 ---

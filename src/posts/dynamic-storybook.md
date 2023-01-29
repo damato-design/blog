@@ -1,6 +1,6 @@
 ---
 title: Dynamic Storybook
-desc:  I revisit a Storybook approach I used a few years ago to help visualize all my components' configurations at once. And why its not recommended in modern Storybook versions.
+desc:  A Storybook approach to visualize all my components' configurations and why its not recommended in Storybook today.
 heat: 0
 date: 2022-06-14
 ---

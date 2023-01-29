@@ -1,6 +1,6 @@
 ---
 title: Classname soup
-desc: I explain the problem with a superfluous utility class approach when styling components and why I choose a different path.
+desc: The problem with a superfluous utility class approach and why I choose a different path.
 heat: 2
 date: 2023-01-17
 ---

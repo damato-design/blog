@@ -1,6 +1,6 @@
 ---
 title: Fetching web component definitions
-desc: I've been using a technique for a few years which passively fetches a web component definition once it is discovered on a page.
+desc: Passively requesting code once an element is discovered on a page.
 heat: 0
 date: 2022-04-12
 ---

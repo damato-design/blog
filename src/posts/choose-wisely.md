@@ -1,6 +1,6 @@
 ---
 title: Choose wisely
-desc: The act of making a selection is a critical part of user experience as it creates a path which we hope lands at a goal. This post explores the different ways users can make decisions in an interface and why designers should use these patterns.
+desc: The act of making a selection is a critical part of user experience as it creates a path which we hope lands at a goal.
 heat: 1
 date: 2022-08-15
 ---
