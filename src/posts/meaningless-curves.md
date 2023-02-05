@@ -1,5 +1,5 @@
 ---
-title: Rounding error
+title: Meaningless curves ahead
 desc: Semantic nested rounding is systematically inconceivable. 
 heat: 3
 date: 2023-02-01
@@ -95,4 +95,10 @@ Let's say we start at the base level again with a rounded button, then we have a
 
 At this point we're really more in search of a _layout_ system than just a rounding system. Prescribing layouts _could_ warrant the possibility of informing how round parts should be due to restrictions set by components of the system. We could know exactly what elements exist and the amount of space between them. Creating a robust layout system is outside the scope of this exploration since that would attempt to define all possible layouts for any hypothetical experience; a monumental task.
 
-So for the moment, I don't believe there's any possibility of a semantic nested rounding system due to the natural dependencies on existing elements. We're unfortunately stuck with a more meaningless system which can provide few nesting effects for curated components. For larger curated compositions, I'm afraid we'll be running in circles.
+So for the moment, I don't believe there's any possibility of a semantic nested rounding system due to the natural dependencies on existing elements. We're unfortunately stuck with a more meaningless system which can provide few nesting effects for curated components. But maybe that's the point. Other properties are decided in an experience based on qualities like feedback, hierarchy, and relationship:
+
+- The color orange often indicates a warning.
+- Large text can support a section outline heading.
+- Less space between items means they are related.
+
+What information does corner rounding convey past being round? [Goose egg](https://en.wiktionary.org/wiki/goose_egg) 🥚.
