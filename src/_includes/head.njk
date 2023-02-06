@@ -19,3 +19,11 @@
 <link rel="stylesheet" href="/public/article.css">
 <style type="text/css">img { max-width: 100%; }</style>
 <script type="text/javascript" defer src="/public/components.min.js"></script>
+<script src="https://getinsights.io/js/insights.js"></script>
+<script>
+insights.init('ElNA3FxZojiB2RsK', {
+  disabled: '{{ metadata.hostname }}' !== window.location.hostname
+});
+console.info(`Analytics disabled: ${insights.DEFAULT_APP.options.disabled}`);
+insights.trackPages();
+</script>
