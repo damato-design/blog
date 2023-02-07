@@ -3,7 +3,6 @@ title: Meaningless curves ahead
 desc: Semantic nested rounding is systematically inconceivable. 
 heat: 3
 date: 2023-02-07
-draft: true
 ---
 
 The tiered system of design tokens has been fairly well-established to include [semantic tokens](../tokens-as-intents). Color, typography, and even [spacing](https://complementary.space) can be described through semantic means. This drives the question, how do we name other properties semantically to further describe a generic experience?
