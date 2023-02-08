@@ -2,7 +2,7 @@
 title: Designers should code
 desc: Medium ignorance is detrimental when communicating your intentions.
 heat: 1
-date: 2023-01-19
+date: 2023-02-08
 draft: true
 ---
 
@@ -18,9 +18,9 @@ The example demonstrates a sentence that is grammatically correct but possess no
 
 A great painter doesn't only possess the creativity to make a beautiful scene, they also know their medium. They know how the paints work together, and how they adhere to the canvas. They can make decisions on what kinds of paints to use against a certain canvas. They will have an in-depth knowledge of these factors to achieve satisfying results. They also know the limitations of the medium; they should not create a sculpture with the paint. It doesn't mean that they cannot continuously layer paint onto the canvas to produce a sculpture. It means that approach is unexpected to the medium.
 
-When designing products for a population, the best approach is to design as expected. Create experiences people are familiar with well-established patterns. It doesn't mean you can't experiement in limited capacities, but it does mean that you might not receive the same engagement that an expected interaction would have. There is friction for users that come across new patterns. When you [reduce this friction](LAWS OF UX) and present experiences that users are commonly familiar with, your experience is percieved as faster, more efficient, and beneficial.
+When designing products for a population, the best approach is to design as expected. Create experiences people are familiar with well-established patterns. It doesn't mean you can't experiement in limited capacities, but it does mean that you might not receive the same engagement that an expected interaction would have. There is friction for users that come across new patterns. When you reduce this friction and [present experiences that users are commonly familiar with](https://lawsofux.com/jakobs-law/), your experience is percieved as faster, more efficient, and beneficial.
 
-In order to understand expectations as a designer working in a medium (ie., the web), you should have a general understanding of how that medium works. What is expected and what the pitfalls are. While you could learn these things through conversations and media; I feel the best way is to actually code. [DO IT MEME]
+In order to understand expectations as a designer working in a medium (ie., the web), you should have a general understanding of how that medium works. What is expected and what the pitfalls are. While you could learn these things through conversations and media; I feel the best way is to [actually code](https://www.youtube.com/watch?v=ZXsQAXx_ao0).
 
 **Let me be clear**
 
