@@ -67,7 +67,7 @@ The solution I have for this is to implement a low-level language that can be bu
 The `$operations` key is still an array which is necessary to ensure we can have a sequential step. The first concept is that each item (except for the first in this example) is an **operation**. It has the following signature:
 
 ```json
-["OperationReference", "$argument1", "$argument2", "argument3",...]
+["OperationReference", "argument1", "argument2", "argument3",...]
 ```
 
 The first item in each operation array references some well-known function that can be implemented across token processing tools and vendors. For this to work, I believe we'll need at least `String` and `Math` with a few additional methods to support standard operations (eg., `Math.add`). This is something that can be included in the tokens specification if agreeable.
