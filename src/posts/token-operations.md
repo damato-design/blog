@@ -1,5 +1,5 @@
 ---
-title: Token operatons
+title: Token operations
 desc: Defining transforms into a specification.
 heat: 2
 date: 2023-05-31
