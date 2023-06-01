@@ -107,23 +107,41 @@ Clearly, we would not want to write all of these operations in order to apply op
   "primary-color-overlay": {
     "$type": "color",
     "$value": "#fffc00",
-    "$operations": [ .5, ["@token-operations/hex-opacity", "$0"] ]
+    "$operations": [ 
+      ["@token-operations/hex-opacity", 0.5]
+    ]
   }
 }
 ```
 
 In the above example `@token-operations/hex-opacity` is completely arbitrary and could be any package registry or url that has an array as the export. The expectation here is that folks might write projects that abstract low-level collections of operations into more user-friendly exports. This is similar to the purpose of the [Lit framework](https://lit.dev/) for component authoring; to make web component development more accessible with a level of abstraction.
 
-The special sauce would be within the operations parser. Since the first argument in an operation is meant to be a reference to a function (eg., `String.concat`), we could also check for a potential file to import here or have some other special syntax. The result would be to inject the operations array related to this reference in place as a nested operation with its own scoped step indicies.
+The special sauce would be within the operations parser. Since the first argument in an operation is meant to be a reference to a function (eg., `String.concat`), we could also check for a potential file to import here or have some other special syntax. The result would be to inject the operations array related to this reference in place as a nested operation with its own scoped step indicies. The trailing arguments of the import are then placed in the beginning of the imported operation set since each curated operation has an expected signature.
 
 ```json
 {
   "primary-color-overlay": {
     "$type": "color",
     "$value": "#fffc00",
-    "$operations": [.5, [...<@token-operations/hex-opacity>]]
+    "$operations": [
+      // First level of operations
+      [
+        // Second level of operations (nested), final output returns to parent operation result in place
+        0.5, // First argument after import operation, placed at $0 in nested operation
+        ["String.match", "$value", "#([0-9A-Fa-f]{2})"],
+        ["String.match", "$value", "#(?:[0-9A-Fa-f]{2})([0-9A-Fa-f]{2})"],
+        ["String.match", "$value", "#(?:[0-9A-Fa-f]{4})([0-9A-Fa-f]{2})"],
+        ["Math.parseInt", "$1", 16],
+        ["Math.parseInt", "$2", 16],
+        ["Math.parseInt", "$3", 16],
+        ["String.concat", ",", "$4", "$5", "$6", "$0"],
+        ["String.concat", "", "rgba(", "$7", ")"]
+      ]
+    ]
   }
 }
 ```
+
+This way, imported operations can be chained while maintaining the positional references for each step.
 
 In this way, as long as token processors include the low-level operational functions and the standardized way to execute them, you can define any kind of transform you need right within the token file.
