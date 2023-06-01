@@ -96,6 +96,8 @@ The result of each operation is stored in a special variable reference related t
 
 This would also include a special `$value` which refers to the original token value.
 
+One of the larger benefits to this approach is that the low-level set of operations don't receive a name, which avoids contention about naming of operations from within the specification (ie., should it be `opacity` or `alpha`). Names would only be needed when sharing sets of operations between token authors.
+
 ## Reusing common operations
 
 Clearly, we would not want to write all of these operations in order to apply opacity to a given token each time. We'll need a way to reference a set of operations. This could be supported by allowing an import syntax within the specification. [I've suggested this idea before in the community group.](https://github.com/design-tokens/community-group/issues/210#issuecomment-1501037423) It could look like this for operations:
@@ -110,9 +112,9 @@ Clearly, we would not want to write all of these operations in order to apply op
 }
 ```
 
-In the above example `@token-operations/hex-opacity` is completely arbitrary and could be any package registry or url that has an array as the export. The expectation here is that folks might write projects that abstract low-level collections of operations into more user-friendly exports. This is similar to the purpose of the [Lit framework](https://lit.dev/) for component authoring; to make web component development more accessible.
+In the above example `@token-operations/hex-opacity` is completely arbitrary and could be any package registry or url that has an array as the export. The expectation here is that folks might write projects that abstract low-level collections of operations into more user-friendly exports. This is similar to the purpose of the [Lit framework](https://lit.dev/) for component authoring; to make web component development more accessible with a level of abstraction.
 
-The special sauce would be within the operations parser. Since the first argument in an operation is meant to be a reference to a function, we could also check for a potential file to import here or have some other special syntax. The result would be to spread the operations array related to this reference in place and then transform.
+The special sauce would be within the operations parser. Since the first argument in an operation is meant to be a reference to a function (eg., `String.concat`), we could also check for a potential file to import here or have some other special syntax. The result would be to spread the operations array related to this reference in place and then transform.
 
 ```json
 {
