@@ -142,6 +142,6 @@ The special sauce would be within the operations parser. Since the first argumen
 }
 ```
 
-This way, imported operations can be chained while maintaining the positional references for each step.
+The purpose of this is so imported operations can be chained while maintaining the positional references for each step. In other words, we want to maintain the meaning of `$0` related to the rest of the steps in place.
 
 In this way, as long as token processors include the low-level operational functions and the standardized way to execute them, you can define any kind of transform you need right within the token file.
