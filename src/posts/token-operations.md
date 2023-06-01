@@ -80,7 +80,7 @@ The result of each operation is stored in a special variable reference related t
     "$type": "color",
     "$value": "#fffc00",
     "$operations": [
-      0.5, // .5 stored at $0
+      0.5, // 0.5 stored at $0
       ["String.match", "$value", "#([0-9A-Fa-f]{2})"], // 'ff' stored at $1
       ["String.match", "$value", "#(?:[0-9A-Fa-f]{2})([0-9A-Fa-f]{2})"], // 'fc' stored at $2
       ["String.match", "$value", "#(?:[0-9A-Fa-f]{4})([0-9A-Fa-f]{2})"], // '00' stored at $3
@@ -108,7 +108,9 @@ Clearly, we would not want to write all of these operations in order to apply op
     "$type": "color",
     "$value": "#fffc00",
     "$operations": [ 
-      ["@token-operations/hex-opacity", 0.5]
+      // All items after the import are used as arguments for the nested operation in order
+      // 0.5 stored at $0 for @token-operations/hex-opacity operations
+      ["@token-operations/hex-opacity", 0.5 ]
     ]
   }
 }
