@@ -110,14 +110,16 @@ Clearly, we would not want to write all of these operations in order to apply op
 }
 ```
 
-Since the first argument in an operation is meant to be a reference to a function, we could also check for a potential file to import here or have some other special syntax. The result would be to spread the operations related to this reference in place and then transform.
+In the above example `@token-operations/hex-opacity` is completely arbitrary and could be any package registry or url that has an array as the export. The expectation here is that folks might write projects that abstract low-level collections of operations into more user-friendly exports. This is similar to the purpose of the [Lit framework](https://lit.dev/) for component authoring; to make web component development more accessible.
+
+The special sauce would be within the operations parser. Since the first argument in an operation is meant to be a reference to a function, we could also check for a potential file to import here or have some other special syntax. The result would be to spread the operations array related to this reference in place and then transform.
 
 ```json
 {
   "primary-color-overlay": {
     "$type": "color",
     "$value": "#fffc00",
-    "$operations": [.5, ...<@token-operations/hex-opacity">]
+    "$operations": [.5, ...<@token-operations/hex-opacity>]
   }
 }
 ```
