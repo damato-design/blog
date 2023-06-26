@@ -38,7 +38,7 @@ This is the core of the DTCG specification; a nested object with unique names. A
     "colors": {
         "color-red-500": {
             "type": "color",
-            "value": "#f00
+            "value": "#f00"
         }
     }
 }
