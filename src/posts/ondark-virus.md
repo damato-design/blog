@@ -23,9 +23,9 @@ Most folks might have a button prepared specifically for this scenario. We might
 
 This works fine for this section which covers just the background, text, and button.
 
-Soon after, a request comes in to show a comparison table in this area; showcasing the benefits of the product of feature. In the current system, you'd need tokens to describe all of the borders of the table. Maybe you have something generic that targets borders in this area. But unfortunately you might see a problem begin to appear.
+Soon after, a request comes in to show a comparison table in this area; showcasing the benefits of the product of feature. In the current system, you'd need tokens to describe all of the borders of the table. Maybe you have something generic that targets borders in this area. But unfortunately, you might see a problem begin to appear.
 
-The problem is that for every UI element that _might_ appear in this section in the future, you'd need to define an entire new set of tokens to describe the color for that UI. This is especially exhausting since you've already defined tokens semanitcally for all of these things in the "default" environment. To fully cover the dark area, you'd need to **double the amount of token names** to include the additional "ondark" (or "inverse", "reverse", "contrast") infix.
+The problem is that for every UI element that _might_ appear in this section in the future, you'd need to define an entirely new set of tokens to describe the color for that UI. This is especially exhausting since you've already defined tokens semantically for all of these things in the "default" environment. To fully cover the dark area, you'd need to **double the amount of token names** to include the additional "ondark" (or "inverse", "reverse", "contrast") infix.
 
 No bueno.
 
