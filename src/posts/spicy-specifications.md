@@ -87,7 +87,7 @@ So the expectation here is that there are additional external systems that exist
 
 ## Why not Design Tokens?
 
-[Jacob Miller, Figma Design Advocate, says](https://twitter.com/pwnies/status/1671597246113280001):
+[Jacob Miller, Figma Product Manager, says](https://twitter.com/pwnies/status/1671597246113280001):
 
 > Our reasons for naming it variables was primarily to align with development. Variables, much like css variables, is not just for design tokens, it's also for conditional logic, string translations, etc.
 
