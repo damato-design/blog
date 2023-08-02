@@ -32,7 +32,7 @@ Another part of my coursework required me to interview an expert in my field of 
 
 I've written about [my time as a UX Engineer](../terminal-career) before but, this is where I found the practice of designing systematically. In previous roles, I was in complete control of the look of the website. This was the first time where the experience of the product is separated by its features and in order to maintain a consistent appearance for users; a system of reusable design would emerge. I went on to learn more about the practice of the design systems here; soaking in all the information I could and learning from the folks who came before.
 
-It was at this time that I attended my first Clarity conference in 2008. It was an incredible event with all of these folks facing the same challenges that I was. I knew these were my people. There's truly too many people to thank here, and I continue to learn from this community everyday.
+It was at this time that I attended my first Clarity conference in 2018. It was an incredible event with all of these folks facing the same challenges that I was. I knew these were my people. There's truly too many people to thank here, and I continue to learn from this community everyday.
 
 I thank [Joe Schmitt](https://joe.sh/) for the original concept of [Intents](../tokens-as-intents) (semantic tokens) as well as [Maëlle Gavet](https://www.linkedin.com/in/maellegavet/) and [Jenifer Stewart](https://www.linkedin.com/in/jeniferv) for accepting me as the first UX Engineer at Compass.
 
