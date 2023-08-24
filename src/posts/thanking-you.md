@@ -1,6 +1,6 @@
 ---
 title: Thanking you
-desc: My journey in contributing with the community
+desc: My journey in contributing with the community.
 heat: 0
 date: 2023-08-02
 draft: false

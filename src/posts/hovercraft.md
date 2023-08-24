@@ -1,9 +1,8 @@
 ---
 title: Hovercraft
-desc: Barely noticeable design fun causes token explosions. 
+desc: Barely noticeable design fun causes token explosions.
 heat: 2
-date: 2023-08-22
-draft: true
+date: 2023-08-24
 ---
 
 In a world where we apply personality to every little interaction for those sweet engagement metrics, the `:hover` CSS pseudo selector is one of the easiest ways for folks to "make it pop". However, I'll argue that perhaps we don't need to put so much design into it; at least from a token maintenance perspective.
