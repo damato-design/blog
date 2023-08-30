@@ -26,6 +26,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(externalLinks);
   eleventyConfig.addPlugin(pluginMermaid);
   eleventyConfig.addPlugin(EleventyPluginOgImage, {
+    getOutputFileSlug: ({ context }) => context.page.fileSlug,
     satoriOptions: {
       fonts: [
         {
