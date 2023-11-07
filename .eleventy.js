@@ -26,6 +26,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(externalLinks);
   eleventyConfig.addPlugin(pluginMermaid);
   eleventyConfig.addPlugin(EleventyPluginOgImage, {
+    generateHTML: (outputUrl) => outputUrl,
     getOutputFileSlug: ({ context }) => {
       return context?.page?.fileSlug || 'index';
     },
