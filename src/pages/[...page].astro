@@ -1,0 +1,26 @@
+---
+import { getCollection } from 'astro:content';
+import Head from '@components/Head.astro';
+import Header from '@components/Header.astro';
+import Entries from '@components/Entries.astro';
+import Pagination from '@components/Pagination.astro';
+
+export async function getStaticPaths({ paginate }) {
+  const recentFirst = (a, b) => new Date(b.data.date) - new Date(a.data.date);
+  const posts = await getCollection('posts');
+  const published = import.meta.env.PROD ? posts.filter((post) => !post.data.draft) : posts;
+  return paginate(published.sort(recentFirst), { pageSize: 6 });
+}
+const { page } = Astro.props;
+---
+
+<html lang="en">
+  <Head/>
+  <body>
+    <Header/>
+    <div class="max-width">
+      <Entries entries={ page?.data } />
+      <Pagination page={ page } />
+    </div>
+  </body>
+</html>

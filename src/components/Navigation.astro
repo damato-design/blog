@@ -1,0 +1,36 @@
+---
+const { headings = [] } = Astro.props;
+---
+
+<style>
+  ol {
+    font-size: .8rem;
+    list-style: none;
+    counter-reset: item;
+    text-indent: -1em;
+    padding-inline-start: 1em;
+  }
+
+  li {
+    padding-block: .2em;
+  }
+
+  li:before {
+    content: counters(item, ".") " ";
+    counter-increment: item;
+    font-variant-numeric: tabular-nums;
+  }
+
+  a {
+    color: inherit;
+  }
+</style>
+
+<ol>
+  { headings.map(({ slug, text, children }) => (
+    <li>
+      <a href={`#${slug}`} data-slug={ slug }>{ text }</a>
+      <Astro.self headings={ children } />
+    </li>
+  )) }
+</ol>

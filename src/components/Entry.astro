@@ -1,0 +1,105 @@
+---
+import Cover from '@components/Cover.astro';
+import logo from '@components/logo.svg?raw';
+import heatColor from '../heat.js';
+const { entry } = Astro.props;
+const { title, desc, heat, draft, animal = 'caterpillar' } = entry.data;
+const date = entry.data.date.toLocaleString('en-US', { month: 'long', day: '2-digit', year: 'numeric' });
+
+const useAnimal = draft ? 'caterpillar' : animal;
+---
+
+<style define:vars={{ heat: heatColor(entry.data.heat) }}>
+  .entry {
+    padding: 1em;
+    padding-block-start: 0;
+    background: var(--box-raised-bg);
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    color: inherit;
+    box-shadow: 0 0.1rem .5rem rgba(128, 128, 128, .1);
+    aspect-ratio: 8.5/11;
+    position: relative;
+  }
+
+  .entry[data-draft]:before {
+    content: "DRAFT";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    inset: 0;
+    transform: rotate(-45deg);
+    opacity: .5;
+    font-size: 4em;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .entry:after {
+    content: '';
+    display: block;
+    aspect-ratio: 1;
+    width: 2rem;
+    position: absolute;
+    background: linear-gradient(
+			135deg, 
+			#fff, 
+			#f3f3f3 45%, 
+			#ddd 50%, 
+			#f3f3f3 80%,
+			#fff 100%
+		);
+    
+    bottom: 0;
+    right: 0;
+    transform: scale(0);
+    transform-origin: bottom right;
+    transition: .2s ease-out;
+  }
+
+  .entry:hover:after {
+    transform: scale(1);
+  }
+
+
+  .desc {
+    font-style: italic;
+    border-top: 4px solid var(--heat);
+    padding-block: .5em;
+    font-family: Garamond Nova;
+    line-height: 1.1;
+    font-size: .8em;
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  .animal {
+    width: 70%;
+    margin-inline-start: auto;
+    margin-block-start: -20%;
+    isolation: isolate;
+  }
+
+  .footer {
+    margin-top: auto;
+    font-size: .6em;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 1rem;
+    font-family: Garamond Nova;
+    line-height: 1;
+  }
+</style>
+
+<a class="entry" href={ `posts/${entry.slug}` } data-draft={ draft }>
+  <div class="desc">{ desc }</div>
+  <Cover heat={ heat }>{ title }</Cover>
+  <img class="animal" src={ `/animals/${useAnimal}.png` }/>
+  <div class="footer">
+    <Fragment set:html={logo} />
+    <datetime time={ entry.data.date } class="date">{ date }</datetime>
+  </div>
+</a>

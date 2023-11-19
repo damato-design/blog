@@ -1,0 +1,25 @@
+---
+const { page } = Astro.props;
+---
+<style>
+  footer {
+    display: flex;
+    justify-content: space-between;
+    padding-block: 1rem;
+    font-family: PT Sans Narrow;
+    text-transform: uppercase;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  [aria-disabled] {
+    visibility: hidden;
+  }
+</style>
+
+<footer>
+  <a role="link" href={page?.url.prev} { ...({ 'aria-disabled': !page?.url.prev })}>Previous</a>
+  <a role="link" href={page?.url.next} { ...({ 'aria-disabled': !page?.url.next })}>Next</a>
+</footer>

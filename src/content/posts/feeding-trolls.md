@@ -1,0 +1,125 @@
+---
+title: Feeding trolls
+desc:  They say that you aren't successful until people begin to criticize your work.
+heat: 2
+date: 2022-06-28
+animal: toad
+---
+
+I published [gridless.design](https://gridless.design) a year ago this month and the initial response was overwhelming. Many people across the design industry shared and discussed these ideas for the coming weeks and I really enjoyed seeing all of the positive affirmations and interest in how we might avoid grids in artboards to hand off responsive web designs.
+
+However, there were others that didn't understand the point I was trying to make. This is my opportunity to address these comments and help clarify where the mark was missed.
+
+## Reddit
+
+{% quote, "https://www.reddit.com/r/Frontend/comments/oq1ogb/comment/h690qdi/?utm_source=share&utm_medium=web2x&context=3", "del_rio" %}
+
+It reads like a long-form rant complete with broken grammar.
+
+{% endquote %}
+
+Rant is probably true. The fact that we've been attempting to design the web like a canvas instead of a document is a complaint about the norms that we've accepted. It's important to state the problem before providing a solution.
+
+As for the broken grammar, I think that's a bit unfair. I'm a native English speaker but my grammar shouldn't be criticized for the idea I'm trying to convey.
+
+{% quote, "https://www.reddit.com/r/Frontend/comments/oq1ogb/comment/h690qdi/?utm_source=share&utm_medium=web2x&context=3", "del_rio" %}
+
+Not a single argument was supported with a citation even though they're presented as "it is recommended"
+
+{% endquote %}
+
+While must of the historical part of the thesis goes uncited and could be improved, it's not as important as the gridless approach which is net-new. How do you cite new ideas? The gridless approach is novel and never before documented. The closest concept is responsive design but it is not the same since the target for the change is artboard exploration specifically; not the web. The recommendations are based on the observations which are documented here in this thesis.
+
+{% quote, "https://www.reddit.com/r/Frontend/comments/oq1ogb/comment/h6d1r1s/?utm_source=share&utm_medium=web2x&context=3", "teokk" %}
+
+It also has a ridiculously long introduction that explains the basics and superficial history of web design/development which seems utterly pointless considering the target audience.
+
+{% endquote %}
+
+The point of the history is to provide a primer to all the concepts that caused the grid to be included in the web design process and what the web aimed to support.
+
+## Hacker News
+
+These were responses to a [blog post](https://css-irl.info/is-it-time-to-ditch-the-design-grid/) by [Michelle Barker](https://michellebarker.co.uk/) about my writing entitled "Is it time to ditch the design grid?".
+
+{% quote, "https://news.ycombinator.com/item?id=28120029", "qkqk" %}
+
+No, of course, not, grid is a fundamental structure in graphic design.
+
+{% endquote %}
+
+That's the thing, we aren't talking about "graphic" design, we're talking about "web" design. Graphic design principles _can_ translate to the web but sometimes not directly. This is one of those cases. The traditional artboard is not an accurate representation of the web. Identifying this is the first step to considering new approaches to support what the web expects.
+
+{% quote, "https://news.ycombinator.com/item?id=28120029", "qkqk" %}
+
+no, no, no. Remember "top: 50%; transform: translateY(-50%);" to vertically center things before Flexbox and Grid? We're not going back to those days!
+
+{% endquote %}
+
+The commenter is reacting to the [Fab Four](https://www.freecodecamp.org/news/the-fab-four-technique-to-create-responsive-emails-without-media-queries-baf11fdfa848/) approach. The negative dimension that I am quoted on writing is the foundational part of the calculation that allows for a container-query-like layout conditional in that approach. The approach is very complicated looking at first glance and admittedly it isn't helpful with all the additional variables that I included in order for the `gap` property to be supported but the end result of allowing the contents to determine when they should change the layout instead of the page is clearly helpful as precedented by native container queries coming to browsers very soon.
+
+{% quote, "https://news.ycombinator.com/item?id=28120029", "qkqk" %}
+
+Renaming the column-gap property to --gap-spacing doesn't mean you're "not using a grid."
+
+{% endquote %}
+
+This person might have missed the intro of gridless.design but I call out that I am not talking about `display: grid;` as an tool to avoid. You can use things that are named "grid" in the process but I'm specifically interested in how we can avoid including the design grid in the hand off process to engineers and even further not using it at all when designing for the web. It has very little to do with the CSS property of the same name.
+
+{% quote, "https://news.ycombinator.com/item?id=28119631", "Rd6n6" %}
+
+As somebody who just began using grids in their designs, I can say that grids can have a really nice effect on a lot of layouts.
+
+{% endquote %}
+
+It's true! Grids make layouts easy and its very much the reason why they work so well for graphic design. However, the final publishing of a graphic design will always have the same layout of elements, the same copy, the same orientation, etc.. On the web, this simply is not the case. What your originally provided in your design will very often not be the same as what your end-user sees. I call out the affects of translation alone and how words will often break out of neatly designed containers. Forcing your content into pink cages will ultimately break usability in designs in the most extreme cases.
+
+I think learning about the design grid for people introduced to design is helpful as a elementary concept but for more scalable experiences, the grid will do more harm than good.
+
+{% quote, "https://news.ycombinator.com/item?id=28119293", "djstein" %}
+
+Visually, the "no" grid website just looked like a website created with CSS Grid. I was expecting some sort of design that would be different. Are we missing something?
+
+{% endquote %}
+
+Yes, you're missing the content of the site! The site itself was not designed using a design grid but instead designed within the rules of the web. You might be able to provide some 12 column overlay that could roughly should some alignment on the web pages but it would be a coincidence.
+
+{% quote, "https://news.ycombinator.com/item?id=28119381", "oo0shiny" %}
+
+I think the idea is not that the design is without a grid, but more on how it handles being resized
+
+{% endquote %}
+
+No, the design of the site is truly completed without a design grid. However, while the design of the site was done without a design grid, the content is more important here.
+
+{% quote, "https://news.ycombinator.com/item?id=28119556", "michaelscott" %}
+
+The principles of a grid-based design are still adhered to though. This isn't "gridless" in any real sense
+
+{% endquote %}
+
+The principles you might be referring to are [Gestalt principles](https://www.smashingmagazine.com/2014/03/design-principles-visual-perception-and-the-principles-of-gestalt/) which I call out as foundational to the gridless concepts. The design grid helps designers adhere to those principles but those principles do not _come from_ the grid.
+
+{% quote, "https://news.ycombinator.com/item?id=28121459", "itronitron" %}
+
+I was surprised by how many right angles, rectangles, and perpendicular lines I saw for a site focused on not using a grid.
+
+{% endquote %}
+
+Cute. Alignment found in a web page does not need to be the result of a design grid. It will be a result of applying Gestalt principles with the rules of authoring web documents.
+
+{% quote, "https://news.ycombinator.com/item?id=28120128", "spcebar" %}
+
+This seems like more of a commentary on responsive design than on grid based layouts. There's a big difference between designing for print/for the web, and a really good designer will be able to give you a grid layout that performs well between breakpoints.
+
+{% endquote %}
+
+I was on board with this until the last phrase. I believe a informed designer will give you guidance about what should occur when the ideal layout isn't possible on a user's device. Not necessarily as a designed comp, but as a conversation. Prescribing what happens at a breakpoint is a lazy solution, in my opinion. Considering how elements might shift in different viewports, orientations, translations, writing-modes, etc. is not scalable as artboards. Having conversations will make more inclusive designs.
+
+{% quote, "https://news.ycombinator.com/item?id=28121827", "munk-a" %}
+
+I, personally, prescribe to the 1px grid system - where I write all my widths, heights and offsets in multiples of 1px. It helps keep things consistent.
+
+{% endquote %}
+
+Thanks, I hate it.

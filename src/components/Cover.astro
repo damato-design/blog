@@ -1,0 +1,31 @@
+---
+import heatColor from '../heat.js';
+const { heat } = Astro.props;
+---
+
+<style define:vars={{ heat: heatColor(heat) }}>
+
+  div {
+    container-type: inline-size;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--heat);
+    color: white;
+    margin-block: auto;
+  }
+
+  h2 {
+    font-weight: 300;
+    font-family: Garamond Nova;
+    font-size: 13cqi;
+    text-wrap: balance;
+    line-height: 1.1;
+    padding: .25em;
+    margin: 0;
+  }
+</style>
+
+<div>
+  <h2><slot/></h2>
+</div>

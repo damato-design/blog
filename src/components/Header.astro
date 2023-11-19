@@ -1,0 +1,45 @@
+---
+import rss from '@components/rss.svg?raw';
+import logo from '@components/logo.svg?raw';
+---
+
+<style>
+  header {
+    padding-block: 2rem;
+  }
+
+  .max-width {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  a {
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    line-height: 1;
+    font-size: 1.5em;
+  }
+
+  h1 {
+    font-size: 1rem;
+    font-weight: normal;
+    line-height: 1;
+    font-family: Garamond Nova;
+  }
+</style>
+
+<header>
+  <div class="max-width">
+    <a href="/">
+      <Fragment set:html={logo} />
+      <h1>Design Systems Hot Takes</h1>
+    </a>
+    <a href="/feed.xml">
+      <Fragment set:html={rss} />
+    </a>
+  </div>
+</header>
