@@ -1,24 +1,31 @@
 import { join } from 'path';
-import { readFileSync } from 'node:fs';
+import { readFile } from 'node:fs/promises';
 import satori from "satori";
 import { html } from 'satori-html';
-import heat from '../../heat.js';
+import heatColor from '../../heat.js';
+
+async function base64Animal(animal = 'dragon') {
+  const filename = join(process.cwd(), 'src', 'components', 'OgImage', 'animals', `${animal}.png`);
+  const file = await readFile(filename, "base64");
+  return `data:image/png;base64,${file}`;
+}
+
+async function base64Logo() {
+  const filename = join(process.cwd(), 'src', 'components', 'OgImage', 'damato-logo.png');
+  const file = await readFile(filename, "base64");
+  return `data:image/png;base64,${file}`;
+}
 
 async function getOptions() {
-  const garamond = join(process.cwd(), 'src', 'components', 'OgImage', 'Garamond-Light.ttf');
-  const outfit = join(process.cwd(), 'src', 'components', 'OgImage', 'Outfit-Medium.ttf');
+  const filename = join(process.cwd(), 'src', 'components', 'OgImage', 'Garamond-Light.ttf');
+  const file = await readFile(filename);
   return {
     width: 1200,
     height: 630,
     fonts: [{
       name: 'Garamond Nova',
-      data: readFileSync(garamond),
+      data: file,
       weight: 400,
-      style: 'normal',
-    }, {
-      name: 'Outfit',
-      data: readFileSync(outfit),
-      weight: 500,
       style: 'normal',
     }]
   }
@@ -31,6 +38,7 @@ const style = `
     height: 100%;
     padding: 1rem;
     position: relative;
+    background: white;
   }
 
   .cover {
@@ -48,25 +56,37 @@ const style = `
     font-size: 2rem;
   }
 
-  .publisher {
-    font-size: 3rem;
+  .logo {
     margin-top: auto;
-    font-family: Outfit;
-    text-transform: uppercase;
+  }
+
+  .animal {
+    position: absolute;
+    width: 800px;
+    height: 800px;
+    top: 100px;
+    right: -10%;
   }
 `;
 
-
-export default async function OgImage({ slug, data }) {
+export default async function OgImage({ data }) {
+  const {
+    animal,
+    heat,
+    title,
+  } = data;
   const options = await getOptions();
+  const img = await base64Animal(animal);
+  const logo = await base64Logo();
   const markup = `
   <style>${style}</style>
   <div class="root">
-    <div class="cover" style="background-color: ${heat(data.heat)};">
-      <span>${ data.title }</span>
+    <div class="cover" style="background-color: ${heatColor(heat)};">
+      <span>${ title }</span>
     </div>
     <p class="byline">blog.damato.design</p>
-    <span class="publisher">D<span style="color: ${heat(data.heat)};">’</span>Amato</span>
+    <img class="logo" src="${logo}" width="270" height="50"/>
+    <img class="animal" src="${img}" width="300" height="300"/>
   </div>
 `;
   return satori(html(markup), options);

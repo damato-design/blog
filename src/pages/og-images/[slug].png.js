@@ -10,8 +10,8 @@ export async function getStaticPaths() {
   }));
 }
 
-export async function GET({ props }) {
-  const svg = await OgImage(props.entry);
+export async function GET(context) {
+  const svg = await OgImage(context.props.entry);
   const png = await sharp(Buffer.from(svg)).png().toBuffer();
   return new Response(png, {
     headers: {
