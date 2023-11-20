@@ -1,0 +1,90 @@
+---
+import heatColor from '../../heat.js';
+import Head from '@components/Head.astro';
+import Header from '@components/Header.astro';
+import Spine from '@components/Spine.astro';
+import Footer from '@components/Footer.astro';
+import Navigation from '@components/Navigation.astro';
+import { getCollection } from 'astro:content';
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return posts.map(entry => ({
+    params: { slug: entry.slug }, props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content, headings, remarkPluginFrontmatter } = await entry.render();
+
+let updatedHeadingDepth = 1;
+const toc = headings.reduce((recentHeadingAtDepths, heading) => {
+  const { depth, ...rest } = heading;
+  const recentHeading = recentHeadingAtDepths.get(updatedHeadingDepth);
+  recentHeading.children = [].concat(recentHeading?.children, rest).filter(Boolean);
+  recentHeadingAtDepths.set(depth, rest);
+  updatedHeadingDepth = depth - 1;
+  return recentHeadingAtDepths;
+}, new Map().set(1, { children: [] }));
+---
+
+<style is:global define:vars={{ heat: heatColor(entry.data.heat) }}>
+  article {
+    font-size: 1.2em;
+  }
+
+  article :where(h2, h3, h4, h5, h6) {
+    font-family: PT Sans Narrow;
+    text-transform: capitalize;
+    line-height: 1.1;
+  }
+
+  article pre {
+    width: 100%;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  article code {
+    font-family: Consolas,Monaco,Andale Mono,Ubuntu Mono,monospace;
+    filter: brightness(0.8);
+  }
+
+  article img {
+    width: 100%;
+  }
+
+  article :not(pre) > code {
+    color: var(--heat);
+  }
+
+  article pre code {
+    display: block;
+    color: currentColor;
+    white-space: pre;
+    background-size: 3em 3em;
+    background-origin: content-box;
+    background-attachment: local;
+    padding: 1em;
+    overflow: auto;
+    resize: vertical;
+  }
+
+  article pre [style="color:var(--astro-code-token-comment)"] {
+    opacity: .4;
+  }
+</style>
+
+<html lang="en">
+  <Head slug={ entry.slug } { ...entry.data }/>
+  <body>
+    <Header/>
+    <Spine time={ remarkPluginFrontmatter.minutesRead } { ...entry.data } />
+    <div class="max-width">
+      <!-- <Navigation headings={ toc.get(1).children } /> -->
+      <article>
+        <Content />
+      </article>
+    </div>
+    <Footer title={ entry.data.title } slug={ entry.slug }/>
+  </body>
+</html>

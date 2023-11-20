@@ -1,0 +1,18 @@
+---
+const { content } = Astro.props;
+---
+
+<style>
+  pre {
+    text-align: center;
+  }
+</style>
+
+<pre class="mermaid">
+  { content }
+</pre>
+
+<script type="module" defer>
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true });
+</script>

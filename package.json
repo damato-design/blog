@@ -4,9 +4,10 @@
   "description": "blog.damato.design",
   "main": "index.js",
   "scripts": {
-    "compile": "rollup -c",
-    "start": "npx @11ty/eleventy --serve",
-    "build": "rm -rf _site && npx @11ty/eleventy && npm run compile"
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
   },
   "repository": {
     "type": "git",
@@ -19,22 +20,15 @@
     "url": "https://github.com/damato-design/blog/issues"
   },
   "homepage": "https://github.com/damato-design/blog#readme",
-  "devDependencies": {
-    "@11ty/eleventy": "^2.0.1",
-    "@11ty/eleventy-plugin-rss": "^1.1.2",
-    "@11ty/eleventy-plugin-syntaxhighlight": "^4.0.0",
-    "@kevingimbel/eleventy-plugin-mermaid": "^2.0.0",
-    "@rollup/plugin-multi-entry": "^6.0.0",
-    "@rollup/plugin-terser": "^0.2.1",
-    "eleventy-plugin-external-links": "^1.1.2",
-    "eleventy-plugin-og-image": "^2.1.0",
-    "eleventy-plugin-postcss": "^1.0.4",
-    "postcss": "^8.4.20",
-    "postcss-nested": "^6.0.0",
+  "dependencies": {
+    "@astrojs/mdx": "^1.1.5",
+    "astro": "^3.5.5",
+    "feed": "^4.2.2",
+    "markdown-it": "^13.0.2",
+    "mdast-util-to-string": "^4.0.0",
     "reading-time": "^1.5.0",
-    "rollup": "^3.9.0",
-    "rollup-plugin-html": "^0.2.1",
-    "rollup-plugin-postcss": "^4.0.2",
-    "slug": "^5.3.0"
+    "satori": "^0.10.9",
+    "satori-html": "^0.3.2",
+    "sharp": "^0.32.6"
   }
 }
