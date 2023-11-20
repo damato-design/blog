@@ -5,19 +5,23 @@ import MarkdownIt from 'markdown-it';
 const md = new MarkdownIt();
 
 function getFeed(context) {
+    const image = new URL(`/og-images/index.png`, context.url.origin).toString();
+    const favicon = new URL(`/favicon.svg`, context.url.origin).toString();
+    const json = new URL(`/rss.json`, context.url.origin).toString();
+    const atom = new URL(`/rss.xml`, context.url.origin).toString();
     return new Feed({
         title: 'blog.damato.design',
         description: 'Design Systems Hot Takes',
         id: context.url.origin,
         link: context.url.origin,
         language: "en",
-        //image: "http://example.com/image.png",
-        //favicon: "http://example.com/favicon.ico",
+        image,
+        favicon,
         copyright: `All rights reserved ${new Date().getFullYear()}, Donnie D'Amato`,
         generator: "Astro.build",
         feedLinks: {
-            json: `${context.url.origin}/rss.json`,
-            atom: `${context.url.origin}/rss.xml`
+            json,
+            atom
         },
         author: {
             name: "Donnie D'Amato",
@@ -35,7 +39,7 @@ export default async function(context) {
       posts = await getCollection('posts');
     } catch (err) {}
     return posts.reduce((feed, post) => {
-        const url = new URL(`posts/${post.slug}`, import.meta.env.SITE).toString();
+        const url = new URL(`/posts/${post.slug}`, context.url.origin).toString();
         const item = {
             title: post.data.title,
             id: url,
@@ -43,7 +47,7 @@ export default async function(context) {
             description: post.data.desc,
             link: url,
             content: md.render(post.body),
-            image: new URL(`og-images/${post.slug}`, import.meta.env.SITE).toString(), 
+            image: new URL(`/og-images/${post.slug}.png`, context.url.origin).toString(), 
         };
         feed.addItem(item);
         return feed;
