@@ -3,23 +3,35 @@
     padding: 1rem;
     font-size: .9em;
     display: flex;
+    flex-wrap: wrap;
     align-items: start;
-    gap: 1rem;
-    width: 90%;
     margin-inline: auto;
   }
 
-  img {
-    border: 1px solid;
-    max-width: 6em;
+  .image {
+    border: 1px solid var(--heat);
     margin-block-start: 1.2em;
+    margin-inline-end: 2rem;
+    max-width: 6em;
+    display: flex;
+  }
+
+  img {
+    transform: scale(1.3);
+    filter: contrast(0.5);
+  }
+
+  .content {
+    flex: 1 1 600px
   }
 
 </style>
 
 <aside>
-  <img src="/animals/raven-black.webp"/>
-  <div>
+  <div class="image">
+    <img src="/animals/raven-black.webp"/>
+  </div>
+  <div class="content">
     <slot/>
   </div>
 </aside>
