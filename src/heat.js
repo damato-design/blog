@@ -1,7 +1,7 @@
 const HEAT_COLORS = [
-  '#1AA8A7', // teal
-  '#B84D98', // purple
-  '#EA8729', // orange
+  '#009586', // teal
+  '#F35A28', // orange
+  '#B92585', // pink
   '#86220B', // red
 ]
 

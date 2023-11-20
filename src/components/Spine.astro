@@ -8,7 +8,7 @@ const { title, heat, time, animal = 'caterpillar' } = Astro.props
   .spine {
     display: grid;
     grid-template-columns: auto 1fr auto;
-    border-radius: 2px;
+    border-radius: 3px;
     overflow: hidden;
   }
 
@@ -22,7 +22,7 @@ const { title, heat, time, animal = 'caterpillar' } = Astro.props
     pointer-events: none;
     box-shadow: 
       inset 0 1rem 2rem rgba(200, 200, 200, .5), 
-      inset 0 -1rem 2rem rgba(200, 200, 200, .5);
+      inset 0 -1rem 2rem rgba(50, 50, 50, .5);
   }
 
   .animal {
@@ -49,7 +49,6 @@ const { title, heat, time, animal = 'caterpillar' } = Astro.props
     align-items: center;
     justify-content: center;
     color: white;
-    flex: 1;
     font-family: Garamond Nova;
   }
 
@@ -80,18 +79,24 @@ const { title, heat, time, animal = 'caterpillar' } = Astro.props
     --heat: currentColor;
   }
 
+  @media (max-width: 600px) {
+    .hide, .spine:after {
+      display: none;
+    }
+  }
+
 </style>
 
 <div>
   <div class="spine max-width">
-    <div class="animal">
+    <div class="animal hide">
       <img src={ `/animals/${animal}.webp` }/>
     </div>
     <div class="title" style={ `background: ${ heatColor(heat) }` }>
       <h2>{ title }</h2>
       <span>{ time }</span>
     </div>
-    <a class="publisher" href="/">
+    <a class="publisher hide" href="/">
       <Fragment set:html={logo} />
     </a>
   </div>
