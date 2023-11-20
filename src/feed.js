@@ -7,8 +7,8 @@ const md = new MarkdownIt();
 function getFeed(context) {
     const image = new URL(`/og-images/index.png`, context.url.origin).toString();
     const favicon = new URL(`/favicon.svg`, context.url.origin).toString();
-    const json = new URL(`/rss.json`, context.url.origin).toString();
-    const atom = new URL(`/rss.xml`, context.url.origin).toString();
+    const json = new URL(`/feed.json`, context.url.origin).toString();
+    const atom = new URL(`/feed.xml`, context.url.origin).toString();
     return new Feed({
         title: 'blog.damato.design',
         description: 'Design Systems Hot Takes',
