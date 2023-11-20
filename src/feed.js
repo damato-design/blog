@@ -21,7 +21,8 @@ function getFeed(context) {
         generator: "Astro.build",
         feedLinks: {
             json,
-            atom
+            atom,
+            rss: atom
         },
         author: {
             name: "Donnie D'Amato",
