@@ -91,7 +91,7 @@ const { title, heat, time, animal = 'caterpillar' } = Astro.props
 <div>
   <div class="spine max-width">
     <div class="animal hide">
-      <img src={ `/animals/${animal}.webp` }/>
+      <img src={ `/animals/${animal}.webp` } role="presentation"/>
     </div>
     <div class="title" style={ `background: ${ heatColor(heat) }` }>
       <h2>{ title }</h2>

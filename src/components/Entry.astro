@@ -97,7 +97,7 @@ const useAnimal = draft ? 'caterpillar' : animal;
 <a class="entry" href={ `/posts/${entry.slug}` } data-draft={ draft }>
   <div class="desc">{ desc }</div>
   <Cover heat={ heat }>{ title }</Cover>
-  <img class="animal" src={ `/animals/${useAnimal}.webp` }/>
+  <img class="animal" src={ `/animals/${useAnimal}.webp` } role="presentation"/>
   <div class="footer">
     <Fragment set:html={logo} />
     <datetime time={ entry.data.date } class="date">{ date }</datetime>
