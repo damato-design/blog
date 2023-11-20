@@ -28,12 +28,13 @@ const { title, heat, time, animal = 'caterpillar' } = Astro.props
   .animal {
     grid-row: 1;
     grid-column: 1;
-    width: 16vw;
     max-width: 10rem;
+    width: 16vw;
     display: flex;
     align-items: center;
     background: black;
     padding: 1rem;
+    overflow: hidden;
   }
 
   .animal img {
@@ -56,7 +57,7 @@ const { title, heat, time, animal = 'caterpillar' } = Astro.props
 
   .title h2 {
     font-weight: 300;
-    font-size: 8cqi;
+    font-size: min(8cqi, 4em);
     text-wrap: balance;
     text-transform: capitalize;
     line-height: 1.1;

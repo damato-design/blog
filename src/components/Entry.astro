@@ -4,7 +4,7 @@ import logo from '@components/logo.svg?raw';
 import heatColor from '../heat.js';
 const { entry } = Astro.props;
 const { title, desc, heat, draft, animal = 'caterpillar' } = entry.data;
-const date = entry.data.date.toLocaleString('en-US', { month: 'long', day: '2-digit', year: 'numeric' });
+const date = entry.data.date.toLocaleString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
 
 const useAnimal = draft ? 'caterpillar' : animal;
 ---
@@ -70,7 +70,6 @@ const useAnimal = draft ? 'caterpillar' : animal;
     padding-block: .5em;
     font-family: Garamond Nova;
     line-height: 1.1;
-    font-size: .8em;
     text-align: center;
     text-wrap: balance;
     font-weight: normal;
@@ -92,7 +91,6 @@ const useAnimal = draft ? 'caterpillar' : animal;
 
   .footer {
     margin-top: auto;
-    font-size: .6em;
     display: flex;
     justify-content: space-between;
     align-items: end;

@@ -29,7 +29,7 @@ const toc = headings.reduce((recentHeadingAtDepths, heading) => {
 
 <style is:global define:vars={{ heat: heatColor(entry.data.heat) }}>
   article {
-    font-size: clamp(1rem, 0.652rem + 1.739vw,2rem);
+    font-size: clamp(1rem, 0.826rem + 0.87vw, 1.5rem);
   }
 
   article :where(h2, h3, h4, h5, h6) {
@@ -40,8 +40,8 @@ const toc = headings.reduce((recentHeadingAtDepths, heading) => {
 
   article pre {
     width: 100%;
-    font-size: 1rem;
     line-height: 1.5;
+    font-size: .9em;
   }
 
   article code {
