@@ -6,6 +6,8 @@ date: 2023-04-10
 animal: squirrel
 ---
 
+import Aside from '@components/Aside.astro';
+
 When I first heard of [Astro](https://astro.build/) it sounded incredible. I thought of it as the next step after working with [11ty](https://www.11ty.dev/). That step is requiring framework support such as [React, Vue, or others](https://docs.astro.build/en/guides/integrations-guide/#official-integrations). While I often avoid frameworks, a framework allows for a shared understanding with a team to achieve a result within the guardrails, [even if convoluted](https://twitter.com/CherryJimbo/status/1643778121944952833).
 
 So for documentation sites that expect to host components written in a framework, Astro seems like a solid choice. However, my initial review of the project had some serious critism when finally attempting to build a site.
@@ -160,9 +162,9 @@ const tree = buildNavigation(collections);
 
 As we loop over the items in the collection, we get the `title` and build the `url`.
 
-{% aside %}
+<Aside>
 If you want your navigation to have a specific order, you'd need to either include additional metadata in the `/content` markdown files for this function to sort by and/or provide an order to the `collectionNames` within the `content/config.js`.
-{% endaside %}
+</Aside>
 
 ### Components
 

@@ -6,6 +6,8 @@ date: 2023-06-23
 animal: treeshrew
 ---
 
+import Aside from '@components/Aside.astro';
+
 Figma's design conference [Config](config.figma.com) just ended and one of the biggest announcements is the introduction of [Variables](https://twitter.com/figma/status/1671563489457090560). The reaction from the community is a mix of emotions. While many people were expecting Design Tokens, some can see the clear benefits of Variables while others are skeptical about perceived defiance to existing specifications. We'll explore the current state of specifications for Design Tokens across the community and how Variables come into play. 
 
 ## Token specifications today
@@ -92,9 +94,9 @@ So the expectation here is that there are additional external systems that exist
 
 > Our reasons for naming it variables was primarily to align with development. Variables, much like css variables, is not just for design tokens, it's also for conditional logic, string translations, etc.
 
-{% aside %}
+<Aside>
 I disagree with the comparison to CSS, as [CSS Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/--*) are meant for style as Design Tokens are. I believe it would have been more accurate to compare using another language like JavaScript. Though I imagine the comparison was done to suggest how you might use Variables to result in style.
-{% endaside %}
+</Aside>
 
 The important takeaway here is that Variables can be used to describe our idea of Design Tokens but also to support additional needs which will most likely exist outside Design Token expectations. A clear example of this is content substitutions for localization. Design Tokens were not created to support this foundationally but Variables, _uniquely defined by Figma_, can.
 
@@ -115,9 +117,9 @@ For reference here is an example of a Figma Variable:
 
 This is not a Design Token but Figma's proprietary format meant for use within the Figma ecosystem. [Based on the official plugin built to transform Variables into Design Tokens](https://github.com/figma/plugin-samples/blob/c91a1e2e02d6c6f100d7651d055ef84725adbb5d/variables-import-export/code.js#L136), the `valuesByMode` will store several values by a unique identifier that relates to a mode. The mode could be light, dark, dense, Spanish, or many others and the value for this Variable can differ depending on the mode.
 
-{% aside %}
+<Aside>
 [Jacob proposed](https://github.com/design-tokens/community-group/issues/210) how modes might look in the official DTCG specification. The discussion is one of the largest within the group and is currently unresolved.
-{% endaside %}
+</Aside>
 
 ## A deliberate choice
 

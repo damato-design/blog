@@ -6,6 +6,8 @@ date: 2023-08-24
 animal: hummingbird
 ---
 
+import Quote from '@components/Quote.astro';
+
 In a world where we apply personality to every little interaction for those sweet engagement metrics, the `:hover` CSS pseudo selector is one of the easiest ways for folks to "make it pop". However, I'll argue that perhaps we don't need to put so much design into it; at least from a token maintenance perspective.
 
 ## Looking good, feeling good
@@ -24,11 +26,9 @@ For the default user-agent `<button/>` styles, the cursor _does not change_. It 
 
 The reason for the cursor difference on hover between links and buttons has some [history](https://ux.stackexchange.com/a/105098) and can be otherwise debated.
 
-{% quote, "https://medium.com/simple-human/buttons-shouldnt-have-a-hand-cursor-b11e99ca374b", "Adam Silver" %}
-
+<Quote cite='Adam Silver' link='https://medium.com/simple-human/buttons-shouldnt-have-a-hand-cursor-b11e99ca374b'>
 There’s a belief that the hand (pointer) cursor means clickable, but this is wrong and potentially problematic.
-
-{% endquote %}
+</Quote>
 
 The issue with this statement is there's nothing (past [technical specifications](https://www.w3.org/TR/css-ui-4/#valdef-cursor-pointer)) that tells daily users of the web the pointer cursor means you are hovering on a link. We have introduced the pattern of the cursor change for buttons, and for general interactivity, over time through shared expectations. This can be thought of as similar to the [hamburger menu](https://www.nngroup.com/articles/hamburger-menus/), which originally meant nothing to most users but has been learned over time; even if other more verbose design patterns exist. The hamburger menu has become ubiquitous, as has the pointer on buttons.
 
@@ -76,10 +76,8 @@ In my perspective, there are often too many tokens to curate and anything that c
 
 Perhaps, we need a new way of looking at the ecosystem.
 
-{% quote, "https://twitter.com/markacianfrani/status/1694341251540123887", "Mark A. Cianfrani" %}
-
+<Quote cite='Mark A. Cianfrani' link='https://twitter.com/markacianfrani/status/1694341251540123887'>
 Design system business model where you have to pay for every token you use.
-
-{% endquote %}
+</Quote>
 
 This isn't the model we deserve, but it's the one we need right now.

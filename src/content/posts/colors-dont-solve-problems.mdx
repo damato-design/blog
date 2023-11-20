@@ -6,17 +6,19 @@ date: 2022-07-11
 animal: macaw
 ---
 
+import Quote from '@components/Quote.astro';
+
 It's unfortunate that the first entry at the [Laws of UX](https://lawsofux.com/en/) is the "Aesthetic-Usability Effect" which is summarized with the following statement.
 
-{% quote "https://lawsofux.com/en/aesthetic-usability-effect" "Jon Yablonski, Laws of UX" %}
+<Quote cite='Jon Yablonski, Laws of UX' link='https://lawsofux.com/en/aesthetic-usability-effect'>
 Users often perceive aesthetically pleasing design as design that’s more usable.
-{% endquote %}
+</Quote>
 
 The source for this law is from an [NN/G article](https://www.nngroup.com/articles/aesthetic-usability-effect/) which I find does a much better job summarizing the concept.
 
-{% quote "https://www.nngroup.com/articles/aesthetic-usability-effect/" "Kate Moran, Nielsen Norman Group" %}
-Users are more tolerant of minor usability issues when they find an interface visually appealing. This aesthetic-usability effect can mask UI problems and can prevent issue discovery during usability testing. 
-{% endquote %}
+<Quote cite='Kate Moran, Nielsen Norman Group' link='https://www.nngroup.com/articles/aesthetic-usability-effect/'>
+Users are more tolerant of minor usability issues when they find an interface visually appealing. This aesthetic-usability effect can mask UI problems and can prevent issue discovery during usability testing.
+</Quote>
 
 The difference between the two statments is that the former suggests that its good to hide usability problems with garnish. The latter addresses that this is a problem when measuring success accurately. I believe that color is part of that avoidable garnish.
 
@@ -50,9 +52,9 @@ Let's first just talk about contrast which is a requirement to make something ac
 
 And in [Ferdy's post about working with the palette](https://ferdychristant.com/color-for-the-color-challenged-884c7aa04a56), there is mention about the lack of accessibility in the palette.
 
-{% quote "https://ferdychristant.com/color-for-the-color-challenged-884c7aa04a56" "Ferdy Christant"%}
+<Quote cite='Ferdy Christant' link='https://ferdychristant.com/color-for-the-color-challenged-884c7aa04a56'>
 Open Color does not rank well when it comes to contrast. The root cause here is that we’re paying the price of beauty.
-{% endquote %}
+</Quote>
 
 You'll be paying for more than beauty if hit with [an accessibility lawsuit](https://www.shrm.org/resourcesandtools/hr-topics/behavioral-competencies/global-and-cultural-effectiveness/pages/record-number-of-lawsuits-filed-over-accessibility-for-people-with-disabilities.aspx). But Ferdy's answer is to add _more_ color; 3 more dark tones to each hue. I don't agree with this suggestion because trying to choose the right color becomes a challenge when there are so many to choose from (ie., [Hick's Law](https://lawsofux.com/en/hicks-law/)). Limiting the selection drives consistency. I'll even go so far to say that it enhances creativity because you'll need to design within constraints which requires out-of-the-(crayon)-box thinking.
 
@@ -60,9 +62,9 @@ You'll be paying for more than beauty if hit with [an accessibility lawsuit](htt
 
 Past contrast, let's now talk about the application of color within an interface. If you look at many modern interface designs today, they tend to follow a 60/30/10 rule. Some sites like [Twitter](https://twitter.com/) even let you choose a few colors. This comes from interior design where you choose 3 colors and use them in percentages in your space. This is a loose rule, and [opponents of the rule](https://bootcamp.uxdesign.cc/problems-with-the-60-30-10-rule-25206d02bbfd) will call out several factors against it. 
 
-{% quote "https://bootcamp.uxdesign.cc/problems-with-the-60-30-10-rule-25206d02bbfd" "Catherine Rasgaitis" %}
+<Quote cite='Catherine Rasgaitis' link='https://bootcamp.uxdesign.cc/problems-with-the-60-30-10-rule-25206d02bbfd'>
 First, restricting a color palette to only three colors inhibits creative designs. While it prevents overstimulation, exploring more “rebellious” designs make brands stand out from their competitors.
-{% endquote %}
+</Quote>
 
 For the purpose of functional product design, I don't believe we should be striving for creativity in the application of color. Users are expecting familiar and accessible experiences. Painting with all of the colors of the wind will feel like navigating a rainbow hurricane. The limiting of this color helps set expectations as users achieve their goals.
 

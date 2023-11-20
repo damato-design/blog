@@ -6,6 +6,8 @@ date: 2022-04-12
 animal: labrador
 ---
 
+import Aside from '@components/Aside.astro';
+
 I love web components. Being able to just plop a custom element onto a page with all the functionality baked in without needing a framework or bundling to make it work is just liberating. I know there's a lot of overhead that comes with it that libraries and frameworks aim to abstract but I just enjoy having the low-level ability to do whatever you want.
 
 The trickiest part of web components for me has been how to identify when a web components, which is written as HTML, needs to be defined through JavaScript. From a performance point-of-view, we don't want to send JavaScript to the page for components that aren't there. On the flip side, we don't want to miss components that apppear later in the lifecycle of the page.
@@ -52,13 +54,13 @@ The missing piece is the selector to target these custom elements. In my origina
 
 Yep, that's it. Now the `undefined-detection` animation will trigger for all custom elements that are not yet defined.
 
-{% aside %}
+<Aside>
 
 ### Greedy registration
 
 I've noticed that custom elements that are on the page from extensions or other libraries will also attempt to be requested and ultimately fail since they aren't part of the library. This would be a benefit for having an explicit list of elements to listen for but the failures can be caught and ignored in this implementation or you could filter by prefix (i.e.; `ds-button` but not `random-button`).
 
-{% endaside %}
+</Aside>
 
 So we will write this CSS to the `<head/>` of the page within the registrar and begin listening for the animation.
 
@@ -248,7 +250,7 @@ class MyElement extends window.HTMLElement {
 window.customElements.define('my-element', MyElement);
 ```
 
-{% aside %}
+<Aside>
 
 ### Listening for defined
 
@@ -271,7 +273,7 @@ root.addEventListener('animationend', ({ animationName, target }) => {
 
 There's one catch, the `:defined` selector will trigger for _all elements_ (`<html/>`, `<div/>`, `<p/>`, etc.) and for every single one of them found on the page. While you could certainly filter for specific custom elements with open shadow roots, it's still a lot of callbacks firing. Another reason why having a list of elements to update or pre-updating with the triggering resources seems to be better approaches.
 
-{% endaside %}
+</Aside>
 
 ## All together now
 

@@ -6,15 +6,18 @@ date: 2023-01-17
 animal: chicken
 ---
 
+import Aside from '@components/Aside.astro';
+import Quote from '@components/Quote.astro';
+
 The internet blew up again regarding CSS frameworks and there have been no shortage of responses. While this could just be more fuel to the fire, I hope this will be evergreen and reflect on any similar approaches that are developed over time. This also has the benefit of avoiding the name of any single framework in particular and instead comment on the direction as a whole.
 
 ## Lightbulb moment
 
 Recently, I realized exactly why I was aversed to utility class resources after watching [Fireship.io's video](https://www.youtube.com/watch?v=lHZwlzOUOZ4) responding to the recent debates. The lightbulb lit for me specifically at this quote.
 
-{% quote "https://www.youtube.com/watch?v=lHZwlzOUOZ4" "Fireship.io"  %}
+<Quote cite='Fireship.io' link='https://www.youtube.com/watch?v=lHZwlzOUOZ4'>
 The benefit is that you don't have all these arbitrary classnames anymore and know exactly which styles apply to it.
-{% endquote %}
+</Quote>
 
 **#naming-is-hard** strikes again. There's two parts in the quote that I'll touch upon.
 
@@ -106,10 +109,10 @@ nav > * {
 
 However, I wouldn't recommend this since it goes against the first point that if it exists, it should have a name. Just be comforted that internal naming is much easier to iterate on.
 
-{% aside %}
+<Aside>
 Some things might not make sense as a component and exist better as a utility. The historic [`.sr-only`](https://css-tricks.com/inclusively-hidden/) meant for hiding content visually while remaining accessible to assistive technology might be better suited using an attribute because it is not dependent on other factors for a consistent outcome and is presented imperatively. Not to mention, there's really nothing visual about it.
 
 Though there's also nothing stopping you from creating a `<sr-only/>` web component which achieves the same result with more code.
-{% endaside %}
+</Aside>
 
 In lieu of scoping styles, create a standardized naming strategy that keeps classnames semantic and you'll be better prepared to support a scalable experience.

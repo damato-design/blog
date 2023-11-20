@@ -6,6 +6,8 @@ date: 2023-02-07
 animal: hippo
 ---
 
+import Aside from '@components/Aside.astro';
+
 The tiered system of design tokens has been fairly well-established to include [semantic tokens](../tokens-as-intents). Color, typography, and even [spacing](https://complementary.space) can be described through semantic means. This drives the question, how do we name other properties semantically to further describe a generic experience?
 
 ## Nested rounding
@@ -33,9 +35,9 @@ The first problem is trying to get the `--ancestor-element-radius` and `--distan
 
 When trying to fill the `--distance-from-ancestor` value, it's very likely that we will have several elements nested which may or may not include their own methods of supplying space. The properties of `margin`, `padding`, `gap`, and additional `position` and `transform` properties can all have a hand at visually presenting how far two elements are from each other, thereby making the `--distance-from-ancestor` value very challenging to determine.
 
-{% aside %}
+<Aside>
 You could try computing this in JavaScript. You'd mark elements that you'd like to measure between and then write the value to a CSS Custom Property. There's a few pitfalls here; responsive changes, transforms, relative units, etc.. All of these things would make trying to capture this value a nightmare. This isn't a simple programmatic redlining exercise. On top of this, adding JavaScript to adjust a visual treatment seems like a bad use of the main thread. [Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers) for `border-radius`? Now that's just crazy talk.
-{% endaside %}
+</Aside>
 
 Let's assume we have a system which can readily provide the `--distance-from-ancestor`. The `--ancestor-element-radius` in a perfect system would also be derived by the formula. So where does the base radius come from that influences all other nested rounding? Would it make sense for the `<body/>` to declare the first amount of rounding? Conceptually this seems incorrect since we don't expect the `<body/>` element to have rounding at all. Though, we can simply choose not to apply rounding at the `<body/>` and rather only define the value here.
 

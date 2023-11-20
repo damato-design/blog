@@ -1,0 +1,35 @@
+---
+const { cite, link } = Astro.props;
+---
+
+<style>
+
+  blockquote {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .quote {
+    font-size: 1.5em;
+    color: var(--heat);
+    filter: brightness(0.8);
+  }
+
+  span {
+    margin-inline-start: auto;
+  }
+
+  a {
+    font-family: PT Sans Narrow;
+  }
+
+</style>
+
+<blockquote cite={ link }>
+  <div class="quote">
+    <slot/>
+  </div>
+  { cite && <span>— <a href={ link }>
+    <cite>{ cite }</cite></span>
+  </a> }
+</blockquote>

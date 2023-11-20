@@ -6,6 +6,8 @@ date: 2023-01-09
 animal: fox
 ---
 
+import Aside from '@components/Aside.astro';
+
 You've seen it before, an 'x' at the corner of a surface which will allow the user to exit that surface. In design, it seems simple to just place the button at the top corner. To engineer this, we have a few options:
 
 ## Absolute Position
@@ -41,9 +43,9 @@ In some configurations for the above components, the content (usually the title)
 
 ![Curated text that visually collides with the close button in Github Primer](/images/modal-button-collide.png)
 
-{% aside "warning" %}
+<Aside>
 Even if you think you control the content, assume that you don't. User preferences can influence the content display, either by size, translation, or otherwise. Be prepared for the content to vary.
-{% endaside %}
+</Aside>
 
 Some implementations solve this for by providing enough padding to the content area so the button never collides. However, this often results in an imbalance of padding and may not be desirable from design.
 
@@ -93,9 +95,9 @@ Let's be clear about some requirements. If design is expecting a close button to
 - The close button should never move from the corner.
 - The content in the surface should not collide with the close button.
 
-{% aside %}
+<Aside>
 These requirements are meant for surfaces that are text heavy. A surface which has a full-bleed media (eg., image or video) which spans the width of the surface will have other problems. The normal `position: absolute;` treatment would probably work well in this case and then ensuring that the button has sufficient contrast against the media it appears above.
-{% endaside %}
+</Aside>
 
 We can leverage two features of CSS to get an intended result.
 
@@ -125,7 +127,7 @@ span.floater {
 }
 ```
 
-{% aside %}
+<Aside>
 While we'd like to use CSS Logical Properties for the float, [they aren't well supported](https://developer.mozilla.org/en-US/docs/Web/CSS/float#browser_compatibility). You'll probably need to adjust the type of float based on the `dir`.
 
 ```css
@@ -134,7 +136,7 @@ While we'd like to use CSS Logical Properties for the float, [they aren't well s
 }
 ```
 
-{% endaside %}
+</Aside>
 
 Then our HTML should be setup in the following manner:
 

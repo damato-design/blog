@@ -6,6 +6,8 @@ date: 2023-03-01
 animal: stork
 ---
 
+import Aside from '@components/Aside.astro';
+
 The design hand-off process is often troublesome because of intentions lost in translation. We've created [expertise in this space between design and engineering](../terminal-career) to help smooth the exercise but we often try to find ways to bridge the gap without human intervention. One of these ways is generating resources to use from the design tool.
 
 I saw a great [Figma for developers video](https://www.youtube.com/watch?v=hbN9RGcQFNU) [shared on social media](https://twitter.com/megaroeny/status/1625680821372739586) last month. This is definitely a part of the role that isn't often taught, leaving most engineers stumbling around the interface. There's a lot of helpful points made in the short presentation but I need to be critical about one area in particular; the inspect panel.
@@ -14,9 +16,9 @@ I saw a great [Figma for developers video](https://www.youtube.com/watch?v=hbN9R
 
 I consider the inspect panel to be a trap. Admittedly, calling it a trap is dramatic but it's also meant to warn folks who accept what the panel provides verbatim; possibly believing it's the blessed approach. I'll be referring to [Figma's inspect panel](https://help.figma.com/hc/en-us/articles/360055203533-Use-the-Inspect-panel) in the following examples as the most popular tool to date but any design tool feature that claims to output code should be treated with skepticism.
 
-{% aside %}
+<Aside>
 This can exclude design tools that manipulate coded assets such as [Framer](https://www.framer.com/). Because those assets are foundationally engineered, inspecting or exporting these is looking at the direct source code of the asset and not an estimated representation.
-{% endaside %}
+</Aside>
 
 ### Coordinate system
 

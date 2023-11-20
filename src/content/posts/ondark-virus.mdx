@@ -6,6 +6,9 @@ date: 2023-01-12
 animal: bat
 ---
 
+import Aside from '@components/Aside.astro';
+import Quote from '@components/Quote.astro';
+
 The "ondark" virus is infecting token names in the design systems community everywhere. I've tried providing recommendations in token related posts and replies before. However, it seems this approach is becoming more wide-spread so I want to give it one final try to describe the problem with this naming scheme and provide some help with prevention.
 
 **This isn't about what a token name should include, it's about what it shouldn't.**
@@ -48,15 +51,15 @@ I cannot stress enough, **how values are assigned on the right-side does not mat
 
 The design system team is responsible for maintaining consistency on the left-side; that's it. They should only focus on the semantic token names for those values to be assigned and how they might support describing the experience at scale.
 
-{% aside "warning" %}
+<Aside>
 While I advocate for design systems folks to be hands-off for the right-side of the theme, it is not possible to be completely ignorant of what happens there. We should be providing guidance on best practices when curating the other side, especially in terms of accessibility. We should provide feedback when people attempt to choose color combinations that have low contrast or font-sizes that are illegible.
 
 And certainly when posed with limited resources, it's entirely possible for the design system team to manage both sides. But if you can avoid it, it's one less thing to be responsible for.
-{% endaside %}
+</Aside>
 
-{% aside %}
+<Aside>
 Note that for simplicity the idea of "dark-mode" is also well represented by providing a dark theme. A user preference for "high-contrast mode" is asking for a high-contrast theme. The mode is the user preference. The theme is a collection of value assignments that aim to satisfy the mode.
-{% endaside %}
+</Aside>
 
 Now for the key insight — instead of the dark area and the light colored page needing to be informed by a single theme, **think of the dark area as an entirely separate theme**. In this way, the values that represent `--button-background` can change depending on scope.
 
@@ -110,11 +113,9 @@ I wish you best of luck in your path toward recovery.
 
 **EDIT (2023-01-12):** [Dave](https://desandro.com/) posted a great question as a follow-up and it deserves addressing.
 
-{% quote "https://twitter.com/desandro/status/1613568348331155456" "Dave DeSandro" %}
-
+<Quote cite='Dave DeSandro' link='https://twitter.com/desandro/status/1613568348331155456'>
 I'm curious how you would accommodate session-level Dark Mode? Does the hero theme stay dark, or maybe sub-themes like `data-theme='inverted'`
-
-{% endquote %}
+</Quote>
 
 [My reply](https://twitter.com/donniedamato/status/1613583101493481487) was half-joking but in seriousness, the answer is to continue leaning into semantic naming at the _scope_ level. For the purposes of this demonstration, it was more helpful to use the word "dark" to further cement what was happening within the scope. In practice, the scope should be described with some meaning or purpose for the change in scope over expected appearance. For the examples above, the "light" theme could instead be the "base" theme as it is meant to be the default. The "dark" theme could be "feature" theme as it is meant to highlight features (in our examples).
 

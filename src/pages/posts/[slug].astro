@@ -36,6 +36,12 @@ const toc = headings.reduce((recentHeadingAtDepths, heading) => {
     text-transform: capitalize;
   }
 
+  article pre {
+    width: 100%;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
   article code {
     font-family: Consolas,Monaco,Andale Mono,Ubuntu Mono,monospace;
     filter: brightness(0.8);
@@ -43,6 +49,22 @@ const toc = headings.reduce((recentHeadingAtDepths, heading) => {
 
   article :not(pre) > code {
     color: var(--heat);
+  }
+
+  article pre code {
+    display: block;
+    color: currentColor;
+    white-space: pre;
+    background-size: 3em 3em;
+    background-origin: content-box;
+    background-attachment: local;
+    padding: 1em;
+    overflow: auto;
+    resize: vertical;
+  }
+
+  article pre [style="color:var(--astro-code-token-comment)"] {
+    opacity: .4;
   }
 </style>
 

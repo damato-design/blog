@@ -6,6 +6,8 @@ date: 2022-06-14
 animal: bear
 ---
 
+import Aside from '@components/Aside.astro';
+
 When I was exploring the next version of the design system for [Compass](https://www.compass.com/), I was really interested in how I could keep designers from recreating symbols that we already have represented in code. They'd have to painstakingly make all of the possible states and interactions for every component for the design library. I knew there was a better way so I cobbled a few systems together in order to do it.
 
 ## Legacy system
@@ -68,7 +70,7 @@ export default function (component) {
 }
 ```
 
-{% aside %}
+<Aside>
 
 If you get a collection of types that all return as `'custom'`, you'll need to include the following before defining proptypes for each component.
 
@@ -78,7 +80,7 @@ import 'parse-prop-types';
 
 For more information, like the return object structure, I recommend reading [the project's `README.md`](https://github.com/diegohaz/parse-prop-types/blob/master/README.md).
 
-{% endaside %}
+</Aside>
 
 Next, we'll need to prepare a collection of properties and possible values. For `type: 'bool'` and `type: 'oneOf'`, the values are fairly straight forward. We'll put these in a lookup object for easy access.
 

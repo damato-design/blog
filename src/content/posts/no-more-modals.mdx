@@ -6,6 +6,8 @@ date: 2022-06-05
 animal: gopher
 ---
 
+import Quote from '@components/Quote.astro';
+
 Have you ever landed on a web page and have it immediately ask you for a location? How about while you are reading an article and, after you scroll down to read more, you get an advertisement covering your next paragraph? These are super annoying patterns but why are they annoying?
 
 ## Surprising popups
@@ -43,9 +45,9 @@ It's common to find modals used to login or signup. Consider using a separate pa
 
 [NN/Group](https://www.nngroup.com/) also provides a few additional recommendations for when to use modals. One of the examples is a wizard which breaks down a complicated workflow into steps. What's important here is the second paragraph:
 
-{% quote, "https://www.nngroup.com/articles/modal-nonmodal-dialog" %}
+<Quote cite='https://www.nngroup.com/articles/modal-nonmodal-dialog' link='https://www.nngroup.com/articles/modal-nonmodal-dialog'>
 However, it’s important to note that a modal with multiple steps will just prolong the amount of time spent away from the main tasks, making it more likely that users will forget what they were doing in the first place.
-{% endquote %}
+</Quote>
 
 In my opinion this describes that we _shouldn't_ be using a modal for wizards and instead provide a navigational pattern linking to pages sequentially; allowing the user to return to steps easily. This is also relevant to their following comment about lessening a user's effort. The point of designing an experience is to do just that. So, asking if the user is working with an agent could be a question exposed as a checkbox while filling out the form for a open house. That selection could be saved for subsequent open house requests. This simplifies the experience instead of disrupting the user with a question the system forgot to ask when it was more relevant.
 

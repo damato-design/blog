@@ -6,6 +6,9 @@ date: 2023-01-30
 animal: octopus
 ---
 
+import Aside from '@components/Aside.astro';
+import Quote from '@components/Quote.astro';
+
 Pixels are an [absolute unit](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Values_and_units#absolute_length_units), they are expected to represent a fixed size and aren't affected by outside factors ([sort of](https://www.smashingmagazine.com/2021/07/css-absolute-units/)). While this sounds like a good thing for design because you can be be sure of the dimensions, the reality is that using pixel values in the web hinders user experience. Layouts become unresponsive, translated content becomes unreadable, and accessibility preferences just aren't considered. In most cases, we want to avoid absolute units and instead use something more flexible that adapts to the needs of the layout.
 
 Relative units are _related_ to something else. An example of a relative unit is percentage and relates to different properties based on where it is used. The `rem` is a relative unit which roughly represents the size of the letter "M" in the document. If the document `font-size` changes, all areas where this unit is used will also change. The root `font-size` can change based on user preference; usually increasing to help folks with vision impairment. There is a [not insignificant amount of the population](https://medium.com/@vamptvo/pixels-vs-ems-users-do-change-font-size-5cfb20831773) who leverage the ability to change the `font-size` in user settings so we want to ensure this feature of the web is maintained in our experiences. [It's possible to check this out for yourself.](https://brokul.dev/detecting-the-default-browser-font-size-in-javascript)
@@ -20,9 +23,11 @@ html {
 }
 ```
 
-{% aside %}
+<Aside>
+
 It's important to know that when this trick was discovered, we didn't have `rem` units at all. The trick was attempting to solve for `em` units. These units are scoped to the parent `font-size` which can change at any time. So trying to get all of the sizes to behave is a nightmare. Luckily `rem` can only be changed in one place.
-{% endaside %}
+
+</Aside>
 
 The `62.5%` _looks like_ what we like to call a [magic number](https://css-tricks.com/magic-numbers-in-css/); it seems oddly specific. The number is the ratio 10:16 as a percent. The default `rem` is 16 pixels, so 1/16th of a `rem` equals one pixel. Multiplying by 10 helps keep the font size _somewhat_ readable (`6.25%` is too small, `625%` too large). Then the final use of this declaration allows for the following:
 
@@ -38,15 +43,16 @@ The fact is that the `rem` doesn't exist in design tools, so a **translation fro
 
 So why would [Jeremy Keith](https://adactio.com/) say the following about the author and the approach nearly 20 years later?
 
-{% quote "https://twitter.com/adactio/status/1523743519034200067" "Jeremy Keith" %}
+
+<Quote cite='Jeremy Keith' link='https://twitter.com/adactio/status/1523743519034200067'>
 Not that he—or anyone else—would recommend it these days!
-{% endquote %}
+</Quote>
 
 ## Absolutely arbitrary font-size
 
 [Toheeb Ogunbiyi](https://twitter.com/toheebdotcom) does a deep dive into the `62.5%` approach and has some opinions about thinking in pixels:
 
-{% quote "https://www.toheeb.com/on/62.5-font-size-trick/" "Toheeb Ogunbiyi" %}
+<Quote cite='Toheeb Ogunbiyi' link='https://www.toheeb.com/on/62.5-font-size-trick/'>
 Thinking in pixels makes it easy to do the following:
 
 - Translate UI Design to code.
@@ -54,7 +60,7 @@ Thinking in pixels makes it easy to do the following:
 - Troubleshoot the code in the browser.
 
 This ensures a better development experience. In addition, the mental model is maintained across the team.
-{% endquote %}
+</Quote>
 
 What if I said that mental model being maintained is baseless artifact of legacy computer graphic design? 😱
 
@@ -66,9 +72,9 @@ So why do we need to use the pixel value so much? It's because that's what desig
 
 When the `font-size` value is redefined at the `html` element, the representation of the `rem` is changed for the _entire document_. This means that third-party elements could look incorrect; designed with the `rem` to expect the browser `16px` default. This even includes usage of `rem` in the [Shadow DOM](https://blog.openreplay.com/shadow-dom--the-ultimate-guide/). [Josh W. Comeau](https://www.twitter.com/joshwcomeau) calls this out:
 
-{% quote "https://www.joshwcomeau.com/css/surprising-truth-about-pixels-and-accessibility/#the-sixtwofive-trick-13" "Josh W. Comeau" %}
+<Quote cite='Josh W. Comeau' link='https://www.joshwcomeau.com/css/surprising-truth-about-pixels-and-accessibility/#the-sixtwofive-trick-13'>
 There's a baseline assumption on the web that `1rem` will produce readable text. I don't wanna mess with that assumption.
-{% endquote %}
+</Quote>
 
 He also mentions that adoption is difficult because it would need to be done all at once. There's no possibility of incremental enhancement. This also means that deprecating the approach is also troublesome. So you need to be very sure in this decision, more than most others.
 
@@ -84,12 +90,10 @@ h1 {
 
 If the user zooms the content, that relationship is maintained. This is what [Andrés Galante](https://twitter.com/andresgalante) says in his article ["Accessible Font Sizing, Explained"](https://css-tricks.com/accessible-font-sizing-explained/) at CSS-Tricks:
 
-{% quote "https://css-tricks.com/accessible-font-sizing-explained/#aa-think-about-proportions-not-size" "Andrés Galante" %}
+<Quote cite='Andrés Galante' link='https://css-tricks.com/accessible-font-sizing-explained/#aa-think-about-proportions-not-size'>
 Think about proportions, not size
-{% endquote %}
+</Quote>
 
 While it's recommended to _not_ update the `font-size` at `html` and maintain the default expectations, setting the size here [isn't all bad](https://taupecat.com/blog/2013/07/17/the-62-5-solution/) as long as it's made accessible. Just recognize that it does affect _all_ use of `rem` throughout the page where this rule is applied. So reverting this approach later is an exercise of auditing all pages where `rem` is used and updating the values where appropriate. For large applications and systems, this could be a monumental task. However, if you've kept in mind that the `rem` is relating to the `font-size` in the usage, it might not be a difficult change. It might even be a feature of the approach. Though, if you use `rem` as just another unit because someone said it's better without understanding why, you might end up fighting `rem`.
 
 Don't dislike `rem` because you don't understand it, dislike pixels because you do.
-
-

@@ -6,6 +6,8 @@ date: 2022-05-12
 animal: chameleon
 ---
 
+import Aside from '@components/Aside.astro';
+
 There are tons of definitions of design tokens on the web. Enough that I won't link to them here and you can find your favorite one with a web search. Many of the examples of design tokens show a relationship that looks something like this:
 
 - `color-blue-500` ⬅ `#0000ff`
@@ -178,11 +180,11 @@ I've avoided trying to describe intents for the purposes of marketing because de
 
 Remember to cover all of the possible states that your interaction might have.
 
-{% aside %}
+<Aside>
 
 I've chosen to use the past tense to describe these states to indicate what has happened. You can think about this with the word "selected" where we wouldn't use the word "select" to describe the state. You can also think of the word you might use if combined with "is" (ie., is hovered, is focused).
 
-{% endaside %}
+</Aside>
 
 One more note, if you are using focus rings, I recommend associating the ring with the _box_ category because the ring visually appears on the box, not on the interactive element. As you might expect, having the same focus treatment across all interactive elements will be best and having it associated with the box category makes this easy to maintain. This would also go for shadows, although shadows have much more to do with light cast rather than a theme and could be avoided altogether.
 
