@@ -80,6 +80,12 @@ const useAnimal = draft ? 'caterpillar' : animal;
     margin-inline-start: auto;
     margin-block-start: -20%;
     isolation: isolate;
+    aspect-ratio: 1;
+  }
+
+  .animal img {
+    width: 100%;
+    height: 100%;
   }
 
   .footer {
@@ -97,7 +103,9 @@ const useAnimal = draft ? 'caterpillar' : animal;
 <a class="entry" href={ `/posts/${entry.slug}` } data-draft={ draft }>
   <div class="desc">{ desc }</div>
   <Cover heat={ heat }>{ title }</Cover>
-  <img class="animal" src={ `/animals/${useAnimal}.webp` } role="presentation"/>
+  <div class="animal">
+    <img src={ `/animals/${useAnimal}.webp` } role="presentation" width="400" height="400"/>
+  </div>
   <div class="footer">
     <Fragment set:html={logo} />
     <datetime time={ entry.data.date } class="date">{ date }</datetime>
