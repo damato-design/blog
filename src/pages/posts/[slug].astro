@@ -29,7 +29,7 @@ const toc = headings.reduce((recentHeadingAtDepths, heading) => {
 
 <style is:global define:vars={{ heat: heatColor(entry.data.heat) }}>
   article {
-    font-size: 1.2em;
+    font-size: clamp(1rem, 0.652rem + 1.739vw,2rem);
   }
 
   article :where(h2, h3, h4, h5, h6) {
@@ -51,6 +51,9 @@ const toc = headings.reduce((recentHeadingAtDepths, heading) => {
 
   article img {
     width: 100%;
+    max-width: 860px;
+    display: block;
+    margin-inline: auto;
   }
 
   article :not(pre) > code {
