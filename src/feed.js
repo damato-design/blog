@@ -39,7 +39,8 @@ export default async function(context) {
     try {
       posts = await getCollection('posts');
     } catch (err) {}
-    return posts.reduce((feed, post) => {
+    const published = import.meta.env.PROD ? posts.filter((post) => !post.data.draft) : posts;
+    return published.reduce((feed, post) => {
         const url = new URL(`/posts/${post.slug}`, context.url.origin).toString();
         const item = {
             title: post.data.title,
