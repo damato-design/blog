@@ -94,7 +94,7 @@ const useAnimal = draft ? 'caterpillar' : animal;
   }
 </style>
 
-<a class="entry" href={ `posts/${entry.slug}` } data-draft={ draft }>
+<a class="entry" href={ `/posts/${entry.slug}` } data-draft={ draft }>
   <div class="desc">{ desc }</div>
   <Cover heat={ heat }>{ title }</Cover>
   <img class="animal" src={ `/animals/${useAnimal}.webp` }/>
