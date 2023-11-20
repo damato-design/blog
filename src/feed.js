@@ -35,12 +35,13 @@ export default async function(context) {
       posts = await getCollection('posts');
     } catch (err) {}
     return posts.reduce((feed, post) => {
+        const url = new URL(`posts/${post.slug}`, import.meta.env.SITE).toString();
         const item = {
             title: post.data.title,
-            id: post.slug,
+            id: url,
             date: post.data.date,
             description: post.data.desc,
-            link: new URL(`posts/${post.slug}`, import.meta.env.SITE).toString(),
+            link: url,
             content: md.render(post.body),
             image: new URL(`og-images/${post.slug}`, import.meta.env.SITE).toString(), 
         };
