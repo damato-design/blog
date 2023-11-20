@@ -47,6 +47,7 @@ const style = `
     font-size: 8rem;
     letter-spacing: -.05em;
     line-height: 1.05;
+    text-transform: capitalize;
     display: flex;
     align-items: center;
     justify-content: center;

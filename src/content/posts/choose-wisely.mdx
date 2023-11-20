@@ -7,6 +7,7 @@ animal: owl
 ---
 
 import Aside from '@components/Aside.astro';
+import Mermaid from '@components/Mermaid.astro';
 
 If you believe in free-will, options are most likely a foundational aspect of your philosophy. Designers are responsible for presenting choices to users so that they may select the best option and advance toward a goal. Historically, we have introduced several patterns which support the ability for users to make a choice. In this exploration we will consider some common interface components and understand why we might decide to use one over another.
 ## Ground rules
@@ -164,8 +165,8 @@ Let's break down the options one more time:
 
 Here's a visual representation of our decision tree:
 
-```mermaid
-  graph TD
+<Mermaid content={`
+graph TD
     A[Give user a choice]
     A --> B{Happens immediately?}
     B -->|Yes| C[Instantaneous]
@@ -176,7 +177,7 @@ Here's a visual representation of our decision tree:
     D --> H{Include considerations?}
     H -->|Yes| I[Verbose]
     H -->|No| J[Concise]
-```
+`}/>
 
 The flow chart above can help lead a path toward a decision by asking **why**...
 
