@@ -1,0 +1,38 @@
+---
+const { title = 'Design Systems Hot Takes', slug = ''} = Astro.props;
+const url = slug ? new URL(`/posts/${slug}`, import.meta.env.SITE) : '/';
+---
+
+<style>
+  footer {
+    border-top: 1px solid;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+  }
+
+  .title {
+    font-family: PT Sans Narrow;
+    text-align: center;
+    text-wrap: balance;
+    text-transform: capitalize;
+    text-decoration: none;
+    line-height: 1;
+  }
+
+  hr {
+    align-self: stretch;
+    margin-inline: 1rem;
+  }
+
+  p {
+    font-size: .8em;
+  }
+</style>
+
+<footer class="max-width">
+  <a class="title" href={ url }>{title}</a>
+  <hr>
+  <p>The design of this website is a <em>parody</em> of the books published by O’Reilly Media, Inc and has no affliation with the organization.</p>
+</footer>
+<img src="https://analytics.damato.design/api/track?domain=blog.damato.design" style="display: none">

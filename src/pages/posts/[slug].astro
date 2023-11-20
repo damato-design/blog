@@ -3,6 +3,7 @@ import heatColor from '../../heat.js';
 import Head from '@components/Head.astro';
 import Header from '@components/Header.astro';
 import Spine from '@components/Spine.astro';
+import Footer from '@components/Footer.astro';
 import Navigation from '@components/Navigation.astro';
 import { getCollection } from 'astro:content';
 export async function getStaticPaths() {
@@ -48,6 +49,10 @@ const toc = headings.reduce((recentHeadingAtDepths, heading) => {
     filter: brightness(0.8);
   }
 
+  article img {
+    width: 100%;
+  }
+
   article :not(pre) > code {
     color: var(--heat);
   }
@@ -80,5 +85,6 @@ const toc = headings.reduce((recentHeadingAtDepths, heading) => {
         <Content />
       </article>
     </div>
+    <Footer title={ entry.data.title } slug={ entry.slug }/>
   </body>
 </html>
