@@ -27,9 +27,12 @@ const toc = headings.reduce((recentHeadingAtDepths, heading) => {
 }, new Map().set(1, { children: [] }));
 ---
 
-<style is:global define:vars={{ heat: heatColor(entry.data.heat) }}>
+<style is:global define:vars={{ 
+  heat: heatColor(entry.data.heat),
+  contentWidth: '80ch'
+}}>
   article {
-    font-size: clamp(1rem, 0.722rem + 1.391vw, 1.8rem);
+    font-size: clamp(1rem, 0.896rem + 0.522vw, 1.3rem);
   }
 
   article :where(h2, h3, h4, h5, h6) {
@@ -78,7 +81,7 @@ const toc = headings.reduce((recentHeadingAtDepths, heading) => {
 </style>
 
 <html lang="en">
-  <Head slug={ entry.slug } { ...entry.data }/>
+  <Head slug={ entry.slug } width='max(20vw + 10rem, 860px)' { ...entry.data }/>
   <body>
     <Header/>
     <Spine time={ remarkPluginFrontmatter.minutesRead } { ...entry.data } />

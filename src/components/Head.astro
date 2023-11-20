@@ -2,7 +2,7 @@
 const { 
   title = 'blog.damato.design',
   description = 'Design Systems Hot Takes',
-  slug = 'index'
+  slug = 'index',
 } = Astro.props;
 
 const ogImage = new URL(`og-images/${slug}.png`, import.meta.env.SITE).toString();
@@ -61,7 +61,6 @@ const ogImage = new URL(`og-images/${slug}.png`, import.meta.env.SITE).toString(
     }
 
     :root {
-      --content-width: max(50vw + 20rem, 860px);
       --card-width: max(10vw + 10rem, 260px);
       --box-surface-bg: #f9f9f4;
       --box-surface-fg: #111;
@@ -73,6 +72,7 @@ const ogImage = new URL(`og-images/${slug}.png`, import.meta.env.SITE).toString(
     }
   
     body {
+      --content-width: var(--contentWidth, max(50vw + 20rem, 860px));
       margin: 0;
       font-family: "Merriweather",Book Antiqua, Palatino, Palatino Linotype, Palatino LT STD, Georgia, serif;
       font-size: 1rem;
