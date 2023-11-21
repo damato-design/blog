@@ -59,6 +59,11 @@ const toc = headings.reduce((recentHeadingAtDepths, heading) => {
     margin-inline: auto;
   }
 
+  article blockquote:not(.blockquote) {
+    color: var(--heat);
+    filter: brightness(0.8);
+  }
+
   article :not(pre) > code {
     color: var(--heat);
   }
