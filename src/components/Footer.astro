@@ -1,6 +1,7 @@
 ---
 const { title = 'Design Systems Hot Takes', slug = ''} = Astro.props;
-const url = slug ? new URL(`/posts/${slug}`, import.meta.env.SITE) : '/';
+const domain = Astro.url;
+const url = slug ? new URL(`/posts/${slug}`, domain) : '/';
 ---
 
 <style>
@@ -9,6 +10,13 @@ const url = slug ? new URL(`/posts/${slug}`, import.meta.env.SITE) : '/';
     display: flex;
     align-items: center;
     justify-content: start;
+  }
+
+  @media print {
+    footer {
+      position: fixed;
+      bottom: 0;
+    }
   }
 
   .title {
@@ -31,4 +39,4 @@ const url = slug ? new URL(`/posts/${slug}`, import.meta.env.SITE) : '/';
   <hr>
   <p>The design of this website is a <em>parody</em> of the books published by O’Reilly Media, Inc and has no affliation with the organization.</p>
 </footer>
-<img src="https://analytics.damato.design/api/track?domain=blog.damato.design" aria-hidden style="display: none">
+<img src={`https://analytics.damato.design/api/track?domain=${domain.host}`} aria-hidden style="display: none">

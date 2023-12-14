@@ -1,0 +1,50 @@
+---
+import heatColor from '../heat.js';
+const { prev, next } = Astro.props;
+const url = new URL(Astro.url);
+---
+
+<style>
+  .bookshelf {
+    background-image: url(/images/bookshelf.png);
+    background-repeat: repeat-x;
+    background-size: contain;
+    background-position: bottom center;
+    color: white;
+    display: flex;
+  }
+
+  .bookshelf a {
+    writing-mode: vertical-rl;
+    text-decoration: none;
+    border-inline: 3em solid black;
+    padding: .5em;
+    max-height: 15em;
+    text-transform: capitalize;
+    line-height: 1.1;
+    text-wrap: pretty;
+    font-weight: 300;
+    display: flex;
+    font-size: min(1.5cqi,.8em);
+    align-items: center;
+    justify-content: center;
+    transition: .218s ease;
+  }
+
+  .bookshelf a:hover {
+    transform: scale(1.05);
+  }
+</style>
+
+<div class="max-width bookshelf">
+  { prev && <a 
+    href={ new URL(`/posts/${prev.slug}`, url) }
+    title={ prev.data.title }
+    style={ `background-color: ${heatColor(prev.data.heat)}; margin-block-start: auto;` }>
+    { prev.data.title }</a> }
+  { next && <a
+    href={ new URL(`/posts/${next.slug}`, url) }
+    title={ next.data.title }
+    style={ `background-color: ${heatColor(next.data.heat)}; margin-block-end: auto;` }>
+    { next.data.title }</a> }
+</div>

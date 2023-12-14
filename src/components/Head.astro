@@ -5,7 +5,7 @@ const {
   slug = 'index',
 } = Astro.props;
 
-const ogImage = new URL(`og-images/${slug}.png`, import.meta.env.SITE).toString();
+const ogImage = new URL(`og-images/${slug}.png`, Astro.url).toString();
 ---
 
 <head>
