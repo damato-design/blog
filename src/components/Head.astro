@@ -97,5 +97,11 @@ const ogImage = new URL(`og-images/${slug}.png`, Astro.url).toString();
       max-width: min(var(--content-width) - 2rem, 100vw - 2rem);
       margin-inline: auto;
     }
+
+    @media print {
+      .no-print {
+        display: none !important;
+      }
+    }
   </style>
 </head>

@@ -90,6 +90,20 @@ const toc = headings.reduce((recentHeadingAtDepths, heading) => {
   article pre [style="color:var(--astro-code-token-comment)"] {
     opacity: .4;
   }
+
+  @media print {
+
+    article pre,
+    article blockquote,
+    article aside {
+      page-break-inside: avoid;
+    }
+
+    article pre code {
+      white-space: pre-wrap;
+      resize: initial;
+    }
+  }
 </style>
 
 <html lang="en">

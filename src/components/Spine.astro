@@ -4,7 +4,7 @@ import logo from '@components/logo.svg?raw';
 const { title, heat, time, animal = 'caterpillar' } = Astro.props
 ---
 
-<style>
+<style lang="scss">
   .spine {
     display: grid;
     grid-template-columns: auto 1fr auto;
@@ -63,6 +63,12 @@ const { title, heat, time, animal = 'caterpillar' } = Astro.props
     line-height: 1.1;
     padding: .25em;
     margin: 0;
+    margin-inline-end: auto;
+
+    @media print {
+      color: black;
+      padding: 0;
+    }
   }
 
   .title span {
@@ -83,7 +89,7 @@ const { title, heat, time, animal = 'caterpillar' } = Astro.props
     --heat: currentColor;
   }
 
-  @media (max-width: 600px) {
+  @media print, (max-width: 600px) {
     .hide, .spine:after {
       display: none;
     }
@@ -98,7 +104,7 @@ const { title, heat, time, animal = 'caterpillar' } = Astro.props
     </div>
     <div class="title" style={ `background: ${ heatColor(heat) }` }>
       <h2>{ title }</h2>
-      <span>{ time }</span>
+      <span class="hide">{ time }</span>
     </div>
     <a class="publisher hide" href="/">
       <Fragment set:html={logo} />

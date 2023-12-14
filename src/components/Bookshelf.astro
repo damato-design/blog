@@ -36,7 +36,7 @@ const url = new URL(Astro.url);
   }
 </style>
 
-<div class="max-width bookshelf">
+<div class="max-width no-print bookshelf">
   { prev && <a 
     href={ new URL(`/posts/${prev.slug}`, url) }
     title={ prev.data.title }
