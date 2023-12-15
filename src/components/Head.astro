@@ -3,9 +3,23 @@ const {
   title = 'blog.damato.design',
   desc = 'Design Systems Hot Takes',
   slug = 'index',
+  date,
 } = Astro.props;
 
 const ogImage = new URL(`og-images/${slug}.png`, Astro.url).toString();
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "headline": title,
+  "image": [ ogImage ],
+  "datePublished": date,
+  "dateModified": date,
+  "author": [{
+    "@type": "Person",
+    "name": "Donnie D'Amato",
+    "url": "https://donnie.damato.design"
+  }]
+};
 ---
 
 <head>
@@ -41,6 +55,8 @@ const ogImage = new URL(`og-images/${slug}.png`, Astro.url).toString();
   console.info(`Analytics disabled: ${insights.DEFAULT_APP.options.disabled}`);
   insights.trackPages();
   </script>
+
+  { date && <script type="application/ld+json" set:html={JSON.stringify(schema)}/> }
 
 
   <style is:global>
