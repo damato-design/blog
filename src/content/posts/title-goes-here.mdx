@@ -1,9 +1,9 @@
 ---
 title: Title goes here
-desc: A quick exploration about naming typography components
+desc: A quick exploration of naming typography components
 heat: 1
 date: 2023-12-20
-draft: true
+animal: elephant
 ---
 
 Naming is [clearly something I think a lot about](/posts/truly-semantic). So when I saw [this tweet from Nathan Curtis](https://twitter.com/nathanacurtis/status/1724500748388450587) about the way [Shaun Bent](https://twitter.com/shaunbent) and [his team at Spotify](https://spotify.design/) handle component composition has named slots, _I was triggered_. Hot takes activate, here's the image from the tweet:
@@ -12,9 +12,9 @@ Naming is [clearly something I think a lot about](/posts/truly-semantic). So whe
 
 ## Pretweet
 
-There's several words in here that are suggesting position. For this exploration I'll focus on the title area, specifically the areas above and below the title slot. The team has chosen the words pretitle and subtitle for these areas, respectively. Seeing this, I went through the following stream of thought:
+There are several words in here that suggest position. For this exploration, I'll focus on the title area, specifically the areas above and below the title slot. The team has chosen the words pretitle and subtitle for these areas, respectively. Seeing this, I went through the following stream of thought:
 
-Initially, I'd expect that the concepts should match. In other words, to choose either pre/post or super/sub. There's awkwardness in both choices. Choosing the former pair will result in a double-t (posttitle) while the latter pair will result in a suggested size of the title from the name (supertitle).
+Initially, I'd expect that the concepts should match. In other words, choose either pre/post or super/sub. There's awkwardness in both choices. Choosing the former pair will result in a double-t (posttitle) while the latter pair will result in a suggested size of the title from the name (supertitle).
 
 I've recently adopted the concept of "overline" from [Material Design](https://m2.material.io/design/typography/the-type-system.html#applying-the-type-scale) for the area above headlines. While it might work using the word title (eg., "overtitle", "undertitle") it wouldn't for other typographic terms as we may end up with a very confusing "underline".
 
@@ -26,7 +26,7 @@ The parts we're identifying here are from the anatomy of [page layout](https://e
 
 ### Headline
 
-This is meant to be the most important element in the layout. As such, we expect this to have the largest font size and / or most ornate font style to capture the reader, along with its compelling content to continue traveling down the path it introduces.
+This is meant to be the most important element in the layout. As such, we expect this to have the largest font size and/or most ornate font style to capture the reader, along with its compelling content to continue traveling down the path it introduces.
 
 ### Deck / Kicker / Intro / Stand-first / Lead / Lede
 
@@ -34,7 +34,7 @@ This often summarizes the article and appears directly after the headline. It is
 
 ### Subhead
 
-There's some disagreement in the research I've done that identifies this element. In some examples, this is a synonym for [deck](#deck--kicker--intro--stand-first--lead--lede) but for others it is specifically meant to break up large chunks of text.
+There's some disagreement in the research I've done that identifies this element. In some examples, this is a synonym for [deck](#deck--kicker--intro--stand-first--lead--lede) but for others, it is specifically meant to break up large chunks of text.
 
 ### Drop cap
 
@@ -50,11 +50,11 @@ As you might expect, this is meant to present the date that the piece was report
 
 ### Caption
 
-This is text used to describe accompanying media such as images, photos, or illustrations. We will also see captions in media outside of page layout such as video in the form of closed captions. While we expect this text to be smaller than most copy, it is important that it is still legible. Importantly, captions are also subtitles that include a written description of other elements in the media.
+This is text used to describe accompanying media such as images, photos, or illustrations. We will also see captions in media outside of page layout such as video in the form of closed captions. While we expect this text to be smaller than most body copy, it must be still legible. Importantly, captions are also subtitles that include a written description of other elements in the media.
 
 ### Folio
 
-This is meant as metadata about the piece, often including the publishers name, page number, or year of publishing. This is often in the corners of printed pages in a smaller and less distracting typographic treatment.
+This is meant as metadata about the piece, often including the publisher's name, page number, or year of publishing. This is often in the corners of printed pages in a smaller and less distracting typographic treatment.
 
 ### Running head
 
@@ -66,7 +66,7 @@ This is meant to highlight a particular topic or mention from the existing body 
 
 ## Disambiguation
 
-There's also many of these that are often used interchangably that have more meaning. For example, the difference between a headline and a title. From the [English Language Learners Stack Exchange](https://ell.stackexchange.com/a/201030): 
+Many of these are often used interchangeably and have more meaning. For example, the difference between a headline and a title. From the [English Language Learners Stack Exchange](https://ell.stackexchange.com/a/201030): 
 
 > "Headline" is normally used when an article appears as one of a collection of articles, such as a newspaper. If the article is reprinted separately, the headline becomes the "title".
 
@@ -82,9 +82,9 @@ In HTML web pages, the title is a metatag meant for the `<head/>` of the webpage
 
 ## Purpose not position
 
-You may have noticed that much of the descriptions above do not suggest the element's position in the layout, but rather its purpose. This is the reason why the original tweet was so triggering for me. When we provide an API that is driven by placement, that allows different variations of lockups to emerge because the person supplying the content is less likely to . It becomes much harder to have a consistent presentation of these elements.
+You may have noticed that much of the descriptions above do not suggest the element's position in the layout, but rather its purpose. This is the reason why the original tweet was so triggering for me. When we provide an API that is driven by placement, it allows different variations of lockups to emerge because the person supplying the content is less likely to truly understand _why_ they want this treatment. It becomes much harder to have a consistent presentation of these elements.
 
-That is why when we create a component like this, we should be preparing it by purpose. This will ensure that what the designer decided is done by intention. Where it is finally displayed is a separate layout exercise. As an example, in magazine layout, an article's author does not have authority to the folio position. Less artistic articles may also have more restrictions on other elements such as the style of headline, deck, and body copy. This keeps the presentation consistent across the publication and readers become more familiar with presentation; making it easier to read.
+That is why when we create a component like this, we should be preparing it by purpose. This will ensure that what the designer decides is done by intention. Where it is finally displayed is a separate layout exercise. As an example, in magazine layout, an article's author does not have authority over the folio position. Less artistic articles may also have more restrictions on other elements such as the style of headline, deck, and body copy. This keeps the presentation consistent across the publication and readers become more familiar with the presentation; making it easier to read.
 
 Going back to the original example at the beginning of this article, I'd now recommend the following based on the above:
 
@@ -104,8 +104,8 @@ As a practical example, the button component I've designed allows for an `icon` 
 <Button icon={ <Star/> } as='disclosure' />
 ```
 
-With this API naming scheme, we can create several kinds of lockups. We could have a `<ListRow/>`, `<MediaCard/>`, `<Hero/>`, or any other component which expects a hierarchy of content. In fact, we could also have different layout options specific to each once each of these are well-defined. Ones that allow the folio to appear above the headline as an example. The exercise of determining where each one of these elements goes should be separate from the the exercise of curating the kinds of elements that need to appear and their content. In fact, designers often aren't curating the content here. The decision about which kind of lockup to use might be the only decision required in some cases; such as widgets of a CMS.
+With this API naming scheme, we can create several kinds of lockups. We could have a `<ListRow/>`, `<MediaCard/>`, `<Hero/>`, or any other component which expects a hierarchy of content. We could also have different layout options specific to each once each of these is well-defined. Ones that allow the folio to appear above the headline as an example. The exercise of determining where each one of these elements goes should be separate from the exercise of curating the kinds of elements that need to appear and their content. In fact, designers often aren't curating the content here. The decision about which kind of lockup to use might be the only decision required in some cases; such as widgets of a CMS.
 
-The opinion about where these elements should appear or how many variations exist should be influenced by the designers interested in these layouts but ultimately consolidated by design system governance to align on a common shared language by intention. Designers must articular their needs past ego and identify how their choice is targeting a user need. That then informs this new API.
+The opinion about where these elements should appear or how many variations exist should be influenced by the designers interested in these layouts but ultimately consolidated by design system governance to align on a common shared language by intention. Designers must articulate their needs past ego and identify how their choice is targeting a user's need. That then informs this new API.
 
 Overall, I continue to recommend naming things with purpose.
