@@ -42,7 +42,7 @@ const toc = headings.reduce((recentHeadingAtDepths, heading) => {
     font-size: clamp(1rem, 0.896rem + 0.522vw, 1.3rem);
   }
 
-  article :where(h2, h3, h4, h5, h6) {
+  article :where(h2, h3, h4, h5, h6, th) {
     font-family: PT Sans Narrow;
     text-transform: capitalize;
     line-height: 1.1;
@@ -89,6 +89,24 @@ const toc = headings.reduce((recentHeadingAtDepths, heading) => {
 
   article pre [style="color:var(--astro-code-token-comment)"] {
     opacity: .4;
+  }
+
+  article table {
+    table-layout: fixed;
+    border-collapse: collapse;
+    margin-block: 2em;
+  }
+
+  article tr {
+    border-bottom: 1px solid;
+  }
+
+  article :where(th, td) {
+    padding: .5em;
+  }
+
+  article :where(th:not(:last-child), td:not(:last-child)) {
+    border-right: 1px solid;
   }
 
   @media print {
