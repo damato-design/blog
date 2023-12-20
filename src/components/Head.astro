@@ -6,7 +6,7 @@ const {
   date,
 } = Astro.props;
 
-const ogImage = new URL(`og-images/${slug}.png`, Astro.url).toString();
+const ogImage = new URL(`og-images/${slug}.png`, Astro.url.origin).toString();
 const schema = {
   "@context": "https://schema.org",
   "@type": "NewsArticle",
