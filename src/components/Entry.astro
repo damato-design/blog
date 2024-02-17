@@ -18,9 +18,13 @@ const useAnimal = draft ? 'caterpillar' : animal;
     display: flex;
     flex-direction: column;
     color: inherit;
-    box-shadow: 0 0.1rem .5rem rgba(128, 128, 128, .1);
     aspect-ratio: 8.5/11;
     position: relative;
+    border-bottom-color: #f3f3f3;
+    border-bottom-style: solid;
+    border-bottom-width: 1em;
+    border-image: repeating-linear-gradient(#fff, #ddd 1px, #ddd 1px, #fff 2px) 16;
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 1em), 99% 100%, 1% 100%, 0 calc(100% - 1em));
   }
 
   .entry[data-draft]:before {
