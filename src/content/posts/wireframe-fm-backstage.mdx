@@ -7,9 +7,11 @@ animal: tiger
 draft: true
 ---
 
+import Aside from '@components/Aside.astro';
+
 I've been an AV nerd for a long time. In one of the first iterations of my personal website, I had something called "Audio Phrekwenci" (pronounced "frequency"), which was an audio blog of sporadic release. I'd record my ramblings to a microphone, edit in some free software, and publish it on my personal server. I had some friends listen to it ever so often and it was fun to talk about.
 
-Since then, I've always had the itch to do it again. But one thing was always holding me back; **editing**. Now that technology has come a long way, and text-based editing has appeared, it's finally time to give it a go in a new show called [Wireframe](https://wireframe.fm).
+Since then, I've always had the itch to do it again. But one thing was always holding me back; **editing**. Traditional editing is painful and time-consuming. Now, that technology has come a long way and text-based editing has appeared, it's finally time to give it a go in a new show called [Wireframe](https://wireframe.fm).
 
 ## Concept
 
@@ -58,6 +60,10 @@ Realizing that less and less of my expectations were being met with Streamlabs, 
 ## Hosting
 
 This was one of the easiest choices but it took some time to find. I decided to use [Acast](https://www.acast.com/) to host the episodes as [I didn't want to host audio files on Netlify](https://www.reddit.com/r/webdev/comments/1b14bty/netlify_just_sent_me_a_104k_bill_for_a_simple/). The platform has unlimited hosting and downloads of episodes. It also can add an intro & outro to every episode; no need to edit it into the file beforehand. It provides a nicely styled RSS feed.
+
+<Aside>
+Some folks might be wondering about the recorded intro and outro. That was a combination of [ElevenLabs](https://elevenlabs.io/) and [YouTube Studio Audio Library](https://studio.youtube.com/), with a small session in Adobe Audition to get the mixdown.
+</Aside>
 
 One thing that I want to mention: _do not play with the feed redirect settings_. I made the mistake of testing this out and it took several days for customer service to revert this since you're unable to go back yourself once you do it. The messaging is misleading in that setting; saying "you can easily reverse the redirection if needed". Easy means contact customer service, so don't do that. It's only needed if you no longer want to use Acast.
 
