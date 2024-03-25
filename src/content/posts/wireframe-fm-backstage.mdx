@@ -1,0 +1,106 @@
+---
+title: Wireframe, Backstage
+desc: Behind the scenes in the making of wireframe.fm
+heat: 0
+date: 2024-03-25
+animal: tiger
+draft: true
+---
+
+I've been an AV nerd for a long time. In one of the first iterations of my personal website, I had something called "Audio Phrekwenci" (pronounced "frequency"), which was an audio blog of sporadic release. I'd record my ramblings to a microphone, edit in some free software, and publish it on my personal server. I had some friends listen to it ever so often and it was fun to talk about.
+
+Since then, I've always had the itch to do it again. But one thing was always holding me back; **editing**. Now that technology has come a long way, and text-based editing has appeared, it's finally time to give it a go in a new show called [Wireframe](https://wireframe.fm).
+
+## Concept
+
+The idea was to create a workflow so that once I see an idea or opinion on the internet, I can have the potential to create an episode within 2 hours. Whether or not that happens regularly is not yet determined, but I wanted the ability to respond quickly if appropriate.
+
+To do this, I needed a tight framework of applications to work together that output all of the resources I'd like to provide. Here's a list of requirements that I had:
+
+- **Recording equipment**, microphone and other devices.
+- **Text-based editing**, otherwise this just isn't happening.
+- **Cloud-based editing**, with the option to edit on my tablet.
+- **`.mp3` export**, seems obvious but needs to be enumerated.
+- **`.srt` export**, the transcript so contents are eventually searchable.
+- **Shownotes editor**, a way to include shownotes into the episode page.
+- **Inexpensive/Free audio hosting**, not trying to pay for more than I need.
+
+## Recording
+
+As an AV nerd, I have a prosumer setup for recording and streaming audio and video. Below is an image from when I was recording [my talk for UXDX](https://www.youtube.com/watch?v=V_FfUrmLnQ0) a few years ago.
+
+![Media cart with lots of audio/video devices](/images/media-cart.jpeg)
+
+I've updated the cart a little bit since then. Nearly all of the devices on the desktop have been replaced with a single [Roland SR-20HD](https://proav.roland.com/global/products/sr-20hd/).
+
+My original plan was to record the media directly to YouTube as unlisted. YouTube provides practically unlimited media storage so I thought this would be a good start. Unfortunately, there's a few reasons why this didn't work out.
+
+First, the result was low quality. It was more apparent when choosing to record as a webcam, but using the encoder was also not great either. It would seem I was subject to data packet loss and I'd need to find another way to record. I also tried to use the [`MediaRecorder` API](https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder) but that also had a quality issue. Certainly, the web isn't meant to be handling this sort of data.
+
+Second, has to do with the next step of editing. I was very interested in using [Streamlabs Podcast Editor](https://streamlabs.com/podcast-editor) as the next part of my workflow. One of its features is the ability to start a project by providing a YouTube link. This means that I wouldn't need to download the file just to upload it to another platform. The products should be able to talk to each other. This worked in practice with an existing link I had. However, when I tried recording and immediately editing that recording, the download was not available. In fact, it was not available for _several hours_. This was unacceptable as a primary workflow.
+
+Because of this recording to YouTube was removed as part of the workflow. I still plan to use the platform for the potential of live events.
+
+In the end, I record the footage to an SD card and transfer it to a computer for the next step. Not so futuristic, but maybe there's more to explore here.
+
+## Editing
+
+Certainly, text-based editing was critical in this process. Streamlabs also offers this and my initial tests were very good. The pricing was also excellent, offering 40 hours of transcription; the most out of any web-based editing service I found. While I looked into [Descript](https://www.descript.com/) at the time, the price was more expensive for less hours. Streamlabs also seemed to have everything I wanted in my flow and nothing more; making a much simpler editing experience.
+
+I also happen to have a subscription to Adobe, and have Adobe Premiere Pro which recently released text-based editing as well. The workflow is a little bit convoluted but I got some good results once I figured out there's a difference between the source transcript and the timeline transcript. However, this is desktop only. So I wouldn't be able to edit on my tablet. But this would be a good backup solution, except for one problem. 
+
+My recording equipment outputs a file where Adobe Premiere can't render audio. I don't know why this is, as when I play the file anywhere else the audio exists. The only thing I've noticed so far is that the audio sampling rate from the equipment is 48000Hz, while all of the other files I have are 44100Hz. Not sure if that's the issue but, seems like Adobe is just not going to work here.
+
+When it came time to produce the pilot, I did all of the editing within Streamlabs. Then I went to export the file as an `mp3`. The process of doing this was not expected. While I understand I need to have the file encoded, I wasn't expecting an email with the result. Additionally, that email didn't have the file within it. It was a link back to the project, which was a page of different links; none of which were `mp3` files. The file I was able to download was a `.mp4` which was unplayable. I've reached out to their support on this and they claim that the `mp3` export is possible but it's not clear.
+
+Realizing that less and less of my expectations were being met with Streamlabs, I got an account with Descript and re-edited the footage there. The experience was more inline with my expectations; able to receive an `.mp3` file and an `.srt` file for the episode. It also seems I can record to the platform here as well. I might revisit my workflow to record to the cloud instead of SD card transfer if the quality behaves.
+
+## Hosting
+
+This was one of the easiest choices but it took some time to find. I decided to use [Acast](https://www.acast.com/) to host the episodes as [I didn't want to host audio files on Netlify](https://www.reddit.com/r/webdev/comments/1b14bty/netlify_just_sent_me_a_104k_bill_for_a_simple/). The platform has unlimited hosting and downloads of episodes. It also can add an intro & outro to every episode; no need to edit it into the file beforehand. It provides a nicely styled RSS feed.
+
+One thing that I want to mention: _do not play with the feed redirect settings_. I made the mistake of testing this out and it took several days for customer service to revert this since you're unable to go back yourself once you do it. The messaging is misleading in that setting; saying "you can easily reverse the redirection if needed". Easy means contact customer service, so don't do that. It's only needed if you no longer want to use Acast.
+
+## Website
+
+I was heavily inspired by [Syntax](https://syntax.fm/). I truly appreciate those folks providing the site as source code so I can get some ideas on how to provide content about the show.
+
+While I don't have all of their bells & whistles, one thing I knew that I wanted was to have the transcript and shownotes combined into a single Markdown file. I had the idea of using Markdown footnote syntax to pepper the transcript with footnote marks. Then the Astro Markdown renderer would automatically create a shownotes section using that syntax.
+
+Another thing that I created was a page to help create an episode page from the Acast feed. Once I publish an episode, I can visit a special page on the website that fetches the feed and allows me to add the transcript and tags to create a new `.md` file for the website. The submit button creates a PR in Github, and there I can add the shownote markings before publishing. Github has a nice web editor for markdown files where you can preview the result.
+
+One thing that I needed to consider was that the intro added in Acast would cause all of the transcripts offset to be inaccurate. This means that I'd need to offset the transcript times by the intro seconds. I had made a small function that would update all of the transcript times. That looks like this:
+
+```js
+
+// Convert a string time into seconds
+function timecodeToSeconds(t) {
+  return t.split(':').reduce((acc,time) => (60 * acc) + +time);
+}
+
+// Convert seconds into string time
+function secondsToTime(seconds) {
+    return [
+        parseInt(seconds / 60 / 60),
+        parseInt(seconds / 60 % 60),
+        parseInt(seconds % 60)
+    ]
+        .join(":")
+        .replace(/\b(\d)\b/g, "0$1")
+}
+
+// Find timecodes, update with the seconds offset
+function timescriptTimeOffset(srt, offset) {
+    return srt.replace(/((?:\d+:)+\d+,\d+)/gm, function (m) {
+        const [code, ms] = m.split(',');
+        const time = timecodeToSeconds(code) + Number(offset);
+        return [secondsToTime(time), ms].join(',');
+    });
+}
+```
+
+So, for now the workflow is: record to SD card, edit in Descript, publish on Acast, and finalize through Github.
+
+## Stop, collaborate, and listen
+
+And that's it! The pilot is out, and I plan to have a new episode at least once a week for the next few months. You can also follow [`@wireframefm`](https://twitter.com/wireframefm) on Twitter. I expect to add syndications in the next week or so to your favorite platforms.
