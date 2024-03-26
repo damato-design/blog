@@ -2,9 +2,8 @@
 title: Wireframe, Backstage
 desc: Behind the scenes in the making of wireframe.fm
 heat: 0
-date: 2024-03-25
+date: 2024-03-26
 animal: tiger
-draft: true
 ---
 
 import Aside from '@components/Aside.astro';
@@ -73,7 +72,9 @@ I was heavily inspired by [Syntax](https://syntax.fm/). I truly appreciate those
 
 While I don't have all of their bells & whistles, one thing I knew that I wanted was to have the transcript and shownotes combined into a single Markdown file. I had the idea of using Markdown footnote syntax to pepper the transcript with footnote marks. Then the Astro Markdown renderer would automatically create a shownotes section using that syntax.
 
-Another thing that I created was a page to help create an episode page from the Acast feed. Once I publish an episode, I can visit a special page on the website that fetches the feed and allows me to add the transcript and tags to create a new `.md` file for the website. The submit button creates a PR in Github, and there I can add the shownote markings before publishing. Github has a nice web editor for markdown files where you can preview the result.
+This was also the first time I used the new `subgrid` syntax for the episodes to get the content alignment between the cards. You won't notice this until there are more episodes. Setting `grid-row: span 2` on the children of the parent grid was the key to making this work.
+
+Another thing that I created was a page to help create an episode entry for the website from the Acast feed. Once I publish an episode, I can visit a special page on the website that fetches the feed and allows me to add the transcript and tags to create a new `.md` file for the website. The submit button creates a PR in Github, and there I can add the shownote markings before publishing. Github has a nice web editor for markdown files where you can preview the result.
 
 One thing that I needed to consider was that the intro added in Acast would cause all of the transcripts offset to be inaccurate. This means that I'd need to offset the transcript times by the intro seconds. I had made a small function that would update all of the transcript times. That looks like this:
 
