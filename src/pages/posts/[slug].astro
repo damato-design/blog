@@ -8,6 +8,7 @@ import Spine from '@components/Spine.astro';
 import Bookshelf from '@components/Bookshelf.astro';
 import Footer from '@components/Footer.astro';
 import Navigation from '@components/Navigation.astro';
+import Postdate from '@components/Postdate.astro';
 
 export async function getStaticPaths() {
   const posts = await getPosts();
@@ -131,6 +132,7 @@ const toc = headings.reduce((recentHeadingAtDepths, heading) => {
     <Spine time={ remarkPluginFrontmatter.minutesRead } { ...entry.data } />
     <div class="max-width">
       <!-- <Navigation headings={ toc.get(1).children } /> -->
+      <Postdate date={ entry.data.date } />
       <article>
         <Content />
       </article>

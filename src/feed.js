@@ -32,6 +32,11 @@ function getFeed(context) {
     });
 }
 
+// MDX isn't rendered properly yet
+// https://github.com/withastro/roadmap/issues/533
+function removeImport(body) {
+    return body.replace(/import [^\s]+ from [^/]+\/\w+.astro';/gm, '');
+}
 
 export default async function(context) {
     const feed = getFeed(context);
@@ -48,7 +53,7 @@ export default async function(context) {
             date: post.data.date,
             description: post.data.desc,
             link: url,
-            content: md.render(post.body),
+            content: md.render(removeImport(post.body)),
             image: new URL(`/og-images/${post.slug}.png`, context.url.origin).toString(), 
         };
         feed.addItem(item);

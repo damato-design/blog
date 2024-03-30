@@ -1,0 +1,41 @@
+---
+const { date } = Astro.props;
+---
+
+<style>
+  .postdate {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-block: .5rem;
+  }
+
+  time {
+    display: none;
+  }
+</style>
+
+<div class="postdate">
+  <time datetime={ date }/>
+</div>
+
+<script>
+  const cutoffs = [60, 3600, 86400, 86400 * 7, 86400 * 30, 86400 * 365, Infinity];
+  const units = ["second", "minute", "hour", "day", "week", "month", "year"];
+  
+  const $time = document.querySelector('.postdate time');
+  const d = new Date($time?.getAttribute('datetime'));
+  const deltaSeconds = Math.round((d - Date.now()) / 1000);
+  const unitIndex = cutoffs.findIndex(cutoff => cutoff > Math.abs(deltaSeconds));
+  const divisor = unitIndex ? cutoffs[unitIndex - 1] : 1;
+  const rtf = new Intl.RelativeTimeFormat(undefined, { numeric: "auto" });
+  const format = rtf.format(Math.floor(deltaSeconds / divisor), units[unitIndex]);
+
+  const $absolute = document.createElement('span');
+  $absolute.textContent = new Intl.DateTimeFormat(undefined).format(d);
+  $time.parentElement.appendChild($absolute);
+
+  const $relative = document.createElement('span');
+  $relative.textContent = format;
+  $time.parentElement.appendChild($relative);
+</script>
