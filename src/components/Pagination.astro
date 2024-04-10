@@ -21,5 +21,6 @@ const { page } = Astro.props;
 
 <footer>
   <a role="link" href={page?.url.prev} { ...({ 'aria-disabled': !page?.url.prev })}>Previous</a>
+  <span title={ `${page.total} articles total` }>page { page.currentPage } of { page.lastPage }</span>
   <a role="link" href={page?.url.next} { ...({ 'aria-disabled': !page?.url.next })}>Next</a>
 </footer>
