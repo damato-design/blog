@@ -5,8 +5,6 @@ import heatColor from '../heat.js';
 const { entry } = Astro.props;
 const { title, desc, heat, draft, animal = 'caterpillar' } = entry.data;
 const date = entry.data.date.toLocaleString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
-
-const useAnimal = draft ? 'caterpillar' : animal;
 ---
 
 <style define:vars={{ heat: heatColor(entry.data.heat) }}>
@@ -109,7 +107,7 @@ const useAnimal = draft ? 'caterpillar' : animal;
   <div class="desc">{ desc }</div>
   <Cover heat={ heat }>{ title }</Cover>
   <div class="animal">
-    <img src={ `/animals/${useAnimal}.webp` } role="presentation" width="400" height="400"/>
+    <img src={ `/animals/${animal}.webp` } role="presentation" width="400" height="400"/>
   </div>
   <div class="footer">
     <Fragment set:html={logo} />
