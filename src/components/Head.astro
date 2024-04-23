@@ -56,6 +56,10 @@ const schema = {
   insights.trackPages();
   </script>
 
+<script>
+  window.onload = () => 'serviceWorker' in navigator && navigator.serviceWorker.register('/sw.js').then((registration) => registration.update()).catch((err) => {});
+</script>
+
   { date && <script type="application/ld+json" set:html={JSON.stringify(schema)}/> }
 
 
