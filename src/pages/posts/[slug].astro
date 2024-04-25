@@ -64,7 +64,7 @@ const toc = headings.reduce((recentHeadingAtDepths, heading) => {
     filter: brightness(0.8);
   }
 
-  article img {
+  article img:not([role="presentation"]) {
     width: 100%;
     max-width: 860px;
     display: block;
