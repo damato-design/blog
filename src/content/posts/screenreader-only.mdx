@@ -1,0 +1,149 @@
+---
+title: Screenreader only
+desc: Is this the exception to component-driven development?
+heat: 1
+date: 2024-04-27
+animal: ferret
+draft: true
+---
+
+import Aside from '@components/Aside.astro';
+
+I am a big proponent of component-driven development, and don't agree with the [utility class method of styling](./classname-soup). In component-driven development, you offer blackbox abstractions of common implementations. Meanwhile, the utility class method allows for more customization. In a systematic approach, we want our experiences to be consistent and therefore follow the same patterns and conventions. Distributing these blackboxes that align with guidelines by default makes a consistent experience easy. Whereas, trying to learn and follow guidelines from other resources to implement piecemeal comes with misintereptations and other inconsistencies.
+
+However, in this work there has been one concept that I've stuggled to put into this component-driven ecosystem; _screenreader only_ as it has traditionally existed as a class added to an otherwise benign element.
+
+## Amongst the library
+
+The purpose of screenreader only is to mark a section of an interface that is meant specifically for assistive technologies to pick up within the experience; invisible to sighted users. Here's a common example:
+
+```html
+<button type="button">
+    <svg
+        focusable="false"
+        aria-hidden="true"
+        viewBox="0 0 24 24">
+    <path
+        d="M19 6.41L17.59 5 12 10.59 6.41 5 5
+            6.41 10.59 12 5 17.59 6.41 19 12
+            13.41 17.59 19 19 17.59 13.41 12z" />
+    </svg>
+  <span class="sr-only">Close</span>
+</button>
+```
+
+My gut reaction is that it would be odd to offer such a component that simply applies the styles required to make it hidden and for it to be offered as an exception to an otherwise utility-free ecosystem. However, I don't like exceptions, I like thoughtful systems.
+
+My first thought is where a `<ScreenreaderOnly/>` would live amongst other components, if it is in fact a component itself. This is assuming that the library is vast and requires subsections that aim to direct visitors to the appropriate component through navigation. First I'd assume this might live with other "accessibility" components. However, this also assumes that folks are actively looking to include accessibility in their experiences; something that we can only dream of across an organization.
+
+Further, we expect that accessibility is a quality of components, perhaps not a component itself. As I'm having difficulty thinking about other possible memebers of this family that would also be associated with the `<ScreenreaderOnly/>` component.
+
+My next thought is that because it is a quality, perhaps it isn't a component but a property on an existing component we set. Because we expect that the content of this conceptual `<ScreenreaderOnly/>` component to only ever be text, it might be safe to consider that it is a property of a text component.
+
+```jsx
+<Text screenreaderOnly>To begin, start by...<Text/>
+```
+
+The `<Text/>` component will be widly more popular than the possible `<ScreenreaderOnly/>` component, which will cause more folks to potentially visit its API and learn about the feature. This being an opportunity to educate when its use is appropriate.
+
+## When is it appropriate
+
+I did quite a bit of reading and research before writing this post. As I'm an advocate for accessibility, I don't consider myself an expert and definitely have areas of improvement in my practice. I wanted to know when the concept of screenreader only was appropriate if at all.
+
+For this topic, I highly recommend reading [Scott O'Hara](https://twitter.com/scottohara)'s post called [Inclusively Hidden](https://www.scottohara.me/blog/2017/04/14/inclusively-hidden.html).
+
+In Scott's post, he describes some alternatives to screenreader only; specifically on loophole in particular.
+
+> By attaching an `aria-describedby` or `aria-labelledby` attribute to a focusable element, and setting the ARIA attribute's value to the completely hidden element's id, screen readers will announce the content of the completely hidden element.
+
+Here's his example:
+
+```html
+<p class="visually-hidden" id="example_desc">
+  Here are specific instructions for the type
+  of information this form input is expecting to receive...
+</p>
+
+<label for="example">
+  Example
+</label>
+<input type="text" id="example" aria-describedby="example_desc">
+```
+
+In this way, we still need to apply styles to the `.visually-hidden` element in order for it to disappear from view. But this also demonstrates how to connect that content to an interactive element for further context.
+
+For completeness, here's what Scott recommends as the styles for `visually-hidden`:
+
+```css
+.visually-hidden:not(:focus):not(:active) {
+  clip: rect(0 0 0 0); 
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap; 
+  width: 1px;
+}
+```
+
+I'm now imagining some sort of interface for when `screenreaderOnly` is used on the `<Text/>` component to ensure it is connected to _something_.
+
+```jsx
+// Source
+function Text({ screenreaderOnly, children }) {
+    const id = React.useId();
+
+    React.useEffect(() => {
+        /**
+         * Consider appending the id instead of replacing
+         * `aria-describedby` can accept space separated ids
+         */
+        screenreaderOnly
+            ?.current
+            ?.setAttribute('aria-describedby', id);
+    }, [screenreaderOnly]);
+
+    return (
+        <div
+            className={ screenreaderOnly && 'visually-hidden' }
+            id={ id }>{ children }</div>
+    );  
+}
+
+// Usage
+function MyForm() {
+    const ref = useRef();
+    return (
+        <Text screenreaderOnly={ ref }>
+            Here are specific instructions for
+            the type of information this form
+            input is expecting to receive...
+        </Text>
+
+        <label for="example">
+            Example
+        </label>
+        <input type="text" id="example" ref={ ref }>
+    )
+}
+```
+
+<Aside>
+    It's important to know that `aria-label`, `aria-labelledby` and `aria-describedby` are not valid on all elements. [The general gist is that these are meant for interactive elements or landmark elements.](https://www.tpgi.com/short-note-on-aria-label-aria-labelledby-and-aria-describedby/)
+
+    The interface above _could_ warn if the `ref` is attached to an element that is inappropriate.
+</Aside>
+
+However you feel about using a `useEffect` to then use a DOM API to set an attribute that this component shouldn't have control over is less important than the concept of connecting these two elements for accessibility purposes in an easy to use interface. It would be important to me that using `<Text screenreaderOnly>` _requires_ the connection be maintained. It is too easy to accidentally rename `id`s in a vast composition of components causing accessibility wiring to break.
+
+Also you can have your own naming convention to denote that the expected input is a `ref` to the element that you wish to describe.
+
+## Why `aria-describedby`
+
+The benefits of using `aria-describedby` for screenreader only content is that first [it doesn't replace existing labeling](https://www.aaron-gustafson.com/notebook/aria-quicktip-labelledby-vs-describedby/) (as `aria-labelledby` would); it is meant to accompany it. It also benefits by auto-translation technologies that may struggle finding `aria-label` content will [more easily find `aria-describedby` content](https://heydonworks.com/article/aria-label-is-a-xenophobe/) because it is written within a discoverable DOM node.
+
+<Aside>
+    In doing the research for this article, I wondered if anyone had considered rethinking "Screenreader Only" as "ARIA only" as it is a shorter name with perhaps better marketing. I do worry that a person would believe that it is a valid ARIA attribute (it's not) but [I'm not the first to consider the idea for the purpose](https://fylgja.dev/components/aria-only/).
+</Aside>
+
+Certainly `aria-describedby` isn't _always_ going to be the correct solution. I believe if you've done due dilligence in crafting a well prepared experience, with semantic elements and appropriate attribute usage, this approach is probably going to help provide additional context to visually-impared users [for complex interfaces](https://adrianroselli.com/2019/10/stop-giving-control-hints-to-screen-readers.html). Know that if the content would also help visual users, you should absolutely consider putting the content inline with the composition and forego additional attribute complexity.

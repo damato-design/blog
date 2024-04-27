@@ -49,7 +49,7 @@ const toc = headings.reduce((recentHeadingAtDepths, heading) => {
     line-height: 1.1;
   }
 
-  article :where(h2, h3, h4, h5, h6) a {
+  article :where(h2, h3, h4, h5, h6) :where(a, code) {
     text-transform: initial;
   }
 
