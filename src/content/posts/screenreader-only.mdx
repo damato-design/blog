@@ -32,13 +32,13 @@ The purpose of screenreader only is to mark a section of an interface that is me
 </button>
 ```
 
-There's more about this composition and words about screenreader only versus `aria-label` [in this post](https://gomakethings.com/revisting-aria-label-versus-a-visually-hidden-class/#pairing-a-visually-hidden-class-with-aria-hidden) by [Chris Ferdinandi](https://twitter.com/ChrisFerdinandi).
+In this example, sighted users will be able to see the path of the `<svg/>` in the shape of an 'x' with no other visual information. Non-sighted users who leverage assistive technology should receive "Close" from their tool and ignore the data set by the `<svg/>`. There's more about this composition and words about screenreader only versus `aria-label` [in this post](https://gomakethings.com/revisting-aria-label-versus-a-visually-hidden-class/#pairing-a-visually-hidden-class-with-aria-hidden) by [Chris Ferdinandi](https://twitter.com/ChrisFerdinandi).
 
-My gut reaction is that it would be odd to offer such a component that simply applies the styles required to make it hidden and for it to be offered as an exception to an otherwise utility-free ecosystem. However, I don't like exceptions, I strive for thoughtful systems.
+My gut reaction is that it would be odd to offer such a component that simply applies the styles required to make it hidden and for it to be offered as an exception to an otherwise utility-free ecosystem. However, I don't like exceptions, I strive for consistent thoughtful systems.
 
 My first thought is where a `<ScreenreaderOnly/>` would live amongst other components, if it is in fact a component itself. This is assuming that the library is vast and requires subsections that aim to direct visitors to the appropriate component through navigation. First I'd assume this might live with other "accessibility" components. However, this also assumes that folks are actively looking to include accessibility in their experiences; something that we can only dream of across an organization.
 
-Further, we expect that accessibility is a quality of components, perhaps not a component itself. As I'm having difficulty thinking about other possible memebers of this family that would also be associated with the `<ScreenreaderOnly/>` component.
+Further, we might consider accessibility as a quality of components, perhaps not a component itself. As I'm having difficulty thinking about other possible memebers of this family that would also be associated with the `<ScreenreaderOnly/>` component.
 
 My next thought is that because it is a quality, perhaps it isn't a component but a property on an existing component we set. Because we expect that the content of this conceptual `<ScreenreaderOnly/>` component to only ever be text, it might be safe to consider that it is a property of a text component.
 
@@ -46,7 +46,7 @@ My next thought is that because it is a quality, perhaps it isn't a component bu
 <Text screenreaderOnly>To begin, start by...<Text/>
 ```
 
-The `<Text/>` component will be widely more popular than the possible `<ScreenreaderOnly/>` component, which will cause more folks to potentially visit its API and learn about the feature. This being an opportunity to educate when its use is appropriate.
+The `<Text/>` component will be widely more popular than the possible `<ScreenreaderOnly/>` component, which will cause more folks to potentially visit its API and learn about this helpful feature. This being an opportunity to educate when its use is appropriate.
 
 <Aside>
     In doing the research for this article, I wondered if anyone had considered rethinking "Screenreader Only" as "ARIA only" as it is a shorter name with perhaps better marketing. I do worry that a person would believe that it is a valid ARIA attribute (it's not) but [I'm not the first to consider the idea for the purpose](https://fylgja.dev/components/aria-only/).
@@ -157,3 +157,5 @@ The benefits of using `aria-describedby` for screenreader only content is that f
 Certainly `aria-describedby` isn't _always_ going to be the correct solution. I believe if you've done due dilligence in crafting a well prepared experience, with semantic elements and appropriate attribute usage, this approach is probably going to help provide additional context to visually-impared users [for complex interfaces](https://adrianroselli.com/2019/10/stop-giving-control-hints-to-screen-readers.html).
 
 Know that if the content would also help visual users, you should absolutely consider putting the content inline with the composition and forego additional configuration complexity.
+
+And as always, reconsider the complexity of your experience overall, as you might be able to avoid cumbersome instructions for something simpler.
