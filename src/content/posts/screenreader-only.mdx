@@ -8,7 +8,7 @@ animal: ferret
 
 import Aside from '@components/Aside.astro';
 
-I am a big proponent of component-driven development, and don't agree with the [utility class method of styling](./classname-soup). In component-driven development, you offer blackbox abstractions of common implementations. Meanwhile, the utility class method allows for more customization. In a systematic approach, we want our experiences to be consistent and therefore follow the same patterns and conventions. Distributing these blackboxes that align with guidelines by default makes a consistent experience easy to create and manage. Whereas, trying to learn and follow guidelines from other resources to implement piecemeal comes with misintereptations and other inconsistencies.
+I am a big proponent of component-driven development, and don't agree with the [utility class method of styling](/posts/classname-soup). In component-driven development, you offer blackbox abstractions of common implementations. Meanwhile, the utility class method allows for more customization. In a systematic approach, we want our experiences to be consistent and therefore follow the same patterns and conventions. Distributing these blackboxes that align with guidelines by default makes a consistent experience easy to create and manage. Whereas, trying to learn and follow guidelines from other resources to implement piecemeal comes with misintereptations and other inconsistencies.
 
 However, in this work there has been one concept that I've stuggled to put into this component-driven ecosystem; _screenreader only_ as it has traditionally existed as a class (eg., `.sr-only`) added to an otherwise benign element.
 
@@ -27,7 +27,7 @@ The purpose of screenreader only is to mark a section of an interface that is me
             6.41 10.59 12 5 17.59 6.41 19 12
             13.41 17.59 19 19 17.59 13.41 12z" />
     </svg>
-  <span class="sr-only">Close</span>
+    <span class="sr-only">Close</span>
 </button>
 ```
 
@@ -147,7 +147,7 @@ However you feel about using a `useEffect` to then use a DOM API to set an attri
 
 Also you can have your own naming convention to denote that the expected input is a `ref` to the element that you wish to describe.
 
-It's important to know that `aria-label`, `aria-labelledby` and `aria-describedby` are not valid on all elements. [The general gist is that these are meant for interactive elements or landmark elements.](https://www.tpgi.com/short-note-on-aria-label-aria-labelledby-and-aria-describedby/). This interface above _could_ be enhanced to warn if the `ref` is attached to an element that is inappropriate but would need some more conditional logic to identify this.
+It's important to know that `aria-label`, `aria-labelledby` and `aria-describedby` are not valid on all elements. [The general gist is that these are meant for interactive elements or landmark elements.](https://www.tpgi.com/short-note-on-aria-label-aria-labelledby-and-aria-describedby/) This interface above _could_ be enhanced to warn if the `ref` is attached to an element that is inappropriate but would need some more conditional logic to identify this.
 
 ## Why `aria-describedby`
 
