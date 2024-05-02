@@ -102,11 +102,11 @@ To put this another way, consider these nested regions to work like blend modes.
 
 If it's possible to nest in an infinite amount of combinations, then _it'll be impossible to accurately curate values that satisfy mixed influence_. In other words, while we can have some degree of certainty that a nested mode structure such as `light` → `critical` finally shows text color as "red", we cannot be confident that it will be red when a new expression is injected such as `light` → `cobranding` → `critical` because the cobranding's accent color may conflict with the given red and expects a different treatment. We lose even more confidence with the more modes included; causing more ripple effects to the final result.
 
-## Values of influence
+## Modes of influence
 
-What this makes me believe is that in a mode-driven expressive system, we'll need a way to describe how a value should be influenced, as opposed to prescribing a specific value. Again, this is very much aligned in the way that a blend mode would work. When a mode is set, rules are applied to adjust the current values to make them more appropriate within the given mode. In a perfect world, they would not apply specific values but instead apply functions that transform the current existing value in a predetermined and expected manner.
+What this makes me believe is that in a mode-driven expressive system, we'll need the mode to describe how a value should be influenced, as opposed to prescribing a specific value at the mode. Again, this is very much aligned in the way that a blend mode would work. When a mode is set, rules are applied to adjust the current values to make them more appropriate within the given mode. In a perfect world, they would not apply specific canned values but instead use functions that transform the current existing value in a predetermined and expected manner.
 
-And here's where we hit execution the wall. There is no _straightforward_ way to support this directly in CSS [^1] because it is effectively expecting to do the following:
+And here's where we hit execution the wall. There is no _straightforward_ way to support this directly in CSS because it is effectively expecting to do the following:
 
 ```css
 /* This is invalid CSS */
@@ -115,13 +115,15 @@ And here's where we hit execution the wall. There is no _straightforward_ way to
 }
 ```
 
-What this pseudo-CSS attempts is to receive the current `--text-color` and modify it slightly by adding red for later use within its current "critical" scope and further downstream scopes. **You cannot reassign a CSS custom property using the current value of that property.** I also know attempting to determine the appropriate algorithms to accurately describe an expression would be very challenging; and frustrating to designers looking to have fine-tuned control over the final value for known mode nesting combinations.
+What this pseudo-CSS attempts is to receive the current `--text-color` and modify it slightly by adding red for later use within its current "critical" scope and further downstream scopes. **You cannot reassign a CSS custom property using the current value of that property.** There are tricks to use parent values[^1] but nothing that always works for every property we might want to alter at a mode's scope.
+
+I also know attempting to determine the appropriate algorithms to accurately describe an expression would be very challenging; and frustrating to designers looking to have fine-tuned control over the final value for known mode nesting combinations.
 
 Let me be clear, I cannot even begin to understand what an influence on a value might look like to satisfy this method.
 
-All is not lost! If it is possible to predetermine what the expected nesting structure is, then we can know the series of possible nesting behaviors upfront and curate values accordingly; avoiding difficult computations.
+All is not lost! If it is possible to predetermine what the expected nesting structure is, then we can know the series of nesting behaviors upfront and curate values accordingly; avoiding difficult computations or unintended results.
 
-## Nesting behavior
+## Strict nesting behavior
 
 The question we want to ask to make things simpler is: **is there a regular pattern to nesting these mode placements?** I _think_ there could be. Certainly, I can envision the common case where the user preference informs the page-level mode (eg., light or dark), while lower modes describe scoped expressive areas. The brand in this mode influences the curation decisions occurring for the tokens. In other words, while I am in the process of choosing values for `light`, I am also thinking within the context of what it might mean for this particular brand (eg., McDonald's) to be portrayed as in a light mode.
 
@@ -129,11 +131,15 @@ This means that the file naming convention should suggest what brand was conside
 
 Now, here comes the complexity. The concept of `light` — already influenced by brand — will _also influence_ the concept of `critical`. There will be a way of presenting a critical message for McDonald's when the user is in light mode and a different presentation when in dark mode for the same brand. This would mean that the files we would be managing would be more like `mcd-light-default` and `mcd-light-critical`, among others.
 
-Importantly, these examples are only targeting color. It is very possible to have modes that affect other facets of the experience like density. I assume that color is _probably_ the only one of these which can compound across modes in the way described above; as `light` influences `critical`. Further compounding could also occur; when additional expressions are added in-between (see [How deep is your mode](#how-deep-is-your-mode) earlier in this post), where a promotional newsletter signup within a branded `light` preferred experience is meant to display an error. In this way, you might result in a file as `mcd-light-promo-critical.json` to express this very specific mode. So, with this in mind, perhaps a standard construction of a mode file could be:
+Further compounding could also occur; when additional expressions are added in-between (see [How deep is your mode](#how-deep-is-your-mode) earlier in this post), where a promotional newsletter signup within a branded `light` preferred experience is meant to display an error. In this way, you might result in a file as `mcd-light-promo-critical.json` to express this very specific mode. So, with this in mind, perhaps a standard construction of a mode file could be:
 
 ```yaml
 [brand]-[device]-[purpose]-[system].json
 ```
+
+<Aside>
+    I'm not confident that this structure is exhaustive. I can already think of the localization influencing the curation of these values as well. I do wonder how we can be sure what an exhaustive list of factors is meant to look like. It also further makes me feel that a highly curated, strict nesting behavior curated system is untenable for large organizations without significant tooling. Influential modes will be critical in these modern ecosystems.
+</Aside>
 
 Note that there are variations of this meant for different nesting configurations.
 
@@ -145,7 +151,7 @@ Note that there are variations of this meant for different nesting configuration
 ```
 
 <Aside>
-    It might be important to maintain the full syntax using placeholders so `system` and `purpose` don't have conflicts.
+    It might be important to maintain the full syntax using placeholders so `system` and `purpose` don't have conflicts but I will continue to avoid in examples for brevity.
 
     ```yaml
     mcd-light-_-_.json
@@ -159,7 +165,7 @@ The structure attempts to guide the curation process, indicating that deciding w
 
 So for a dark footer, you could either assign the values from `mcd-light-inverted.json` or assign `mcd-dark.json`. I imagine both of these would have the same values. But having both also allows for the possibility of them _not_ having the same values. This allows for `mcd-light-inverted.json` to not entirely match `mcd-dark.json` because it is deemed inappropriate for what we want to convey as "inverted". [The naming of modes is another separate exercise of defining purpose.](/posts/ondark-virus) However, you could also have some mechanism of aliasing such that a request for `mcd-light-inverted.json` simply returns `mcd-dark.json` until it is inappropriate to do so.
 
-Overall, what this explains is that in this method of scalable interface design, we must know the possible nested mode structures to curate values appropriately. Declaring the factors through the file name and later the scoped data attribute selector should suffice as a clear indication of the intent behind this curated set. In fact, the data attribute value would inform the expectation of nesting for an interface.
+Overall, what this explains is that in this method of scalable interface design, we must know the possible nested mode structures to curate values appropriately. Declaring the factors through the file name and later the scoped data attribute selector should suffice as a clear indication of the intent behind this curated set. In fact, the data attribute value would inform the expectation of nesting for an interface and the mode file where the values are from.
 
 ```html
 <body data-mode="mcd-light">
@@ -169,10 +175,17 @@ Overall, what this explains is that in this method of scalable interface design,
 </body>
 ```
 
+This allows for a single CSS selector to drive what the value is while informing the expected nested mode hierarchy.
+
+```css
+[data-mode="mcd-light-promo-critical"] {
+    --text-color: darkred;
+}
+```
+
 <Aside>
 
-In the self-referential ["influence values"](#values-of-influence) world, these parts are clearer because the compound nature of factors would only exist as decided in the interface and wouldn't need to be predefined upfront. Instructions on how to influence the base value would be encoded at each mode.
-
+Using self-referential values in a ["modes of influence"](#modes-of-influence) world, these parts are clearer because the compound nature of factors would only exist as design choices in the HTML and wouldn't need the order to be predefined upfront. Instructions on how to influence the current value would be encoded at each mode.
 
 ```html
 <body data-mode="mcd light">
@@ -181,7 +194,9 @@ In the self-referential ["influence values"](#values-of-influence) world, these 
     </section>
 </body>
 ```
-This has the added benefit of not needing to know how deep we are in the possible nesting. But at the moment, we don't have nice things.
+In other words, `promo` doesn't care what scope is above it; the values given by the above scope will be computed in the same way for anything passing through the `promo` mode into the appropriate result.
+
+This has the added benefit of not needing to know how deep we are in the possible nesting. However, the order in the CSS cascade will matter specifically if two modes are placed at the same scope (`data-mode="promo critical"`). This is the same as applying two blend modes at the same layer. I'd argue that setting the order in CSS with the cascade is less disruptive than rearranging the order in HTML; especially in a shared component-driven ecosystem.
 
 </Aside>
 
