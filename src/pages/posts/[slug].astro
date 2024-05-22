@@ -146,7 +146,6 @@ const toc = headings.reduce((recentHeadingAtDepths, heading) => {
   article > :where(p:has(img), blockquote, pre) {
     min-height: 100vh;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     scroll-snap-align: start;
@@ -193,6 +192,7 @@ const toc = headings.reduce((recentHeadingAtDepths, heading) => {
   article :where(img, pre) {
     max-height: 80vh;
     max-width: 80vw !important;
+    width: auto !important;
   }
 }
 
