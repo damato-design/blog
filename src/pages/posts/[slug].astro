@@ -128,6 +128,75 @@ const toc = headings.reduce((recentHeadingAtDepths, heading) => {
       resize: initial;
     }
   }
+
+</style>
+
+<style is:global>
+
+@media not (display-mode: browser) {
+  html {
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+  }
+
+  article > :where(p:not(:has(img)), h2, h3, h4) {
+    display: none;
+  }
+
+  article > :where(p:has(img), blockquote, pre) {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    scroll-snap-align: start;
+  }
+
+  article > :where(ul, ol) {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    scroll-snap-align: start;
+    gap: 1em;
+  }
+
+  article > iframe {
+    scroll-snap-align: start;
+    border-top: 10vh solid transparent;
+    border-bottom: 10vh solid transparent;
+    height: 80vh;
+  }
+
+  article > table {
+    scroll-snap-align: start;
+    min-height: 100vh;
+    display: grid;
+    place-content: center;
+  }
+
+  article thead {
+    display: none;
+  }
+
+  article tbody {
+    border-top: 1px solid;
+  }
+
+  article > aside {
+    min-height: 100vh;
+    align-items: center !important;
+    justify-content: center;
+    scroll-snap-align: start;
+  }
+
+  article :where(img, pre) {
+    max-height: 80vh;
+    max-width: 80vw !important;
+    width: auto !important;
+  }
+}
+
 </style>
 
 <html lang="en">

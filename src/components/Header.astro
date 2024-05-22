@@ -31,6 +31,10 @@ import logo from '@components/logo.svg?raw';
     font-family: Garamond Nova;
     margin-block: .25em;
   }
+
+  @media not (display-mode: browser) {
+    header { display: none; }
+  }
 </style>
 
 <header>
