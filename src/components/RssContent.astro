@@ -1,0 +1,14 @@
+---
+import { getEntry } from "astro:content";
+
+const { slug } = Astro.params;
+
+// Load the content collection entry specified by the passed params.
+const entry = await getEntry('posts', slug);
+
+// Get the content component for the requested content collection entry.
+const { Content } = await entry.render();
+---
+
+{/* Render your content collection content: */}
+<Content />
