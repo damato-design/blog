@@ -34,6 +34,11 @@ const url = new URL(Astro.url);
   .bookshelf a:hover {
     transform: scale(1.05);
   }
+
+  @media not (display-mode: browser) {
+    .bookshelf { display: none; }
+  }
+
 </style>
 
 <div class="max-width no-print bookshelf">
