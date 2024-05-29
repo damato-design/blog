@@ -1,0 +1,37 @@
+---
+title: On being extra
+desc: Your T-shirt scale isn't scalable
+heat: 1
+date: 2024-05-29
+animal: bison
+---
+
+While [I don't recommend scales within the semantic set](/posts/truly-semantic), it could be helpful in your primitives. One way of providing a scale is through something called "T-shirt sizing". In this method, each size is provided in a similar way to how you might find sizes of clothing in a store. You might choose this type of scale when you expect the middle value to be the default and have values exist in opposite directions. In other words, you'd start with `medium` or `md`, and then have a smaller value represented with `small` or `sm` and a larger value represented with `large` or `lg`.
+
+The T-shirt sizing scale is most frequently found describing space. In fact, I mention it as a direction within [Gridless Design](https://gridless.design/). While [I have discovered a more semantic method of applying space](https://complementary.space/) since then, the T-shirt sizing approach remains popular and is appropriate for primitive token sets most certainly.
+
+In seeing folks demonstrate their T-shirt sizing scale, one thing irks me. It's about how people handle being "extra".
+
+## Growing badly
+
+Certainly, your scale will most likely exist to have more than 3 sizes, and when that occurs this extends into "extra" territory. In other words, you'll begin to have values for `xs` and `xl` to go out from either direction of `small` and `large`. So far, so good. But if you extend one more step in either direction, you'll begin to see and example like this: `xxs`.
+
+Certainly, the expectation is that this is "extra extra small" or "double X S". The problem is more apparent as you include more sizes, you'll get `xxxs` and `xxxxs`; the representation becomes longer with each size.
+
+The fix for this is very simple, use a number to indicate the number of X's, so for `xxxxs`, you'd replace with `4xs`. In this way, you aren't repeating the character which increase the length of the representation. It is also more clear how many X's in the name instead of needing to count at larger amounts. Of course, this goes for the `xl` direction too.
+
+## Considerations
+
+So why _aren't_ people doing this? I'm going to make some assumptions.
+
+Perhaps there is a constraint that the representation _must_ start with an alpha character. For example, [HTML `id` attributes should start with an alpha character](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id), and [Javascript variables also cannot start with a number](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/First_steps/Variables#an_aside_on_variable_naming_rules).
+
+If this is the case, then you can do one of two things. You could flip the X and number which would create `x2l`. This is most likely less clear what it is meant to convey but it does keep the number of characters low if that is beneficial in some way. The other option is to prefix with alpha characters like a namespace. `size-2xl` is more readable but longer if that is critical. I'd imagine the latter is more appropriate, as this also indicates what set this representation is meant to be included within.
+
+Another possiblity is that the number suggests a relationship within the value. A person might perceive that `2xl` is twice as large as `xl` which may not be the case. The relationship is more ambiguous when numbers aren't included. I'm not confident this is the perception, as we don't commonly assume that `color-red-200` is "twice as red" than `color-red-100`. Though the mental model is wholly different in comparing color to size. Doubling color isn't an exercise we normally consider, but doubling an amount of space would be.
+
+And finally, the good ol' [Bandwagon Effect](https://en.wikipedia.org/wiki/Bandwagon_effect). Some team copied another system that looked good enough and wound up with a scale that could have been improved but, due to lack of resources, was never corrected. The team is now stuck smashing that X key until the correct value is set.
+
+Is this nitpicky? Maybe. But I also think it's an easy win to make a small part of the system more maintainable and easily referrable. If you're considering T-shirt sizing in your system, then I highly recommend representing the extraness with numbers over excess Xs.
+
+XOXO 😊
