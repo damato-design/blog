@@ -21,8 +21,8 @@
   },
   "homepage": "https://github.com/damato-design/blog#readme",
   "dependencies": {
-    "@astrojs/mdx": "^3.0.1",
-    "astro": "^4.9.1",
+    "@astrojs/mdx": "^3.1.2",
+    "astro": "^4.11.5",
     "feed": "^4.2.2",
     "mdast-util-to-string": "^4.0.0",
     "reading-time": "^1.5.0",
