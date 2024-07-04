@@ -1,4 +1,6 @@
-import { experimental_AstroContainer as AstroContainer } from 'astro/container';
+import { experimental_AstroContainer as AstroContainer } from "astro/container";
+import { loadRenderers } from "astro:container";
+import { getContainerRenderer as getMDXRenderer } from "@astrojs/mdx";
 import { getCollection } from 'astro:content';
 import { Feed } from 'feed';
 import RssContent from '@components/RssContent.astro';
