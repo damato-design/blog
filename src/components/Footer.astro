@@ -25,6 +25,10 @@ const url = slug ? new URL(`/posts/${slug}`, domain) : '/';
     align-self: stretch;
     margin-inline: 1rem;
   }
+
+  @media not (display-mode: browser) {
+    footer { display: none; }
+  }
 </style>
 
 <footer class="max-width no-print">

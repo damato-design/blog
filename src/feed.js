@@ -1,8 +1,7 @@
+import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 import { getCollection } from 'astro:content';
 import { Feed } from 'feed';
-import MarkdownIt from 'markdown-it';
-
-const md = new MarkdownIt();
+import RssContent from '@components/RssContent.astro';
 
 function getFeed(context) {
     const image = new URL(`/og-images/index.png`, context.url.origin).toString();
@@ -32,31 +31,37 @@ function getFeed(context) {
     });
 }
 
-// MDX isn't rendered properly yet
-// https://github.com/withastro/roadmap/issues/533
-function removeImport(body) {
-    return body.replace(/import [^\s]+ from [^/]+\/\w+.astro';/gm, '');
-}
-
 export default async function(context) {
     const feed = getFeed(context);
+    const container = await AstroContainer.create({
+        renderers: [
+            { name: "@astrojs/mdx", serverEntrypoint: "astro/jsx/server.js" },
+        ],
+    });
     let posts = [];
     try {
       posts = await getCollection('posts');
     } catch (err) {}
     const published = import.meta.env.PROD ? posts.filter((post) => !post?.data?.draft) : posts;
-    return published.reduce((feed, post) => {
+
+    const items = await Promise.all(published.map(async (post) => {
         const url = new URL(`/posts/${post.slug}`, context.url.origin).toString();
-        const item = {
+        const content = await container.renderToString(RssContent, {
+            params: { slug: post.slug }
+        });
+        
+        return {
             title: post.data.title,
             id: url,
             date: post.data.date,
             description: post.data.desc,
             link: url,
-            content: md.render(removeImport(post.body)),
+            content,
             image: new URL(`/og-images/${post.slug}.png`, context.url.origin).toString(), 
         };
-        feed.addItem(item);
-        return feed;
-    }, feed);
+    }));
+
+    items.forEach((item) => feed.addItem(item));
+
+    return feed;
 }

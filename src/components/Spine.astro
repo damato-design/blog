@@ -10,6 +10,7 @@ const { title, heat, time, animal = 'caterpillar' } = Astro.props
     grid-template-columns: auto 1fr auto;
     border-radius: 3px;
     overflow: hidden;
+    width: 100%;
   }
 
   .spine:after {
@@ -95,16 +96,35 @@ const { title, heat, time, animal = 'caterpillar' } = Astro.props
     }
   }
 
+  @media not (display-mode: browser) {
+    .spine-parent {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      scroll-snap-align: start;
+    }
+
+    .animal img {
+      transform: none;
+    }
+
+    .time {
+      display: none;
+    }
+  }
+
 </style>
 
-<div>
+<div class="spine-parent">
   <div class="spine max-width">
     <div class="animal hide">
       <img src={ `/animals/${animal}.webp` } role="presentation" width="400" height="400"/>
     </div>
     <div class="title" style={ `background: ${ heatColor(heat) }` }>
       <h2>{ title }</h2>
-      <span class="hide">{ time }</span>
+      <span class="time hide">{ time }</span>
     </div>
     <a class="publisher hide" href="/">
       <Fragment set:html={logo} />

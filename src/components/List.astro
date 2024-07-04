@@ -1,0 +1,57 @@
+---
+import heatColor from '../heat.js';
+const { entries } = Astro.props;
+---
+
+<style>
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    margin-block: 2em;
+    border-left: .5em solid var(--heat);
+    padding-inline-start: 1em;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  a[data-draft] {
+    opacity: .5;
+  }
+
+  time {
+    font-size: .8em;
+  }
+
+  h2 {
+    margin: 0;
+  }
+
+  a:hover h2 {
+    text-decoration: underline;
+  }
+
+  p {
+    margin: 0;
+  }
+</style>
+
+<ul>
+  { entries.map((entry) => {
+    const date = entry.data.date.toLocaleString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
+    return (
+        <li style={ `--heat: ${heatColor(entry.data.heat)}` }>
+            <a href={ `/posts/${entry.slug}` } data-draft={ entry.data.draft }>
+                <time datetime={ entry.data.date }>{ date }</time>
+                <h2>{ entry.data.title }</h2>
+                <p>{ entry.data.desc }</p>
+            </a>
+        </li>
+    );
+  }) }
+</ul>
