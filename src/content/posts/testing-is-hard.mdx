@@ -1,0 +1,150 @@
+---
+title: Testing is hard
+desc: A case of libraries getting in the way, and how to find peace with it.
+heat: 0
+date: 2024-07-19
+animal: pig
+---
+
+In my day job I code React components. React is a good solution to allow large teams to make significant applications fast and under a standardized set of rules. Without a library like React, the Javascript ecosystem would allow for many different ways of achieving a result. This makes it challenging for teams to gain traction.
+
+However, it doesn't make it great for doing very specific things. Even things that you might think should be easy. This is often my frustration with testing library components, along with using a library to test that library. Yo dawg, I heard you like libraries.
+
+I'm using [Cypress](https://www.cypress.io/) for testing as it has a solid API and makes assertions in a true browser environment. I'm also using [Chai's expect API](https://www.chaijs.com/api/bdd/) to help with the assertion.
+
+## Asserting ref placement
+
+One of the biggest annoyances of learning React is not manipulating the DOM like I used to in the jQuery days. The DOM is very powerful, and we've got lots of awesome APIs in the browser that do all sorts of things. But React doesn't want you to use any of those. One of my biggest pain points was getting an element to programmatically focus. To do that in React, you may have [seen something like this](https://react.dev/learn/manipulating-the-dom-with-refs#example-focusing-a-text-input):
+
+```jsx
+function MyInputWithButton(props) {
+    const inputRef = React.useRef(null);
+
+    function handleClick() {
+        inputRef.current.focus();
+    }
+
+    return (
+        <>
+            <input { ...props } ref={ inputRef }/>
+            <button onClick={ handleClick }>Focus the input</button>
+        </>
+    );
+}
+```
+
+However, someone may want to supply their own `ref`. That's where `React.forwardRef()` comes in. When we include this, things get more complicated.
+
+```jsx
+const MyInputWithButton = React.forwardRef((props, ref) => {
+    const inputRef = React.useRef(null);
+    React.useImperativeHandle(ref, () => inputRef.current);
+
+    function handleClick() {
+        inputRef.current.focus();
+    }
+
+    return (
+        <>
+            <input { ...props } ref={ inputRef } />
+            <button onClick={ handleClick }>
+                Focus the input
+            </button>
+        </>
+    );
+});
+```
+
+We'll need to merge the `ref` that we made, with the one that is potentially incoming from outside. There's [other ways of merging refs](https://www.jameskerr.blog/posts/react-useref-and-forward-ref/) but the point is that you'll need to support this possibility if you allow the user to supply a `ref`.
+
+That's all well and good. Now that we have this component in a library, how do we test it? Specifically, how can we be sure that the `ref` is assigned to the `<input/>` and not the `<button/>`?
+
+This is exactly the problem I came across recently. A regression came in that caused that `ref` to be assigned to more than one element by accident. So we want to be sure that wherever the `ref` is meant to be assigned, it stays there.
+
+If you're familiar with testing suites, you may think that this would a test that works:
+
+```js
+describe('ref assignment', function () {
+    it('should assign ref to <input/>', function () {
+        const ref = React.createRef();
+        mount(<MyInputWithButton ref={ ref } />);
+        expect(ref.current.tagName).to.equal('INPUT'); // FAILURE
+    });
+});
+```
+
+Unfortunately, `ref.current` is `null` when written this way. In all my searching online, I couldn't find any examples of folks testing if a `ref` is assigned to the proper element. Luckily, [ChatGPT](https://chatgpt.com/) saved the day with the following test that will do what we want.
+
+```js
+describe('ref assignment', function () {
+    it('should assign ref to <input/>', function () {
+        const ref = React.createRef();
+        mount(<MyInputWithButton ref={ ref } />);
+        cy.get('input').then(([$input]) => expect(ref.current).to.equal($input)); // SUCCESS
+    });
+});
+```
+
+It seems that the secret is to first select the DOM element within the environment and after selection to assert that value against the `ref.current`. Hopefully, this helps anyone else trying to assure that `ref`s are assigned properly. I'm going to be adding similar tests in places where we expose the `ref`.
+
+## Hover styles
+
+If you thought that was fun, you're going to love this next one. How might we test that styles appear on hover?
+
+You might think it's just a matter of triggering a mouseover on the element. However, that only works if we're triggering some Javascript execution. If we're trying to test that styles are applied on `:hover` using pure CSS, it's not straightforward. There's a plugin for Cypress called [`cypress-real-events`](https://github.com/dmtrKovalenko/cypress-real-events) that tries to help get closer to true events. This is done by hooking into the [Chrome DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/) to trigger events, but even this isn't helpful enough for what we want. From the project's `README.md`:
+
+> Unfortunately, neither visual regression services like Happo and Percy nor plain cy.screenshot do not allow to test the hovering state. The hovering state is very different from any kind of js and css so it is not possible to capture it using dom snapshotting (like visual regression services do) and the screenshooting as well because cypress core itself is preventing hovering state in the screenshots.
+
+The root cause of this problem is because hover is called a "Trusted Event". This means _no technology can directly trigger a native CSS `:hover`_. The following is an excerpt from another post [Simulating hovers in Cypress](https://reflect.run/articles/simulating-hovers-in-cypress/):
+
+> Events that are generated by the user agent, either as a result of user interaction, or as a direct result of changes to the DOM, are trusted by the user agent with privileges that are not afforded to events generated by script through the `createEvent()` method, modified using the `initEvent()` method, or dispatched via the `dispatchEvent()` method. The isTrusted attribute of trusted events has a value of `true`, while untrusted events have an `isTrusted` attribute value of `false`.
+> 
+> Most untrusted events will not trigger default actions, with the exception of the `click` event. This event always triggers the default action, even if the `isTrusted` attribute is `false` (this behavior is retained for backward-compatibility). All other untrusted events behave as if the `preventDefault()` method had been called on that event.”
+
+The post has some workarounds, but none of them truly solve the problem as everything is still Javascript-centric. What we really need is to get that CSS style tied to `:hover` to show visually and be included in visual regression testing.
+
+In my search for a solution, I came across a project for [Storybook](https://storybook.js.org/) called [Storybook Pseudo States](https://storybook.js.org/addons/storybook-addon-pseudo-states) and it claims to "force" your components to display pseudo states like hover. While I am currently using Storybook for local development, it's not part of the testing suite. So I wanted to know what they technique was under the hood.
+
+[The file that is doing the magic](https://github.com/chromaui/storybook-addon-pseudo-states/blob/main/src/preview/rewriteStyleSheet.ts) is fairly overwhelming but there's a simple way to think of what they are doing. You can even take a good guess at the file name (`rewriteStyleSheet.ts`). Here's the basic steps:
+
+- Get a reference to the element we want to assert hover on.
+- Find the CSS that currently matches that element.
+- Rewrite the `:hover` selector to a non-pseudo selector.
+- Apply the non-psuedo selector to the element.
+- Profit.
+
+There's a lot that this addon is trying to cover past those steps. Seems like half the file is managing the `:host` selector found in Shadow DOM contexts. This may also depend on how you have styles applied to your components. For my environment, the styles are written into `<style/>` tags and there's no Shadow DOM to worry about. This is what I did in my Cypress test:
+
+```js
+function forceHoverSnapshot($target, ...screenshotArgs) {
+    const HOVER_ATTRIBUTE_SELECTOR = '__data-cypress-hover__';
+
+    // If our replacement stylesheet doesn't exist
+    if (!document.getElementById(HOVER_ATTRIBUTE_SELECTOR)) {
+        // Find the stylesheets that associate with the target
+        const sheets = [...document.styleSheets].filter(({ cssRules }) => 
+            [...cssRules].some({ selectorText }) => $target.matches(selectorText));
+        
+        // Concat all the cssText from associated styles
+        const cssText = sheets.reduce((css, { ownerNode }) => css + (ownerNode?.textContent || ''), '');
+
+        // Create and append new sheet
+        const $sheet = document.createElement('style');
+        $sheet.id = HOVER_ATTRIBUTE_SELECTOR;
+        sheets.at(-1).ownerNode.after($sheet);
+
+        // Append to replace instances of `:hover` with attribute
+        $sheet.textContent = cssText.replaceAll(':hover', `[${HOVER_ATTRIBUTE_SELECTOR}]`);
+    }
+
+    // Add the attribute to the target element
+    $target.setAttribute(HOVER_ATTRIBUTE_SELECTOR, '');
+
+    // Screenshot
+    screenshotArgs.length && cy.screenshot(...screenshotArgs);
+}
+```
+
+I imagine this would be helpful as a plugin in the future if it hasn't been done yet. Knowing this, you _could_ opt to simply include a `[data-hover]` selector to the same declaration as `:hover` so it can be manually triggered. In fact, it might even make sense if you wish to present a "visually focused" state, typically used when keyboard navigating. For me, I don't want to include code meant exclusively for testing in my production environment (👀 on `data-cy` on public sites) so the extraneous selector is out of the question.
+
+So, that's been the trouble with testing components recently. I know there's been so many attempts at making testing our components easier over the years but sometimes it is an uphill battle for what seems like the smallest ideas that should have been tackled many times before. If I come across others, I'll update this post. Good luck testing out there, it's a battlefield!
