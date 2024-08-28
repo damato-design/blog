@@ -31,9 +31,9 @@
 </style>
 
 <aside>
-  <div class="image">
+  { Astro.site && <div class="image">
     <img src="/animals/raven-black.webp" role="presentation" width="400" height="400"/>
-  </div>
+  </div> }
   <div class="content">
     <slot/>
   </div>
