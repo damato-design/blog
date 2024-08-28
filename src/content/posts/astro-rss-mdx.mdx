@@ -1,0 +1,143 @@
+---
+title: Astro RSS MDX
+desc: Showing more love for Astro, now that we can finally render MDX in RSS content.
+heat: 0
+date: 2024-08-18
+animal: zebra
+---
+
+import Aside from '@components/Aside.astro';
+
+I've been using Astro for a long time. The developer experience includes all the best parts from the way I learned web development nearly 30 years ago. The stuff that was missing back then is intuitively included, like HTML templating without the need for a heavy framework. I've since moved all the personal projects I'm currently developing onto an Astro stack.
+
+However, there's been one thing that was always missing from the Astro ecosystem. Rendering full content MDX in your RSS feed.
+
+## Astro's recommendation
+
+[From the docs](https://docs.astro.build/en/guides/rss/), the general idea is to use [Astro's RSS package](https://www.npmjs.com/package/@astrojs/rss) to create the feed. This isn't doing anything too special itself. It leverages the `src/pages` directory to statically generate XML content based on your collections. Here's the "whole" example from their docs: 
+
+```js
+import rss from '@astrojs/rss';
+import { getCollection } from 'astro:content';
+
+export async function GET(context) {
+  const blog = await getCollection('blog');
+  return rss({
+    title: 'Buzz’s Blog',
+    description: 'A humble Astronaut’s guide to the stars',
+    site: context.site,
+    items: blog.map((post) => ({
+      title: post.data.title,
+      pubDate: post.data.pubDate,
+      description: post.data.description,
+      customData: post.data.customData,
+      link: `/blog/${post.slug}/`,
+    })),
+  });
+}
+```
+
+I put the word "whole" in quotes because you might notice that the post content is missing from the feed. Some folks prefer this choice to drive traffic to their website. Personally, I'm old school and would rather folks read my content in whatever medium they feel most comfortable. That's why it was very important to include the full content in my feed.
+
+While Astro does have a [section about rendering full page content](https://docs.astro.build/en/guides/rss/#including-full-post-content), it is limited to vanilla Markdown. It does not include an approach to handle the full MDX documented. In fact, it suggests using an entirely different rendering engine. This has been a big thorn in the side for folks who have dynamic MDX content looking to migrate to Astro from other ecosystems. This is because the only way to render that content is by using the following:
+
+```astro
+---
+import { getEntry } from "astro:content";
+
+const { slug } = Astro.params;
+const entry = await getEntry('posts', slug);
+const { Content } = await entry.render();
+---
+<Content />
+```
+
+That `<Content/>` component can only be rendered within the context of a `.astro` file. Now, you might think you could just render that content to HTML and then fetch the result. With some finesse, [you can get this to work](https://github.com/ddamato/astro-mdx-rss) in local development, but a statically generated site will have problems. This is most likely due to a race condition, or the order in which data is rendered. Either way, there hasn't been a clear approach to render MDX in Astro RSS feeds for a while.
+
+<Aside>
+    [I still believe](https://github.com/withastro/roadmap/discussions/881) providing an API that suggests the content type of a file would be helpful. Similar to how you can [render a partial file](https://docs.astro.build/en/basics/astro-pages/#page-partials) using `export const partial = true;` for frameworks like [HTMX](https://htmx.org/). Then we could render XML from a `.astro` file more directly.
+</Aside>
+
+Luckily, one of the more recent releases of Astro introduces an approach that can get us what we're looking for.
+
+## Astro Containers
+
+In [v4.9 of Astro](https://astro.build/blog/astro-490/), a new experimental Container API was introduced. The benefit of this API is the ability to render Astro components outside of the normal Astro context, specifically outside of `.astro` files. This is exactly what we need to get the content into a normal Javascript file.
+
+At first, this was not a straightforward process. We still needed a `.astro` file to help render the special `<Content/>` element. Soon afterward, the setup to do this became a lot cleaner which is what I'll show in this post.
+
+We'll start with a `/pages/feed.xml.js` file. This is similar to what was provided in the first example, and you can certainly use Astro's RSS package to help construct the feed. However, to get the MDX rendering, you're going to need some additional helpers. Let's go through the file by each section, first the imports:
+
+```js
+import { experimental_AstroContainer as AstroContainer } from "astro/container";
+import { getContainerRenderer as getMDXRenderer } from "@astrojs/mdx";
+import { loadRenderers } from "astro:container";
+import { getCollection } from "astro:content";
+import rss from "@astrojs/rss";
+```
+
+The first line imports the new Container API, we'll use this to create a new Astro context. The second line comes from the [`@astrojs/mdx` package](https://www.npmjs.com/package/@astrojs/mdx), and this will tell the container API how to render the data. The next import is used to load the renderers. For whatever reason, this isn't included in the container API.
+
+The last two imports should be familiar, importing the `getCollection` method from `astro:content` and the `rss` builder from `@astrojs/rss`. Now we're going to put those imports to work:
+
+```js
+export async function GET(context) {
+    const renderers = await loadRenderers([getMDXRenderer()]);
+    const container = await AstroContainer.create({ renderers });
+    const posts = await getCollection('posts');
+    const items = [];
+    for (const post of posts) { /* Next part will be here */ }
+    return rss({
+        title: 'My blog',
+        description: 'All my thoughts',
+        site: context.site,
+        items,
+    });
+}
+```
+
+First, we load the MDX renderer. Then we pass the result of that into the `.create()` method for making an Astro Container. Then we do a standard `getCollection()` for the posts. If you need to filter posts for some reason, make sure to also do that here before processing in the upcoming for loop. We're using a for loop instead of a functional process because we'll need to do some async work in the loop. After all the items are processed, we'll write the feed using the `@astrojs/rss` rendering function. Let's look at what's inside the loop:
+
+```js
+const { Content } = await post.render();
+const content = await container.renderToString(Content);
+const link = new URL(`/posts/${post.slug}`, context.url.origin).toString();    
+items.push({ ...post.data, link, content });
+```
+
+Assuming that your frontmatter matches the expected schema for `@astrojs/rss`, the only other keys you'll need to provide are `link` and `content`. You can see how I construct the `link` by using the `context.url.origin`. This helps with local development.
+
+Our real focus is the `content` output. In here, we do something similar to how we might render the `<Content/>` element in a `.astro` file. However, then we send the output of that to the `container.renderToString()` method. The result of that is regular HTML that we can pipe directly into the `rss()` method at the end of the function. Here's the whole file:
+
+```js
+import { experimental_AstroContainer as AstroContainer } from "astro/container";
+import { getContainerRenderer as getMDXRenderer } from "@astrojs/mdx";
+import { loadRenderers } from "astro:container";
+import { getCollection } from "astro:content";
+import rss from "@astrojs/rss";
+
+export async function GET(context) {
+    const renderers = await loadRenderers([getMDXRenderer()]);
+    const container = await AstroContainer.create({ renderers });
+    const posts = await getCollection('posts');
+
+    const items = [];
+    for (const post of posts) {
+        const { Content } = await post.render();
+        const content = await container.renderToString(Content);
+        const link = new URL(`/posts/${post.slug}`, context.url.origin).toString();    
+        items.push({ ...post.data, link, content });
+    }
+
+    return rss({
+        title: 'My blog',
+        description: 'All my thoughts',
+        site: context.site,
+        items,
+    });
+}
+```
+
+Again, you'll probably want to add some additional metadata to your feed, maybe filter and sort the posts too. You could probably construct that data in a similar way to the approach taken for `link` above. This is basically how I create [the feed at this very site](/feed.xml).
+
+Hopefully, this helps folks with the final steps in migrating their blog to Astro. From here, the sky's the limit!
