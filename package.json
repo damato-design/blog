@@ -7,7 +7,8 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "unused": "node ./unused.js"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,7 @@
     "sharp": "^0.32.6"
   },
   "devDependencies": {
+    "frontmatter": "^0.0.3",
     "sass": "^1.69.5"
   }
 }

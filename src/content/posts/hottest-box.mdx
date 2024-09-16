@@ -1,0 +1,212 @@
+---
+title: The Hottest Box
+desc: Considerations to take when making a layout component.
+heat: 2
+date: 2024-09-13
+animal: piranha
+draft: true
+---
+
+import Aside from '@components/Aside.astro';
+
+Over the past year, I've had the task of creating layout components for an organization. This is something that was initially confused about. My initial assumption was that everyone knows about flexbox! It's our lord and layout savior! Jokes about centering content should have vanished away now that we can use flexbox! Oh, how naïve I was.
+
+Realistically, the developer landscape doesn't hone these skills well, and instead hides them behind APIs; even if [those very APIs](https://tailwindcss.com/docs/flex-direction) are identical to what a person would write in CSS. It's true, [people will do anything to avoid writing code in a `.css` file](https://x.com/donniedamato/status/1831662438191612281).
+
+Honestly, I stumbled all over making a robust layout component. The following is considerations I take into account and how I might build a new component if I was given another opportunity.
+
+## Layout
+
+The first thing I'd take into consideration is layout using flexbox. I'm avoiding introducing grid configurations here. I've found that in the years I've been working with CSS, grid is the lesser used layout technique. It certainly has benefits over flexbox in many cases, but the majority of layout needs revolve around aligning items on a single axis in a container.
+
+Much of the confusion about flexbox comes from the alignment properties; `align-items` and `justify-content`. They are very easy to get mixed up and, the results can be unexpected when you change the `flex-direction`. I believe an improvement here would be to simplify the API.
+
+<Aside>
+    I'll be using JSX syntax to describe the component API, but you could imagine similar configurations in your authoring experience of choice.
+</Aside>
+
+```jsx
+<Box stretch stack>Hello world!</Box>
+```
+
+The first thing I'd introduce is the boolean properties of `stretch` and `stack`. The `stretch` flag would switch between `inline-flex` and `flex` so the container can fill its parent. The `stack` flag would toggle on `flex-direction: column` so the children stack in a single column. I'd also include `wrap` to align directly to `flex-wrap: wrap`.
+
+With that out of the way, now we need to address the alignment properties. Generally, the expectation for someone manipulating layout is to place the content in one of 9 locations within the container. For example, take the following CSS:
+
+```css
+.box {
+    display: flex;
+    align-items: start;
+    justify-content: end;
+}
+```
+
+This code will place the content in the top-right corner of an LTR container. But with one line of code, it'll completely flip the position to the bottom-left corner:
+
+```diff
+.box {
+    display: flex;
++   flex-direction: column;
+    align-items: start;
+    justify-content: end;
+}
+```
+
+In my opinion, this is unexpected. The intention to show the items in a row versus a column shouldn't have an effect on the alignment in this case. Instead, I'd like to see an approach where someone could configure the items such that the `stack` has no effect.
+
+<Aside>
+    I'm aware that there are cases where we want the above behavior, such as when the writing mode is adjusted. I'd argue that this is rare in comparison to the task of creating layouts.
+</Aside>
+
+Furthermore, I'd like to lean into [CSS Logical Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_logical_properties_and_values), such that configuration inputs have aliases; `left` / `top` would transform to `start` and `right` / `bottom` transforms to `end`, of course allowing these values directly as well. I could imagine some flag that turns off (eg., `logical=false`) this translation [in cases where we want to force the direction regardless of the writing mode](https://m2.material.io/design/usability/bidirectionality.html#mirroring-elements).
+
+```jsx
+<Box logical={ false }>
+    Media player timeline
+</Box>
+```
+
+Importantly, we'd need to inform what axis to apply the `start` or `end`. Logical properties describe that the horizontal axis is the "inline" direction, and the vertical axis is the "block" direction. As we have seen, when we update the `flex-direction`, these axes flip where I'd argue this is largely unexpected. So instead of using `align` and `justify`, I'd suggest `inline` and `block`, similar to how `padding` and `margin` would be modernly applied.
+
+With this all in mind, we'd have the following:
+
+```jsx
+<Box
+    stack
+    inline="left"
+    block="bottom">
+    Hello world!
+</Box>
+```
+
+Regardless if the `stack` was applied or not, the children of this LTR container would be placed in the bottom-left corner. In an RTL container, the items would be placed in the bottom-right corner because `logical` defaults to `true`.
+
+The final element to consider here is handling the concept of "self". The flexbox ecosystem allows an item to essentially override the placement given by the parent through properties such as `align-self` and `justify-self`. Knowing this, we can also see a potential problem with the current API. The words `inline` and `block` aren't clear as to what they are affecting. A better API naming convention would be more clear about what these are doing. That is why the flexbox APIs include the words `items` and `content`; they are affecting the elements _inside_ this container, not the container itself.
+
+This means that we should have similar but separate APIs for the concept of affecting the elements inside versus the element itself. We can communicate that layout is affecting the interior children with `inset` (ie., interior setup) and the exterior self with `outset`:
+
+```jsx
+<Box
+    inset={{ inline: 'start', block: 'end' }}
+    outset={{ /* Similar options */ }}>
+    Hello world!
+</Box>
+```
+
+We could also consider shorthands that handle these with a single value; affecting both `inline` and `block` in the same way. The following would place the text horizontally and vertically within the box:
+
+```jsx
+<Box inset='center'>
+    Hello world!
+</Box>
+```
+
+<Aside>
+    `inset` means [something slightly different in CSS](https://developer.mozilla.org/en-US/docs/Web/CSS/inset) compared to how it is being used here. In CSS, the "in" is speaking about how the target is being set inside a parent element.
+</Aside>
+
+One more thing to mention is the more nuianced alignment properties, such as `justify-content: space-between`. Since we're hiding implementation details to match some new expectations, I'd consider an option that would effectively override the given `inline` or `block` (depending on the `stack` flag) to distribute the children.
+
+```jsx
+<Box stack inset="center" distribute="between">
+    <Box>Child 1</Box>
+    <Box>Child 2</Box>
+    <Box>Child 3</Box>
+</Box>
+```
+
+In this example, the `justify-content` would be set as `space-between` instead of `center`. I'm avoiding the word "space" here to not confuse with other spacing properties such as `padding` or `gap` which we'll introduce later.
+
+## Appearance
+
+By default, it makes sense to allow this container to be invisible when a configuration is omitted. This helps with general layout approaches, allowing boxes to be arranged without explicitly showing boundaries. However, in some cases we may want to have a box appear segregated from other boxes.
+
+Aligning with the idea of [Mise en Mode](https://mode.place), appearance properties would be informed by the use of intents (ie., strict semantic tokens) where we'd consider the priority that this box is meant to convey. So the box with the highest priority would be presented in a way that was clear to a user that they should pay attention here first before looking at other elements. This suggests that there is a `priority` setting that could either be numeric (`1`, `2`, `3`, and so on) or Latinate ordinal numbers (`primary`, `secondary`, etc.). I'd recommend the latter and having only `default`, `secondary`, and `primary`. This reduces the decision-making paralysis; making it more clear which to use. Having a number system of significant size makes it challenging to determine the most appropriate number. I also suggest using the term `default` over including `tertiary` as if you need an additional level, you can include it later.
+
+<Aside>
+    As a sidenote, you should never assign the primary concept of anything as the default. Primary should be reserved as the main focus for the user. Meanwhile, your default should be set as the most common presentation of any element. If primary is your most common presentation, that means nothing is really important because everything is important.
+</Aside>
+
+ Continuing with the Mise en Mode concept, this allows any box to present itself with any color combination as provided by the current mode. This means, if you need a purple gradient to convey the supreme intelligence of AI, you can do it by informing the intents with new values, not by providing new tokens directly to a component.
+
+ I believe the priority of any box is more closely tied to the concept of surfaces. We could imagine that the `default` priority to be the base level of the page where most UI elements would live. Next, the `secondary` level could be reserved for elements that are meant to appear on top of the UI but are contextual to some anchor. You can think of flyouts like context menus or tooltips. These are introduced because there is some more important information for you to take in before continuing, but they aren't typically the most important thing to do. Finally, the `primary` level would be a full disruption like a modal, which is meant to appear on top of everything blocking further progress.
+
+ ```jsx 
+<Box aria-modal="true" inset="center" priority="primary">
+    Hello world!
+</Box>
+```
+
+Any one of these priorities would apply additional presentational styles to the element to allow it to convey the priority consistently. This is so our users can subconsciously learn the hierarchical order of the content and make better decisions.
+
+## Spacing
+
+Continuing with Mise en Mode, more specifically its origins of [Complementary Space](https://complementary.space/), I believe we'll only need two spacing options for box: `padding` and `gap`. These would be _flags_ and not expecting values like T-shirt sizing. This is because the mode would inform the size.
+
+```jsx
+/* Example 1 */
+<Box padding gap>
+    <Box>Child 1</Box>
+    <Box>Child 2</Box>
+</Box>
+
+/* Example 2 */
+<Box padding gap data-mode="density-shift">
+    <Box>Child 1</Box>
+    <Box>Child 2</Box>
+</Box>
+```
+
+The `data-mode` in the second example indicates that a mode changes occurs here. This would affect all intents of this element and below new values. The `density-shift` value would refer to a mode that expects the density to shift down one level, such that `padding` and `gap` are smaller than if this mode wasn't applied; as in the first example.
+
+You might consider simply adding `mode` as the option instead. I'm specifically using `data-mode` to indicate that this isn't specific to `<Box/>` but more related to Mise en Mode. If this element is meant to be the base of all other elements, then `mode` could be appropriate.
+
+If Complementary Space is too radical of an idea, feel free to wade in the depths of applying T-shirt sizing values.
+
+## Loading
+
+Some work that was being done in parallel to the layout component was that of a skeleton loader. [For many systems](https://component.gallery/components/skeleton/), this is a separate component than any others in the system for the specific purpose of displaying a placeholder while work is done in the background. This has the perception that the system is processing, as opposed to having a blank area waiting for content to appear.
+
+It was at this time that I realized that if the skeleton component represented content, and the box component was meant to arrange content, what if the box could represent placeholder content until it was provided? In other words, we can mark `<Box/>` elements with an attribute that shows a skeleton loading presentation if the element has no content. Consider the following simple card layout:
+
+```jsx
+<Box stack padding gap>
+    <Media src={ src } />
+    <Box stack padding gap data-mode="density-shift">
+        <Box standby>{ title }</Box>
+        <Box standby>{ description }</Box>
+        <Box standby>{ actions }</Box>
+    </Box>
+</Box>
+```
+
+The `standby` flag would show a skeleton loading presentation to elements if no content is provided. That could be done with the CSS `:empty` selector.
+
+```css
+[data-standby]:empty {
+    /* Skeleton loading presentation */
+}
+```
+Once content is added, the selector would no longer match and the skeleton styles would be removed through CSS. We could also consider being explicit about when the loader should be shown by using the value of `data-standby="true"`.
+
+<Aside>
+    In a more complete system, there would exist `<Media/>` and `<Text/>` components that would have more specific enhancements that aligned better for `standby`, most likely inheriting from the foundational `<Box/>`. For example, `<Media/>` would have loading when no `src` is provided (`:not[src]`). `<Text/>` would display skeleton lines instead of a single block, depending on the purpose of text. Titles could display a single line, while paragraphs could show 3.
+</Aside>
+
+The purpose of embedding the ability to display a skeleton in any layout is powerful; assuming performance cannot be improved. This means that you can have a layout reused between the expected result and the lack of information with a single composition; just add content. No need to create a separate layout for when the content is missing and another for when the content is finally resolved.
+
+## Semantics
+
+Something I've glossed over is how to assign the element that this component represents. In some systems, this is done with another prop that informs the HTML tag name to use (`<Box as="section"/>`). Instead, I'd recommend trying [a different approach](https://github.com/framer/motion/blob/main/packages/framer-motion/src/components/utils/tag-proxy.ts#L16-L32).
+
+```jsx
+<box.section>
+    Hello world!
+</box.section>
+```
+
+In this way, it is more clear that the `section` part of the element is related to the element that will be rendered. Using `as` could be more ambiguous to what the prop is meant to do, such as the word `variant`. You could also consider a more generic default export as `Box` that refers to a simple `box.div`.
+
+## Demo
+
+TO BE CREATED.
