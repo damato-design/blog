@@ -189,7 +189,7 @@ The `standby` flag would show a skeleton loading presentation to elements if no 
 Once content is added, the selector would no longer match and the skeleton styles would be removed through CSS. We could also consider being explicit about when the loader should be shown by using the value of `data-standby="true"`.
 
 <Aside>
-    In a more complete system, there would exist `<Media/>` and `<Text/>` components that would have more specific enhancements that aligned better for `standby`, most likely inheriting from the foundational `<Box/>`. For example, `<Media/>` would have loading when no `src` is provided (`:not[src]`). `<Text/>` would display skeleton lines instead of a single block, depending on the purpose of text. Titles could display a single line, while paragraphs could show 3.
+    In a more complete system, there would exist `<Media/>` and `<Text/>` components that would have more specific enhancements that aligned better for `standby`, most likely inheriting from the foundational `<Box/>`. For example, `<Media/>` would have loading when no `src` is provided (`:not([src])`). `<Text/>` would display skeleton lines instead of a single block, depending on the purpose of text. Titles could display a single line, while paragraphs could show 3.
 </Aside>
 
 The purpose of embedding the ability to display a skeleton in any layout is powerful; assuming performance cannot be improved. This means that you can have a layout reused between the expected result and the lack of information with a single composition; just add content. No need to create a separate layout for when the content is missing and another for when the content is finally resolved.
@@ -215,3 +215,17 @@ Here's a demo of the concept, missing all the mode changing.
   The Hottest Box</a> by Donnie D'Amato (<a href="https://codepen.io/fauxserious">@fauxserious</a>)
   on <a href="https://codepen.io">CodePen</a>.
 </iframe>
+
+---
+
+**EDIT (2024-09-26):** [Devon Govett recently posted a similar approach](https://x.com/devongovett/status/1838980741197447529) where a `<Skeleton/>` wrapper is added to _any_ component in the system which will cause media and text elements inside to shimmer. Based on what I've written above, of course I really resonate with this. I like how the wrapping component is the trigger because you can also add [accessibility attributes](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-busy) in there to markup the loading state within.
+
+There's some feedback in the replies that challenges how the system is supposed to know what the content looks like. The fact is that we don't need to know what the content looks like, we need to know what _kind_ of content it is.
+
+This is why thinking about design as intention over aesthetics is the key to systems thinking and how we could support this approach. For example, the intention for a heading is commonly for introducing a short concept or label. Therefore, the loading presentation for the area where a heading should appear could always be displayed as a single block instead of considering several lines. Certainly, it is entirely possible that the final content does create multiple lines however, the purpose of the skeleton is not to match one-for-one with the incoming content. It is meant to indicate perceived progress using a loose blueprint of the expected content.
+
+We already know the styles for the text that will appear once the content comes through, including the font size. We can use that font size to set the minimum height of the skeleton placeholder, perhaps using the new `lh` unit. Also know that any styles that we use for the skeleton do not need to remain for when the content is applied. If the `lh` unit isn't appropriate for the incoming font, then no need to set a minimum height when the element is `:not(:empty)`.
+
+For paragraphs, you can pick a number of lines to display when we expect a paragraph. You could even be more considerate and wire in a container query that changes the number of lines based on the size of the paragraph. Wider paragraph containers larger than `60ch` in width can display 2 lines, while smaller widths can display 3. This could imitate line wrapping for the same repeatable placeholder content. This way, a paragraph in a loading hero section would show 2 lines, while a more narrow card would show 3 lines.
+
+The easiest one of these content elements to consider is the image or really any media. [Best practice for loading media](https://www.smashingmagazine.com/2020/03/setting-height-width-images-important-again/) is to set the dimensions in the HTML to help with content shifts which would clearly dictate the size of the container for the skeleton. In the event you couldn't do this, you could have predetermined expectations for that media; square, 4:3, 16:9, and even a circle for avatars. These styles are already most likely applied to the media element already, so we shouldn't need to use too much imagination about how this skeleton might look.

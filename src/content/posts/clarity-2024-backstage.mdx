@@ -1,0 +1,73 @@
+---
+title: Clarity 2024, Backstage
+desc: Behind the scenes in the making of Clarity 2024
+heat: 0
+date: 2024-09-27
+animal: honeybee
+---
+
+import Aside from '@components/Aside.astro';
+
+[Clarity](https://www.clarityconf.com/), the original design systems conference, just wrapped its 9th iteration this year. I was part of the small group of community volunteers that helps put the event together. I'd like to pull back the curtain behind the technical side of the event; somewhat to play Monday-morning quarterback on things I would have improved in my role on my end.
+
+## Playback
+
+We planned to have all the talks pre-recorded, so one of the key parts of the setup is to have playback. Having pre-recorded talks helps reduce the need for multiple connections to perform the talk live. It's hard enough to prepare a presentation, it'll be even harder to troubleshoot connection problems on top of it.
+
+To do this, I was looking for a dedicated device that would handle playback. In my mind, I was expecting to find a modern device that could provide clean HDMI out, display local time remaining for the media, and physical buttons to navigate files and playback. In all my searching, I couldn't find the perfect device with those requirements. It's wild to me that this doesn't readily exist.
+
+The fact is, much of this is done with software now. Usually you'll have folks who stream handling everything with a single computer with [OBS](https://obsproject.com/) and a [StreamDeck](https://www.elgato.com/us/en/p/stream-deck-mk2-black). This is certainly a viable solution but I'm old school. I've been streaming for a long time; before Twitch, before even YouTube. I'd take a RCA encoder and hook that up to stream super low-quailty camcorder video using RealPlayer back in the day. So it is important to me that there are separation of concerns. If you have everything being handled in a single spot, if that spot goes down, everything goes down.
+
+The video switcher I use could load the videos inside of it, but I believe a switcher shouldn't be used to navigate and play the videos. It's main role is to cue and stream a media source from the outside. So for playback, I ended up using my wife's spare laptop. This is a subpar solution for a few reasons:
+
+1. You can't navigate the files while media is playing.
+1. You'll have the system UI show during some setup.
+1. You can't see time remaining on the video to cue talent.
+
+Thank goodness the spacebar was the physical button to start/stop the media. Though I wish the screen wouldn't have flashed the icons in the corner when doing so. A quality media player wouldn't need to show that in the feed but in some exterior menu instead. I do wish this is something that can come to the prosumer market or perhaps something that could be more seriously considered in current hardware switchers. My hardware switcher has 8 slots for media but preparing the media is a hassle through the menus.
+
+This laptop was also the "Character Generator", which is a fancy term for a source that can show text and graphics. This means that I can't prep any text or graphics for the next segment until I'm clear from the playback. I'd have to cue up the next items during the live Q&A.
+
+<Aside>
+    Quick note about the interstitial screens. They were all originally designed by [Lauren LoPrete](https://www.laurenloprete.com/). I took the general layout as reference and made a website from them (using [Astro](https://astro.build) because of course I did). That made it easy to navigate to the next speaker or even change the text with a `contenteditable` attribute to make custom announcements.
+</Aside>
+
+## Live Q&A
+
+It was important to have some live element to this event so it wouldn't just be a playlist. When we were in the early stages of coordinating, [John Allsopp](https://johnfallsopp.com/) warned that broadcasting live, especially a conversation, is very tricky and prone to many problems. He's absolutely right, I definitely wouldn't recommend trying to do this if you haven't before. There's a lot that can go wrong or be otherwise frustrating. I say that from experience because my master's degree is in live event production and this is the sort of thing that I focused a lot of attention on. Back then, we even had some prototype devices for broadcasting Skype calls and successfully did live chats on a weekly basis. The technology is certainly better now, but still not perfect, especially for a scrappy show like this.
+
+To do the live Q&A, I wanted to leverage a reliable call technology where I could pull the source media out to the feed for later compositing. Zoom is what I chose, along with the help of a program called [Zoom Bridge](https://www.videocom.at/zoom-bridge) which creates [NDI](https://ndi.video/) sources from the call. I was unfamiliar with the NDI protocol, but it's a new way of sending media over the network. This means you can have media playing over a network switch and devices can find that media to be played.
+
+The thing about this technique is that it is bandwidth intensive so I was very worried about attempting to create NDI media streams on top of the bandwidth used for the live stream itself. I took some time to try and make a local network specifically for the NDI sources but I couldn't figure it out. I'm not an network engineer. The best I can normally do is release/renew an IP config. Ultimately, the tech checks seemed to show this shouldn't be a problem and after completing the event, it's clear it wasn't an issue. I wonder how many NDI sources it would take for it to be noticeable.
+
+Now, that I had NDI sources from Zoom, I had to get them out of the computer and into the switcher. I purchased a NDI to HDMI decoder to get the streams to convert to HDMI for the switcher, however it seems that each decoder could only handle one source. That would mean I'd need two devices, one for each call participant. Instead, I decided to use OBS. OBS has NDI input source options and can also export the program as an NDI source. So, I made a few simple scenes for the live Q&A in OBS, prepared some hotkeys for the number pad on the keyboard, and sent the whole thing out as a single NDI source to the switcher.
+
+The flow during the Q&A portions worked fairly well. Our speaker would join the private Zoom call where Jina and I were waiting. I'd set the participant as the new source in the Zoom Bridge, which gets the media into the premade OBS scenes. After the presentation video finishes, I'd switch to OBS and cue Jina. Then all of the live Q&A switching would happening with OBS and the 3 scenes: Jina, the speaker, and the split screen (also designed by Lauren). This ended up working better than I was expecting. In my experience, I'd used to having all switching happen from one station because it is easy to confuse otherwise. Separating the live Q&A switching from the main program switching helped focus attention to the flow of the conversation. Also helped since my switcher doesn't have many source inputs and OBS could take many more through software.
+
+Like I said, I'd still rather not use a computer as a source because there's too many things that can go wrong. This was the case for the first day. During the first day, the Zoom connection was awful. It was hard to tell with just Jina starting since it could have only been her connection, but when Dan signed on it was very clear that my connection was the problem. It was then I noticed the Zoom computer was connected to the house WiFi instead of the main fiber. After I switched to the main fiber, everyone had a much better connection with one flaw.
+
+I could see in my studio that there was an audio delay, and I also received a few reports on it. I had no good way of adjusting this during the live stream because of another topic I'll bring up soon. At the end of the first day, Jina and I did a quick tech check where I'd focus on synchronizing the audio with the video. Apparently we were an entire second (1000ms) off. I was able to enter a delay in OBS to prepare for the next day.
+
+During the next day, we did another test on the delay. In doing this I found there was no delay! My assumption is that when I switched the Zoom WiFi during the stream, the sources became slightly out of sync. Now that it was a new Zoom call, it must have re-synchronized. So all of the live Q&A portions on the second day were executed very well, and I'm kicking myself for not doing more testing to identify the problems that happened on the first day. A learning experience for sure.
+
+I do wish that there was prosumer device that could handle this stuff more gracefully. Maybe with all the great tech [RØDE](https://rode.com/en-us) has been making they could consider it in their next device.
+
+## Audio
+
+In just about any event, audio is the most important facet. It's one thing to be showing images but the content that comes from the audio is most noticeable. This is where I really would have loved to have that dedicated Zoom device instead of a computer. The way my computer settled audio was to simply output the desktop audio to the stream. This would be the same audio that you might hear in the Zoom call you'd have in a meeting. It will include all of the audio for the computer in a single channel out to your speakers or headset, except your microphone audio. I don't know if the NDI sources would have accepted individual channels of audio as sources in OBS. I think I tried it a few times and never got more than the desktop audio working.
+
+However, because OBS decided that it wanted to use desktop audio as the output, that apparently meant that if I changed my desktop audio output to be my headset, that the audio would _not_ go out to the switcher. That meant I needed to keep the desktop audio as the source, and that the Zoom call would fill my room with sound. This was a problem since I was trying to monitor the live stream which was on a slight delay from the computer. This was incredibly distracting. To provide some relief, I'd keep myself on mute for the Zoom call to spare others from hearing the stream through my microphone. I did try to use headphones on the switcher toward the end of the first day, but that was also awkward when coordinating over the Zoom call.
+
+If I had a better understanding of how the computer and OBS handle routing audio, I would have rathered having separate audio channels for each person, and to have the Zoom call in the headset and the program playing in the room. This was probably most apparent when I went live on camera in the middle of the second day. This was unplanned so I wasn't sure what sort of audio setup I'd need to adjust. I suspect the echo that was occuring was either the program playback (that I thought I muted) or the Zoom audio coming from the computer. Either way, I did my best to ride the OBS mute button to limit the amount of noise. Hopefully it wasn't too distracting.
+
+That's another big reason why I like hardware solutions over software. It's very clear how the sources are traveling into the equipment as physical cables. I'm sure plenty of folks can relate to struggling with Bluetooth devices connecting and disconnecting, OS switching audio settings as a result. This is actually what happens at the very beginning of Dan's presentation. I disconnected a source I wasn't using on the playback laptop and the OS switched to the internal speakers instead of over HDMI where it was originally connected. Luckily I noticed this quickly seeing empty audio levels and did a quick restart. This doesn't happen when working with hardware, the audio is always connected.
+
+## Don't try this at home
+
+![The basement with all the tech equipment](/images/ds-house-basement.jpg)
+
+In reality for a production like this, there should be at the very least 4 people handling the parts. One for the video playback, one for handling live Q&A, one for character generation and one for the stream itself. That's not counting the stage management job that my wife [Jennifer](https://jennifer.damato.design/) graciously volunteered to handle. We were able to get nearly every speaker cued up and live for the 2 day event, with only one person that had a schedule conflict.
+
+After moving to tech I never thought I'd be running live coordinated events again but I'm glad Jina and the team gave us a chance to do it. Many thanks to the speakers, the volunteers, and the community for all its support.
+
+Will the [Design Systems House](https://ds.house) promote itself with a live event production side business? It depends™ 😊
